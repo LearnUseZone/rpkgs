@@ -1,6 +1,6 @@
 #' @title Render .html files from their original .Rmd files stored in subdirectories
 #' @description
-#' Similarly as for workflowr package, when specifying path to folders or files in function generate_html(), you can start by typing folder name, so for example, you can write "analysis" instead of "./analysis".
+#' Similarly as for workflowr package, when specifying path to directories or files in function generate_html(), you can start by typing directory name, so for example, you can write "analysis" instead of "./analysis".
 #' Processed steps:
 #' 1. Check existence of .Rmd file in a chosen subdirectory.
 #' - If it doesn't exist, inform about it and stop processing.
@@ -16,7 +16,9 @@
 #' @param file_path
 #' character (default: NULL).
 #' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-#' Example when directories subPagesX are saved in folder dir = "code-Rmd": file_path = c("subPages2/testPrint2.Rmd", "subPages3/testPrint3.Rmd")
+#' Example when directories subPagesX are saved in directory dir = "code-Rmd":
+#' file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")
+#' file_path = c("subPages2\\testPrint1.Rmd", "subPages3\\testPrint2.Rmd")
 #' @param commit
 #' character (default: FALSE).
 #' commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in directory "analysis").
@@ -28,6 +30,7 @@
 #' \dontrun{
 #'   generate_html()
 #'   generate_html("code-Rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
+#'   generate_html("code-Rmd", c("subPages1\\testPrint1.Rmd", "subPages2\\testPrint2.Rmd"), F)
 #' }
 
 generate_html <- function(dir = "code-Rmd", file_path = NULL, commit = F) {
@@ -50,7 +53,7 @@ generate_html <- function(dir = "code-Rmd", file_path = NULL, commit = F) {
     }
   }
 
-  temp_file <- base::gsub("/", "--", file_path)               # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
+  temp_file <- base::gsub("/", "--", base::gsub("\\\\", "--", file_path))  # change "/" and "\" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
   temp_file_path <- base::file.path("analysis", temp_file)    # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
   base::file.remove(base::file.path("analysis", dir(path = "analysis", pattern = ".*\\-\\-.*.Rmd")))  # ensure that there are no temporary .Rmd files in directory "analysis" otherwise you may receive message like following one after trying to run function wflow_git_commit(...): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
 
