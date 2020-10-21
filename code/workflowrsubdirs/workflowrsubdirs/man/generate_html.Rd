@@ -4,15 +4,15 @@
 \alias{generate_html}
 \title{Render .html files from their original .Rmd files stored in subdirectories}
 \usage{
-generate_html(dir = "codeRmd", file_path = NULL, commit = F)
+generate_html(dir = "code-Rmd", file_path = NULL, commit = F)
 }
 \arguments{
-\item{dir}{character (default: "codeRmd").
+\item{dir}{character (default: "code-Rmd").
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
 
 \item{file_path}{character (default: NULL).
 Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-Example when directories subPagesX are saved in folder dir = "codeRmd": file_path = c("subPages2/testPrint2.Rmd", "subPages3/testPrint3.Rmd")}
+Example when directories subPagesX are saved in folder dir = "code-Rmd": file_path = c("subPages2/testPrint2.Rmd", "subPages3/testPrint3.Rmd")}
 
 \item{commit}{character (default: FALSE).
 commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in directory "analysis").
@@ -44,7 +44,7 @@ Processed steps:
 \examples{
 \dontrun{
   generate_html()
-  generate_html("codeRmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
+  generate_html("code-Rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
 }
 }
 \keyword{subdirectory}

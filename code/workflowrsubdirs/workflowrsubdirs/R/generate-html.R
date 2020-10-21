@@ -11,12 +11,12 @@
 #'    - So the resulting .html files are associated with their original .Rmd files (temporary .Rmd files are simply product of a helping step).
 #' 6. Delete temporary .Rmd files from directory "analysis".
 #' @param dir
-#' character (default: "codeRmd").
+#' character (default: "code-Rmd").
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
 #' @param file_path
 #' character (default: NULL).
 #' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-#' Example when directories subPagesX are saved in folder dir = "codeRmd": file_path = c("subPages2/testPrint2.Rmd", "subPages3/testPrint3.Rmd")
+#' Example when directories subPagesX are saved in folder dir = "code-Rmd": file_path = c("subPages2/testPrint2.Rmd", "subPages3/testPrint3.Rmd")
 #' @param commit
 #' character (default: FALSE).
 #' commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in directory "analysis").
@@ -27,10 +27,10 @@
 #' @examples
 #' \dontrun{
 #'   generate_html()
-#'   generate_html("codeRmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
+#'   generate_html("code-Rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
 #' }
 
-generate_html <- function(dir = "codeRmd", file_path = NULL, commit = F) {
+generate_html <- function(dir = "code-Rmd", file_path = NULL, commit = F) {
   base::setwd(here::here())         # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
   if (base::is.null(file_path)) {
     file_path <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"

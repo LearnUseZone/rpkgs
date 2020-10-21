@@ -4,10 +4,10 @@
 \alias{generate_rmd}
 \title{Generate temporary .Rmd files}
 \usage{
-generate_rmd(dir = "codeRmd", file_path = NULL, temp_file = NULL)
+generate_rmd(dir = "code-Rmd", file_path = NULL, temp_file = NULL)
 }
 \arguments{
-\item{dir}{character (default: "codeRmd").
+\item{dir}{character (default: "code-Rmd").
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
 
 \item{file_path}{character (default: NULL).
@@ -26,7 +26,7 @@ These generated .Rmd files are meant to be temporary and they will be deleted at
 }
 \examples{
 \dontrun{
-  generate_rmd("codeRmd", "subPages1/testPrint1.Rmd", "subPages1--testPrint1.Rmd")
+  generate_rmd("code-Rmd", "subPages1/testPrint1.Rmd", "subPages1--testPrint1.Rmd")
 }
 }
 \keyword{subdirectory}

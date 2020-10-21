@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
   - Use workflowr if .Rmd files from directory "analysis" are rendered.
   - Use workflowrsubdirs if .Rmd files from subdirectories are rendered.
 - I suggest to create a new directory, for your .Rmd files saved in subdirectories, directly in your workflowr project's working directory (and not in directory "analysis").
-  - For example: create folder "codeRmd" in the same directory as folder "code".
+  - For example: create folder "code-Rmd" in the same directory as folder "code".
 
 
 
@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 - It's only used in generate_html().
 - @examples (file generate_rmd.R) are set to not run.
 - If you want to use devtools::check() also with checking @examples, then remember that this package is an extension of workflowr and in order to ensure that example not fails, it's needed
-  - to have the same structure of some folders (analysis, code, codeRmd, docs) as for workflowr, or
+  - to have the same structure of some folders (analysis, code, code-Rmd, docs) as for workflowr, or
   - to adjust code lines referencing to any path and it's not effective to do it only because of checking.
 
 #### generate_html()
@@ -79,8 +79,8 @@ knitr::opts_chunk$set(
 - If you have created a workflowr project, it's required to create .Rmd files in folder "analysis" in order to render them to .html files.
 - You can use directory "code" for codes that might not be appropriate to include in R Markdown format (e.g. for pre-processing the data, or for long-running code). You can have also subdirectories here.
 - If you want to have .Rmd files showing results of your .R files from folder "code", you have to create them in folder "analysis" if you want to use purely package workflowr.
-- If you like to have the same structure as .R files also for your .Rmd files, you can create a new folder, e.g. codeRmd, and create relevant subdirectories together with associated .Rmd files (these .Rmd files could be also in subdirectories of folder "code" but I think it could be less organized or clear).
-- Now, because you have .Rmd files in subdirectories under directory codeRmd, use this package workflowrsubdir to render .html files.
+- If you like to have the same structure as .R files also for your .Rmd files, you can create a new folder, e.g. code-Rmd, and create relevant subdirectories together with associated .Rmd files (these .Rmd files could be also in subdirectories of folder "code" but I think it could be less organized or clear).
+- Now, because you have .Rmd files in subdirectories under directory code-Rmd, use this package workflowrsubdir to render .html files.
 - As a real example, please feel free to look at structure of this [GitHub repository](https://github.com/LearnUseZone/workflowrSubfolders).
 - More about usage of workflowr folders is [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
 
@@ -89,7 +89,7 @@ knitr::opts_chunk$set(
 1. After workflowrsubdirs is installed, open your workflowr project (run .Rproj file).
 2. Use workflowrsubdirs::generate_html().
   - If you downloaded my [repository](https://github.com/LearnUseZone/workflowrSubfolders), then you can test it by running an example code that you can find also in help for function "generate_html()":
-workflowrsubdirs::generate_html("codeRmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
+workflowrsubdirs::generate_html("code-Rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
 3. Remember that although commit of temporary .Rmd files were made within function workflowrsubdirs::generate_html(), you still have to commit the rest of files.
 You can use for this purpose e.g.:
   - 3a. GitHub Desktop

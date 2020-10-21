@@ -3,7 +3,7 @@
 #' It generates .Rmd files from their original .Rmd files that are saved in subdirectories and saves them into directory "analysis".
 #' These generated .Rmd files are meant to be temporary and they will be deleted at the end of function \code{\link{generate_html}} after final .html files are rendered.
 #' @param dir
-#' character (default: "codeRmd").
+#' character (default: "code-Rmd").
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
 #' @param file_path
 #' character (default: NULL).
@@ -16,10 +16,10 @@
 #' @return <return>
 #' @examples
 #' \dontrun{
-#'   generate_rmd("codeRmd", "subPages1/testPrint1.Rmd", "subPages1--testPrint1.Rmd")
+#'   generate_rmd("code-Rmd", "subPages1/testPrint1.Rmd", "subPages1--testPrint1.Rmd")
 #' }
 
-generate_rmd <- function(dir = "codeRmd", file_path = NULL, temp_file = NULL) {
+generate_rmd <- function(dir = "code-Rmd", file_path = NULL, temp_file = NULL) {
   relPath <- base::file.path(".", dir, file_path)          # relative path to an original .Rmd file that will be rendered to .html file inside function wflow_build_dir(), "." is used for setting a correct path in parameter "child" of "r chunk" below
   base::cat(
     "---\n",

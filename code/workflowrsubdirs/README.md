@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-10-17 16:25 GMT+2
+Last update: 2020-10-21 19:07 GMT+2
 
   - [Purpose](#purpose)
       - [Briefly about package
@@ -29,7 +29,7 @@ Last update: 2020-10-17 16:25 GMT+2
   - I suggest to create a new directory, for your .Rmd files saved in
     subdirectories, directly in your workflowr project’s working
     directory (and not in directory “analysis”).
-      - For example: create folder “codeRmd” in the same directory as
+      - For example: create folder “code-Rmd” in the same directory as
         folder “code”.
 
 ### Briefly about package functions
@@ -54,7 +54,7 @@ Last update: 2020-10-17 16:25 GMT+2
     then remember that this package is an extension of workflowr and in
     order to ensure that example not fails, it’s needed
       - to have the same structure of some folders (analysis, code,
-        codeRmd, docs) as for workflowr, or
+        code-Rmd, docs) as for workflowr, or
       - to adjust code lines referencing to any path and it’s not
         effective to do it only because of checking.
 
@@ -130,12 +130,12 @@ Last update: 2020-10-17 16:25 GMT+2
     folder “code”, you have to create them in folder “analysis” if you
     want to use purely package workflowr.
   - If you like to have the same structure as .R files also for your
-    .Rmd files, you can create a new folder, e.g. codeRmd, and create
+    .Rmd files, you can create a new folder, e.g. code-Rmd, and create
     relevant subdirectories together with associated .Rmd files (these
     .Rmd files could be also in subdirectories of folder “code” but I
     think it could be less organized or clear).
   - Now, because you have .Rmd files in subdirectories under directory
-    codeRmd, use this package workflowrsubdir to render .html files.
+    code-Rmd, use this package workflowrsubdir to render .html files.
   - As a real example, please feel free to look at structure of this
     [GitHub
     repository](https://github.com/LearnUseZone/workflowrSubfolders).
@@ -154,7 +154,7 @@ Last update: 2020-10-17 16:25 GMT+2
     [repository](https://github.com/LearnUseZone/workflowrSubfolders),
     then you can test it by running an example code that you can find
     also in help for function “generate\_html()”:
-    workflowrsubdirs::generate\_html(“codeRmd”,
+    workflowrsubdirs::generate\_html(“code-Rmd”,
     c(“subPages1/testPrint1.Rmd”, “subPages2/testPrint2.Rmd”), T)
 
 <!-- end list -->
