@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-10-21 19:07 GMT+2
+Last update: 2020-10-22 16:33 GMT+2
 
   - [Purpose](#purpose)
       - [Briefly about package
@@ -89,6 +89,20 @@ Last update: 2020-10-21 19:07 GMT+2
           - “base::mapply(generate\_rmd, dir, file\_path, temp\_file)”
             is called inside function
             “workflowrsubdirs::generate\_html()”.
+  - Version 0.0.0.0300 contains possibility to use inline R code in YAML
+    header if .Rmd file is saved in a subdirectory
+      - Previously, one of generate\_rmd behavior was:
+        rmarkdown::yaml\_front\_matter(relPath) with relPath = (e.g.)
+        ./code-Rmd/\<file\_name.Rmd\> and YAML header part (in this .Rmd
+        file) date: “2020-10-22 16:33:48 +0200” returned following as
+        one item of a list ‘2020-10-22 16:33:48 +0200’ instead of
+        e.g. ‘2020-10-22 14:29:49 +0200’ In order to update previous
+        behavior, I’ve added several lines of code (all changes were
+        made in “generate\_html()”), among them knitr::knit(relPath,
+        \<file\_path\_to\_output\_file.Rmd\>) which firstly create a new
+        .Rmd file which is used in
+        yaml::as.yaml(rmarkdown::yaml\_front\_matter(\<file\_path\_to\_output\_file.Rmd\>)),
+        I’ve also added base::file.remove(temp\_file\_path).
 
 ## Installation
 

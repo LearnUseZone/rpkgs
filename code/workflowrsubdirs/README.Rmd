@@ -50,6 +50,18 @@ knitr::opts_chunk$set(
   Error in base::mapply(generate_rmd, dir, file_path, temp_file) : 
   zero-length inputs cannot be mixed with those of non-zero length
     - "base::mapply(generate_rmd, dir, file_path, temp_file)" is called inside function "workflowrsubdirs::generate_html()".
+- Version 0.0.0.0300 contains possibility to use inline R code in YAML header if .Rmd file is saved in a subdirectory
+  - Previously, one of generate_rmd behavior was:
+    rmarkdown::yaml_front_matter(relPath) with relPath = (e.g.) ./code-Rmd/<file_name.Rmd> and YAML header part (in this .Rmd file)
+    date:    "`r format (Sys.time(), format='%Y-%m-%d %H:%M:%S %z')`"
+    returned following as one item of a list
+    '`r format (Sys.time(), format='%Y-%m-%d %H:%M:%S %z')`'
+    instead of e.g. '2020-10-22 14:29:49 +0200'
+    In order to update previous behavior, I’ve added several lines of code (all changes were made in “generate_html()”), among them
+    knitr::knit(relPath, <file_path_to_output_file.Rmd>)
+    which firstly create a new .Rmd file which is used in yaml::as.yaml(rmarkdown::yaml_front_matter(<file_path_to_output_file.Rmd>)),
+    I’ve also added base::file.remove(temp_file_path).
+
 
 
 ## Installation
