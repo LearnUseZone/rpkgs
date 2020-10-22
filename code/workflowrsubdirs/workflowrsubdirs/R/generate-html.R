@@ -54,14 +54,18 @@ generate_html <- function(dir = "code-Rmd", file_path = NULL, commit = F) {
     }
   }
 
+  file_path_knitr <- sub(".Rmd", "_knitr.Rmd", file_path)     # work with file_path_knitr has to be after check of existence of file_path
+  knitr::knit(base::file.path(dir, file_path), base::file.path(dir, file_path_knitr))  # render file_path to file_path_knitr in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
+
   temp_file <- base::gsub("/", "--", file_path)  # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
   temp_file_path <- base::file.path("analysis", temp_file)    # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
   base::file.remove(base::file.path("analysis", dir(path = "analysis", pattern = ".*\\-\\-.*.Rmd")))  # ensure that there are no temporary .Rmd files in directory "analysis" otherwise you may receive message like following one after trying to run function wflow_git_commit(...): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
 
-  base::mapply(generate_rmd, dir, file_path, temp_file)       # generate temporary .Rmd files
+  base::mapply(generate_rmd, dir, file_path_knitr, temp_file)       # generate temporary .Rmd files
   if (commit == T) {
     workflowr::wflow_git_commit("analysis/*--*Rmd", "separate commit of temporary .Rmd files", all = T)
   }
   workflowr::wflow_build(temp_file_path)  # generate .html files from temporary .Rmd files
   base::file.remove(temp_file_path)       # delete temporary .Rmd files from directory "analysis"
+  base::file.remove(base::file.path(dir, file_path_knitr))  # delete file created using knitr::knit(); I will look at this file.path() and also other file.path() in this function generate_html() and also generate_rmd() and try to simplify them (delete uneccessary parts)???
 }

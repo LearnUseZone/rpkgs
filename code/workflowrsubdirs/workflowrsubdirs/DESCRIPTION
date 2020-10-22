@@ -1,7 +1,7 @@
 Package: workflowrsubdirs
 Type: Package
 Title: Extension of Package workflowr to Generate Web Pages from Subdirectories
-Version: 0.0.0.0210
+Version: 0.0.0.0300
 Authors@R: c(person("Peter", "Pisár", role = c("aut", "cre"), email = "learnusezone@gmail.com"))
 Description: Create web pages from .Rmd files saved in workflowr subdirectories.
 License: MIT + file LICENSE
@@ -10,4 +10,10 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: testthat
-Imports: base, here, rmarkdown, workflowr, yaml
+Imports: 
+    base,
+    here,
+    rmarkdown,
+    workflowr,
+    yaml,
+    knitr
