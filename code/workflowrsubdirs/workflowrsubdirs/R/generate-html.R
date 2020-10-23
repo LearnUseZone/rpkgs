@@ -49,8 +49,7 @@ generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
   else {
     for (iteration_path_Rmd in path_orig_Rmd) {
       dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
-      if (!base::file.exists(dir_path_Rmd))
-        stop(base::paste0("File doesn't exist: ", dir_path_Rmd))      # if a file doesn't exist a message is written and code stops
+      if (!base::file.exists(dir_path_Rmd)) stop(base::paste0("File doesn't exist: ", dir_path_Rmd))      # if a file doesn't exist a message is written and code stops
     }
   }
 
