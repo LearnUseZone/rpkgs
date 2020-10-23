@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-10-22 16:33 GMT+2
+Last update: 2020-10-23 20:35 GMT+2
 
   - [Purpose](#purpose)
       - [Briefly about package
@@ -20,30 +20,22 @@ Last update: 2020-10-22 16:33 GMT+2
 
   - It’s an optional extension of package
     [workflowr](https://github.com/jdblischak/workflowr) in order to be
-    able to render .html pages from .Rmd files saved in subdirectories
+    able to render .html pages from .Rmd files saved in sub-directories
     of a workflowr project.
       - Use workflowr if .Rmd files from directory “analysis” are
         rendered.
-      - Use workflowrsubdirs if .Rmd files from subdirectories are
+      - Use workflowrsubdirs if .Rmd files from sub-directories are
         rendered.
   - I suggest to create a new directory, for your .Rmd files saved in
-    subdirectories, directly in your workflowr project’s working
+    sub-directories, directly in your workflowr project’s working
     directory (and not in directory “analysis”).
       - For example: create folder “code-Rmd” in the same directory as
         folder “code”.
 
 ### Briefly about package functions
 
-  - As usually, information about implemented function can be found
-    using help (F1). Information below simply adds even more clarity.  
-  - The base logic of 2 main functions generate\_rmd() and
-    generate\_html() (see below) comes from
-    [here](https://github.com/jdblischak/workflowr/issues/95#issuecomment-360094662)
-    but then they are upgraded for a better consistency with package
-    workflowr.  
-  - [Here](https://github.com/jdblischak/workflowr/issues/220) can be
-    found my discussion of above mentioned upgrades with creator of
-    package workflowr.
+  - Following information adds more clarity to information accessible
+    using help (F1).
 
 #### generate\_rmd()
 
@@ -62,7 +54,7 @@ Last update: 2020-10-22 16:33 GMT+2
 
   - It can be called.
   - It manages process of rendering .html pages from .Rmd files from
-    subdirectories, so this is the only one function needed to be
+    sub-directories, so this is the only one function needed to be
     called.
   - Rendered .html files are again prepared in folder “docs” (for
     GitHub) or folder “public” (for GitLab). Each such file name
@@ -90,26 +82,29 @@ Last update: 2020-10-22 16:33 GMT+2
             is called inside function
             “workflowrsubdirs::generate\_html()”.
   - Version 0.0.0.0300 contains possibility to use inline R code in YAML
-    header if .Rmd file is saved in a subdirectory
-      - Previously, one of generate\_rmd behavior was:
+    header if .Rmd file is saved in a subdirectory.  
+      - Previously, one of generate\_rmd behavior was:  
         rmarkdown::yaml\_front\_matter(relPath) with relPath = (e.g.)
-        ./code-Rmd/\<file\_name.Rmd\> and YAML header part (in this .Rmd
-        file) date: “2020-10-22 16:33:48 +0200” returned following as
-        one item of a list ‘2020-10-22 16:33:48 +0200’ instead of
-        e.g. ‘2020-10-22 14:29:49 +0200’ In order to update previous
-        behavior, I’ve added several lines of code (all changes were
-        made in “generate\_html()”), among them knitr::knit(relPath,
-        \<file\_path\_to\_output\_file.Rmd\>) which firstly create a new
-        .Rmd file which is used in
-        yaml::as.yaml(rmarkdown::yaml\_front\_matter(\<file\_path\_to\_output\_file.Rmd\>)),
+        ./code-Rmd/\<file\_name.Rmd\> and following YAML header date
+        part of this \<file\_name.Rmd\>  
+        date:    "\`r format (Sys.time(), format=‘%Y-%m-%d %H:%M:%S
+        %z’)\`"  
+        returned following as one element of a list  
+        '\`r format (Sys.time(), format=‘%Y-%m-%d %H:%M:%S %z’)\`'  
+        instead of e.g. '2020-10-22 14:29:49 +0200'.
+      - In order to update previous behavior, I’ve added several lines
+        of code (all changes were made in “generate\_html()”), among
+        them knitr::knit(relPath, \<file\_path\_to\_output\_file.Rmd\>)
+        which firstly creates a new .Rmd file which is used in
+        yaml::as.yaml(rmarkdown::yaml\_front\_matter(\<file\_path\_to\_output\_file.Rmd\>)).  
         I’ve also added base::file.remove(temp\_file\_path).
 
 ## Installation
 
-  - Download file “workflowrsubdirs\_0.0.0.0200.tar.gz” from
-    [GitHub](https://github.com/LearnUseZone/workflowrSubfolders/tree/master/code).
-  - Run: install.packages(path\_to\_tar.gz\_file, repos = NULL,
-    type=“source”)
+  - Download .tar.gz file from [rpkgs
+    repository](https://github.com/LearnUseZone/rpkgs/tree/master/code/workflowrsubdirs).
+  - Run: install.packages(\<path\_to\_tar.gz\_file\>, repos = NULL, type
+    = “source”)
 
 ### If there are problems with installation
 
@@ -128,6 +123,7 @@ Last update: 2020-10-22 16:33 GMT+2
     following packages (their loading isn’t necessary):  
       - base
       - here
+      - knitr
       - rmarkdown
       - workflowr
       - yaml
@@ -139,20 +135,20 @@ Last update: 2020-10-22 16:33 GMT+2
     files.
   - You can use directory “code” for codes that might not be appropriate
     to include in R Markdown format (e.g. for pre-processing the data,
-    or for long-running code). You can have also subdirectories here.
+    or for long-running code). You can have also sub-directories here.
   - If you want to have .Rmd files showing results of your .R files from
     folder “code”, you have to create them in folder “analysis” if you
     want to use purely package workflowr.
   - If you like to have the same structure as .R files also for your
     .Rmd files, you can create a new folder, e.g. code-Rmd, and create
-    relevant subdirectories together with associated .Rmd files (these
-    .Rmd files could be also in subdirectories of folder “code” but I
+    relevant sub-directories together with associated .Rmd files (these
+    .Rmd files could be also in sub-directories of folder “code” but I
     think it could be less organized or clear).
-  - Now, because you have .Rmd files in subdirectories under directory
+  - Now, because you have .Rmd files in sub-directories under directory
     code-Rmd, use this package workflowrsubdir to render .html files.
-  - As a real example, please feel free to look at structure of this
-    [GitHub
-    repository](https://github.com/LearnUseZone/workflowrSubfolders).
+  - A real example with .Rmd files in sub-directories (under directory
+    codeRmd in this case) can be found
+    [here](https://github.com/LearnUseZone/workflowrSubfolders).
   - More about usage of workflowr folders is
     [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
 
@@ -207,3 +203,10 @@ Last update: 2020-10-22 16:33 GMT+2
     for example
       - some placeholders like “tests-generate\_rmd.R” and
       - notes for future improvements.
+  - Logic of functions generate\_rmd() and generate\_html() is inspired
+    by these
+    [comments](https://github.com/jdblischak/workflowr/issues/95) but
+    then they are upgraded e.g. for a better consistency with package
+    workflowr.  
+  - [Here](https://github.com/jdblischak/workflowr/issues/220) can be
+    found my discussion with a creator of package workflowr.
