@@ -58,7 +58,7 @@ knitr::opts_chunk$set(
   - In order to update previous behavior, I’ve added several lines of code (all changes were made in     “generate_html()”), among them
     knitr::knit(relPath, <file_path_to_output_file.Rmd>)
     which firstly creates a new .Rmd file which is used in yaml::as.yaml(rmarkdown::yaml_front_matter(<file_path_to_output_file.Rmd>)).\
-    I’ve also added base::file.remove(temp_file_path).
+    I’ve also added base::file.remove(base::file.path(dir, path_knitr_Rmd)).
 
 
 

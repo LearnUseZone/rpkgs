@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-10-23 20:35 GMT+2
+Last update: 2020-10-23 20:40 GMT+2
 
   - [Purpose](#purpose)
       - [Briefly about package
@@ -97,7 +97,8 @@ Last update: 2020-10-23 20:35 GMT+2
         them knitr::knit(relPath, \<file\_path\_to\_output\_file.Rmd\>)
         which firstly creates a new .Rmd file which is used in
         yaml::as.yaml(rmarkdown::yaml\_front\_matter(\<file\_path\_to\_output\_file.Rmd\>)).  
-        I’ve also added base::file.remove(temp\_file\_path).
+        I’ve also added base::file.remove(base::file.path(dir,
+        path\_knitr\_Rmd)).
 
 ## Installation
 
