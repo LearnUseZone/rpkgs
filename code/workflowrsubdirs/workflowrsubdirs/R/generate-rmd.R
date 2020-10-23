@@ -5,13 +5,13 @@
 #' @param dir
 #' character (default: "code-Rmd").
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
-#' @param file_path
+#' @param path_Rmd
 #' character (default: NULL).
-#' Path to an original .Rmd file saved in a dir or in a dir's subdirectory.
-#' @param temp_file
+#' Path to an original .Rmd file. Path ignores dir (see the 1st parameter).
+#' @param temp_name_Rmd
 #' character (default: NULL).
-#' Name ("--" is usually part of it's name) of a temporary .Rmd file that will be saved into directory "analysis".
-#' This temporary file is generated from its original Rmd file specified in path, then it will be deleted within generate.subdir.
+#' Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
+#' This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{generate_html}}.
 #' @keywords workflowr, subdirectory
 #' @return <return>
 #' @examples
@@ -19,21 +19,20 @@
 #'   generate_rmd("code-Rmd", "subPages1/testPrint1.Rmd", "subPages1--testPrint1.Rmd")
 #' }
 
-generate_rmd <- function(dir = "code-Rmd", file_path = NULL, temp_file = NULL) {
-  relPath <- base::file.path(".", dir, file_path)          # relative path to an original .Rmd file that will be rendered to .html file inside function wflow_build_dir(), "." is used for setting a correct path in parameter "child" of "r chunk" below
+generate_rmd <- function(dir = "code-Rmd", path_Rmd = NULL, temp_name_Rmd = NULL) {
+  relPath <- base::file.path(".", dir, path_Rmd)          # relative path to an original .Rmd file that will be rendered to .html file inside function wflow_build_dir(), "." is used for setting a correct path in parameter "child" of "r chunk" below
   base::cat(
     "---\n",
     yaml::as.yaml(rmarkdown::yaml_front_matter(relPath)),  # YAML header from an original .Rmd file
     "---\n\n",
-    "**Source file:** ", base::file.path(dir, file_path),  # link to original .Rmd file from workflowr subdirectory
+    "**Source file:** ", base::file.path(dir, path_Rmd),  # link to original .Rmd file from workflowr subdirectory
     "\n\n",
 
     # r chunk code (not YAML header)
     "```{r child = base::file.path(knitr::opts_knit$get(\"output.dir\"), \".", relPath, "\")}\n```",  # [lit 4]; ...\".",... - this dot is REQUIRED here because knitr::opts_knit$get(\"output.dir\") returns "analysis" as output directory in this case so "child" parameter of "r chunk" has to firstly go one directory up (relPath starts with "./")
 
-    file = base::file.path("analysis", temp_file),  # a name of file that will be created
+    file = base::file.path("analysis", temp_name_Rmd),  # a name of file that will be created
     sep = "",
     append = F                                      # overwrite a content of a file
   )
 }
-

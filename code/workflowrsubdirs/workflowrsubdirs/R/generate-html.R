@@ -13,7 +13,7 @@
 #' @param dir
 #' character (default: "code-Rmd").
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
-#' @param file_path
+#' @param path_orig_Rmd
 #' character (default: NULL).
 #' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
 #' Example when directories subPagesX are saved in directory dir = "code-Rmd":
@@ -33,11 +33,11 @@
 #'   generate_html("code-Rmd", c("subPages1\\testPrint1.Rmd", "subPages2\\testPrint2.Rmd"), F)
 #' }
 
-generate_html <- function(dir = "code-Rmd", file_path = NULL, commit = F) {
+generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
   base::setwd(here::here())         # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
-  file_path <- base::gsub("\\\\", "/", file_path)  # it has to be here - instead of temp_file <- base::gsub("/", "--", base::gsub("\\\\", "--", file_path)) - because otherwise there's message  Error: callr subprocess failed: '\m' is an unrecognized escape in character string starting ""../code-Rmd/eToro\m" after running "workflowr::wflow_build(temp_file_path)" even though temp_file_path doesn't contain any backslash - I think, based on Traceback, that it's because any of variables in environment contains backslash
-  if (base::is.null(file_path)) {
-    file_path <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"
+  path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # it has to be here - instead of temp_name_Rmd <- base::gsub("/", "--", base::gsub("\\\\", "--", path_orig_Rmd)) - because otherwise there's message  Error: callr subprocess failed: '\m' is an unrecognized escape in character string starting ""../code-Rmd/eToro\m" after running "workflowr::wflow_build(analysis_Rmd)" even though analysis_Rmd doesn't contain any backslash - I think, based on Traceback, that it's because any of variables in environment contains backslash
+  if (base::is.null(path_orig_Rmd)) {
+    path_orig_Rmd <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"
       dir,
       recursive = T,
       include.dirs = T,
@@ -47,25 +47,25 @@ generate_html <- function(dir = "code-Rmd", file_path = NULL, commit = F) {
 
   # check existence of files manually specified in variable "files"
   else {
-    for (file in file_path) {
-      path <- base::file.path(dir, file)
-      if (!base::file.exists(path))
-        stop(base::paste0("File doesn't exist: ", path))      # if a file doesn't exist a message is written and code stops
+    for (iteration_path_Rmd in path_orig_Rmd) {
+      dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
+      if (!base::file.exists(dir_path_Rmd))
+        stop(base::paste0("File doesn't exist: ", dir_path_Rmd))      # if a file doesn't exist a message is written and code stops
     }
   }
 
-  file_path_knitr <- sub(".Rmd", "_knitr.Rmd", file_path)     # work with file_path_knitr has to be after check of existence of file_path
-  knitr::knit(base::file.path(dir, file_path), base::file.path(dir, file_path_knitr))  # render file_path to file_path_knitr in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
+  path_knitr_Rmd <- sub(".Rmd", "_knitr.Rmd", path_orig_Rmd)     # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
+  knitr::knit(base::file.path(dir, path_orig_Rmd), base::file.path(dir, path_knitr_Rmd))  # render path_orig_Rmd to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
 
-  temp_file <- base::gsub("/", "--", file_path)  # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
-  temp_file_path <- base::file.path("analysis", temp_file)    # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
+  temp_name_Rmd <- base::gsub("/", "--", path_orig_Rmd)  # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
+  analysis_Rmd <- base::file.path("analysis", temp_name_Rmd)    # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
   base::file.remove(base::file.path("analysis", dir(path = "analysis", pattern = ".*\\-\\-.*.Rmd")))  # ensure that there are no temporary .Rmd files in directory "analysis" otherwise you may receive message like following one after trying to run function wflow_git_commit(...): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
 
-  base::mapply(generate_rmd, dir, file_path_knitr, temp_file)       # generate temporary .Rmd files
+  base::mapply(generate_rmd, dir, path_knitr_Rmd, temp_name_Rmd)       # generate temporary .Rmd files
   if (commit == T) {
     workflowr::wflow_git_commit("analysis/*--*Rmd", "separate commit of temporary .Rmd files", all = T)
   }
-  workflowr::wflow_build(temp_file_path)  # generate .html files from temporary .Rmd files
-  base::file.remove(temp_file_path)       # delete temporary .Rmd files from directory "analysis"
-  base::file.remove(base::file.path(dir, file_path_knitr))  # delete file created using knitr::knit(); I will look at this file.path() and also other file.path() in this function generate_html() and also generate_rmd() and try to simplify them (delete uneccessary parts)???
+  workflowr::wflow_build(analysis_Rmd)  # generate .html files from temporary .Rmd files
+  base::file.remove(analysis_Rmd)       # delete temporary .Rmd files from directory "analysis"
+  base::file.remove(base::file.path(dir, path_knitr_Rmd))  # delete file created using knitr::knit(); I will look at this file.path() and also other file.path() in this function generate_html() and also generate_rmd() and try to simplify them (delete uneccessary parts)???
 }
