@@ -63,15 +63,23 @@ knitr::opts_chunk$set(
 
 
 ## Installation
-- Download .tar.gz file from [rpkgs repository](https://github.com/LearnUseZone/rpkgs/tree/master/code/workflowrsubdirs).
-- Run: install.packages(<path_to_tar.gz_file>, repos = NULL, type = "source")
+- Option 1
+  - Clone this Git [rpkgs repository](https://github.com/LearnUseZone/rpkgs).
+  - Open rpkgs/code/workflowrsubdirs/workflowrsubdirs/workflowrsubdirs.Rproj in RStudio.
+  - Build (from top menu) -> Install and Restart (Ctrl+Shift+B)
 
-### If there are problems with installation
-- Try following steps if the package weren't installed successfully:\
+- Option 2
+  - Do steps from Option 1 until opening .Rproj in RStudio in Option 1 (include also this step)
+  - Build (from top menu) -> Build Source Package -> wait until .tar.gz file is created.
+  - Run R code: install.packages(<path_to_tar.gz_file>, repos = NULL, type = "source")
+
+### Try following steps if the package weren't installed successfully:\
   1. Check if the package is in RStudio “Packages” tab and if yes, uninstall it.
   2. Check if folder "workflowrsubdirs" exists within folder “library” with your installed R packages and if it exists, delete it.
-  3. Restart R session e.g. by RStudio -> Session -> Restart R.
-  4. Install the package again using install.packages().
+  3. Restart R session e.g. using RStudio -> Session -> Restart R.
+  4. Install the package again using\
+    a) Install and Restart (Ctrl+Shift+B) or\
+    b) install.packages(<path_to_tar.gz_file>, repos = NULL, type = \"source\").
 
 
 

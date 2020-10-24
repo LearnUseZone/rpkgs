@@ -1,14 +1,15 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-10-23 20:40 GMT+2
+Last update: 2020-10-24 08:43 GMT+2
 
   - [Purpose](#purpose)
       - [Briefly about package
         functions](#briefly-about-package-functions)
   - [Installation](#installation)
-      - [If there are problems with
-        installation](#if-there-are-problems-with-installation)
+      - [Try following steps if the package weren’t installed
+        successfully:  
+        ](#try-following-steps-if-the-package-werent-installed-successfully)
   - [Needed packages](#needed-packages)
   - [Example](#example)
       - [Usage of workflowrsubdirs after it’s installed from the source
@@ -102,21 +103,32 @@ Last update: 2020-10-23 20:40 GMT+2
 
 ## Installation
 
-  - Download .tar.gz file from [rpkgs
-    repository](https://github.com/LearnUseZone/rpkgs/tree/master/code/workflowrsubdirs).
-  - Run: install.packages(\<path\_to\_tar.gz\_file\>, repos = NULL, type
-    = “source”)
+  - Option 1
+      - Clone this Git [rpkgs
+        repository](https://github.com/LearnUseZone/rpkgs).
+      - Open
+        rpkgs/code/workflowrsubdirs/workflowrsubdirs/workflowrsubdirs.Rproj
+        in RStudio.
+      - Build (from top menu) -\> Install and Restart (Ctrl+Shift+B)
+  - Option 2
+      - Do steps from Option 1 until opening .Rproj in RStudio in Option
+        1 (include also this step)
+      - Build (from top menu) -\> Build Source Package -\> wait until
+        .tar.gz file is created.
+      - Run R code: install.packages(\<path\_to\_tar.gz\_file\>, repos =
+        NULL, type = “source”)
 
-### If there are problems with installation
+### Try following steps if the package weren’t installed successfully:  
 
-  - Try following steps if the package weren’t installed successfully:  
-    1.  Check if the package is in RStudio “Packages” tab and if yes,
-        uninstall it.
-    2.  Check if folder “workflowrsubdirs” exists within folder
-        “library” with your installed R packages and if it exists,
-        delete it.
-    3.  Restart R session e.g. by RStudio -\> Session -\> Restart R.
-    4.  Install the package again using install.packages().
+1.  Check if the package is in RStudio “Packages” tab and if yes,
+    uninstall it.
+2.  Check if folder “workflowrsubdirs” exists within folder “library”
+    with your installed R packages and if it exists, delete it.
+3.  Restart R session e.g. using RStudio -\> Session -\> Restart R.
+4.  Install the package again using  
+    a) Install and Restart (Ctrl+Shift+B) or  
+    b) install.packages(\<path\_to\_tar.gz\_file\>, repos = NULL, type =
+    "source").
 
 ## Needed packages
 
