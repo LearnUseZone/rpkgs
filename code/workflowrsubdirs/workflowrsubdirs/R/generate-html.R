@@ -34,11 +34,10 @@
 #' }
 
 generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
-  # initial checks
-  if (base::length(dir) > 1) stop(base::paste0("Only one directory can be defined in parameter dir."))
-  if (!base::file.exists(dir)) stop(base::paste0("Directory ", dir, " doesn't exist in main workflowr directory."))
+  base::setwd(here::here())           # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
+  initial_checks(dir, path_orig_Rmd)  # has to be after base::setwd(here::here()) in order to be sure that checks start in main workflowr directory
 
-  base::setwd(here::here())         # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
+  # create a list of files
   if (base::is.null(path_orig_Rmd)) {
     path_orig_Rmd <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"
       dir,
@@ -46,15 +45,6 @@ generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
       include.dirs = T,
       pattern = "./*.(r|R)md"
     )
-  }
-
-  # check existence of files manually specified in variable "files"
-  else {
-    path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # see explanation in "Notes" at the end of this function
-    for (iteration_path_Rmd in path_orig_Rmd) {
-      dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
-      if (!base::file.exists(dir_path_Rmd)) stop(base::paste0("File doesn't exist: ", dir_path_Rmd))      # if a file doesn't exist a message is written and code stops
-    }
   }
 
   path_knitr_Rmd <- sub(".Rmd", "_knitr.Rmd", path_orig_Rmd)     # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
