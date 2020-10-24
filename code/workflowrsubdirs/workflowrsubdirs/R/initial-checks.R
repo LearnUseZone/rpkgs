@@ -25,11 +25,13 @@ initial_checks <- function(dir = "code-Rmd", path_orig_Rmd = NULL) {
   }
 
   # check existence of files manually defined in variable "files"
-  if (!base::is.null(path_orig_Rmd)) {
-    path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # see explanation in "Notes" at the end of this function
-    for (iteration_path_Rmd in path_orig_Rmd) {
-      dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
-      if (!base::file.exists(dir_path_Rmd)) stop(base::paste0("File doesn't exist: ", dir_path_Rmd))      # if a file doesn't exist a message is written and code stops
+  if (!base::is.null(path_orig_Rmd)) {  # don't use "&" with following "if" otherwise error "argument is of length zero" arises
+    if (base::substr(path_orig_Rmd, nchar(path_orig_Rmd) - 7, nchar(path_orig_Rmd)) != ".(R|r)md") {
+      path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # see explanation in "Notes" at the end of this function
+      for (iteration_path_Rmd in path_orig_Rmd) {
+        dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
+        if (!base::file.exists(dir_path_Rmd)) stop(base::paste0("File doesn't exist: ", dir_path_Rmd))      # if a file doesn't exist a message is written and code stops
+      }
     }
-  }
+  }  # if (!base::is.null(path_orig_Rmd))
 }

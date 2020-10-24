@@ -37,15 +37,19 @@ generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
   base::setwd(here::here())           # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
   initial_checks(dir, path_orig_Rmd)  # has to be after base::setwd(here::here()) in order to be sure that checks start in main workflowr directory
 
+
+  if (base::is.null(path_orig_Rmd)) path_orig_Rmd = "/*.(R|r)md"
+
   # create a list of files
-  if (base::is.null(path_orig_Rmd)) {
-    path_orig_Rmd <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"
-      dir,
-      recursive = T,
-      include.dirs = T,
-      pattern = "./*.(r|R)md"
-    )
-  }
+  # if (base::is.null(path_orig_Rmd)) {
+  path_orig_Rmd <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"
+    dir,
+    recursive = T,
+    include.dirs = T,
+    pattern = path_orig_Rmd  # e.g. "./*.(r|R)md" (quotation marks included) : get all .Rmd and .rmd files from directory defined in dir and also any subdirectories (thanks to recursive = T) of this directory
+  ) # temporary comment: pattern	- an optional regular expression. Only file names which match the regular expression will be returned.
+  # }
+
 
   path_knitr_Rmd <- sub(".Rmd", "_knitr.Rmd", path_orig_Rmd)     # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
   base::mapply(knitr::knit, base::file.path(dir, path_orig_Rmd), base::file.path(dir, path_knitr_Rmd))  # render path_orig_Rmd to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
