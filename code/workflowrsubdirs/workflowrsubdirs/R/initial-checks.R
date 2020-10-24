@@ -20,6 +20,9 @@
 initial_checks <- function(dir = "code-Rmd", path_orig_Rmd = NULL) {
   if (base::length(dir) > 1) stop(base::paste0("Only one directory can be defined in parameter dir."))
   if (!base::file.exists(dir)) stop(base::paste0("Directory ", dir, " doesn't exist in main workflowr directory."))
+  if (dir %in% c("analysis", "code", "data", "output", "public")) {
+    stop(base::paste0("Choose other than default workflowr directory."))
+  }
 
   # check existence of files manually specified in variable "files"
   if (!base::is.null(path_orig_Rmd)) {
