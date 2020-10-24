@@ -38,6 +38,9 @@ knitr::opts_chunk$set(
   - to have the same structure of some folders (analysis, code, code-Rmd, docs) as for workflowr, or
   - to adjust code lines referencing to any path and it's not effective to do it only because of checking.
 
+#### initial_checks()
+- It cannot be called.
+
 #### generate_html()
 - It can be called.
 - It manages process of rendering .html pages from .Rmd files from subdirectories, so this is the only one function needed to be called.

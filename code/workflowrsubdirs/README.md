@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-10-24 08:43 GMT+2
+Last update: 2020-10-24 19:54 GMT+2
 
   - [Purpose](#purpose)
       - [Briefly about package
@@ -21,14 +21,14 @@ Last update: 2020-10-24 08:43 GMT+2
 
   - It’s an optional extension of package
     [workflowr](https://github.com/jdblischak/workflowr) in order to be
-    able to render .html pages from .Rmd files saved in sub-directories
+    able to render .html pages from .Rmd files saved in subdirectories
     of a workflowr project.
       - Use workflowr if .Rmd files from directory “analysis” are
         rendered.
-      - Use workflowrsubdirs if .Rmd files from sub-directories are
+      - Use workflowrsubdirs if .Rmd files from subdirectories are
         rendered.
   - I suggest to create a new directory, for your .Rmd files saved in
-    sub-directories, directly in your workflowr project’s working
+    subdirectories, directly in your workflowr project’s working
     directory (and not in directory “analysis”).
       - For example: create folder “code-Rmd” in the same directory as
         folder “code”.
@@ -51,11 +51,15 @@ Last update: 2020-10-24 08:43 GMT+2
       - to adjust code lines referencing to any path and it’s not
         effective to do it only because of checking.
 
+#### initial\_checks()
+
+  - It cannot be called.
+
 #### generate\_html()
 
   - It can be called.
   - It manages process of rendering .html pages from .Rmd files from
-    sub-directories, so this is the only one function needed to be
+    subdirectories, so this is the only one function needed to be
     called.
   - Rendered .html files are again prepared in folder “docs” (for
     GitHub) or folder “public” (for GitLab). Each such file name
@@ -148,18 +152,18 @@ Last update: 2020-10-24 08:43 GMT+2
     files.
   - You can use directory “code” for codes that might not be appropriate
     to include in R Markdown format (e.g. for pre-processing the data,
-    or for long-running code). You can have also sub-directories here.
+    or for long-running code). You can have also subdirectories here.
   - If you want to have .Rmd files showing results of your .R files from
     folder “code”, you have to create them in folder “analysis” if you
     want to use purely package workflowr.
   - If you like to have the same structure as .R files also for your
     .Rmd files, you can create a new folder, e.g. code-Rmd, and create
-    relevant sub-directories together with associated .Rmd files (these
-    .Rmd files could be also in sub-directories of folder “code” but I
+    relevant subdirectories together with associated .Rmd files (these
+    .Rmd files could be also in subdirectories of folder “code” but I
     think it could be less organized or clear).
-  - Now, because you have .Rmd files in sub-directories under directory
+  - Now, because you have .Rmd files in subdirectories under directory
     code-Rmd, use this package workflowrsubdir to render .html files.
-  - A real example with .Rmd files in sub-directories (under directory
+  - A real example with .Rmd files in subdirectories (under directory
     codeRmd in this case) can be found
     [here](https://github.com/LearnUseZone/workflowrSubfolders).
   - More about usage of workflowr folders is
