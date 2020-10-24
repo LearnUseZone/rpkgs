@@ -18,7 +18,7 @@ Name ("--" is usually part of it's name) of a temporary .Rmd file that will be t
 This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{generate_html}}.}
 }
 \value{
-<return>
+Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used to generate final .html file.
 }
 \description{
 It generates .Rmd files from their original .Rmd files that are saved in subdirectories and saves them into directory "analysis".

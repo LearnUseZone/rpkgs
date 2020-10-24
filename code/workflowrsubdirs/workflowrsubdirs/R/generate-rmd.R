@@ -13,7 +13,7 @@
 #' Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
 #' This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{generate_html}}.
 #' @keywords workflowr, subdirectory
-#' @return <return>
+#' @return Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used to generate final .html file.
 #' @examples
 #' \dontrun{
 #'   generate_rmd("code-Rmd", "subPages1/testPrint1.Rmd", "subPages1--testPrint1.Rmd")

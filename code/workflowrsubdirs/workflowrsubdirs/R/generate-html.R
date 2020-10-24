@@ -24,7 +24,7 @@
 #' commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in directory "analysis").
 #' Suggestion: Use commit = TRUE only after your original .Rmd files saved in subdirectories are tested properly and so are completely ready, otherwise you could have pointlessly many commits.
 #' @keywords workflowr, subdirectory
-#' @return <return>
+#' @return Final .html file from its original .Rmd file saved in a subdirectory.
 #' @export generate_html
 #' @examples
 #' \dontrun{

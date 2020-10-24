@@ -21,7 +21,7 @@ commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved
 Suggestion: Use commit = TRUE only after your original .Rmd files saved in subdirectories are tested properly and so are completely ready, otherwise you could have pointlessly many commits.}
 }
 \value{
-<return>
+Final .html file from its original .Rmd file saved in a subdirectory.
 }
 \description{
 Similarly as for workflowr package, when specifying path to directories or files in function generate_html(), you can start by typing directory name, so for example, you can write "analysis" instead of "./analysis".
