@@ -34,7 +34,9 @@
 #' }
 
 generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
-  if (!base::file.exists(dir)) stop(base::paste0("Directory ", dir, " doesn't exist, check if it's a typo and update it."))
+  # initial checks
+  if (base::length(dir) > 1) stop(base::paste0("Only one directory can be defined in parameter dir."))
+  if (!base::file.exists(dir)) stop(base::paste0("Directory ", dir, " doesn't exist in main workflowr directory."))
 
   base::setwd(here::here())         # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
   if (base::is.null(path_orig_Rmd)) {
