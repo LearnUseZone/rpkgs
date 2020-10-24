@@ -24,7 +24,7 @@ initial_checks <- function(dir = "code-Rmd", path_orig_Rmd = NULL) {
     stop(base::paste0("Choose other than default workflowr directory."))
   }
 
-  # check existence of files manually specified in variable "files"
+  # check existence of files manually defined in variable "files"
   if (!base::is.null(path_orig_Rmd)) {
     path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # see explanation in "Notes" at the end of this function
     for (iteration_path_Rmd in path_orig_Rmd) {
