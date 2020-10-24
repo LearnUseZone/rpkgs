@@ -34,6 +34,8 @@
 #' }
 
 generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
+  if (!base::file.exists(dir)) stop(base::paste0("Directory ", dir, " doesn't exist, check if it's a typo and update it."))
+
   base::setwd(here::here())         # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
   if (base::is.null(path_orig_Rmd)) {
     path_orig_Rmd <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"
