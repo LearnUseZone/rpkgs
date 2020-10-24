@@ -35,7 +35,7 @@
 
 generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
   base::setwd(here::here())         # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
-  path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # it has to be here - instead of temp_name_Rmd <- base::gsub("/", "--", base::gsub("\\\\", "--", path_orig_Rmd)) - because otherwise there's message  Error: callr subprocess failed: '\m' is an unrecognized escape in character string starting ""../code-Rmd/eToro\m" after running "workflowr::wflow_build(analysis_Rmd)" even though analysis_Rmd doesn't contain any backslash - I think, based on Traceback, that it's because any of variables in environment contains backslash
+  path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # see explanation in "Notes" at the end of this function
   if (base::is.null(path_orig_Rmd)) {
     path_orig_Rmd <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"
       dir,
@@ -67,4 +67,12 @@ generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
   workflowr::wflow_build(analysis_Rmd)  # generate .html files from temporary .Rmd files
   base::file.remove(analysis_Rmd)       # delete temporary .Rmd files from directory "analysis"
   base::file.remove(base::file.path(dir, path_knitr_Rmd))  # delete file created using knitr::knit(); I will look at this file.path() and also other file.path() in this function generate_html() and also generate_rmd() and try to simplify them (delete uneccessary parts)???
+
+# Notes
+# Explanation for usage of (Option 1): path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)
+#   Option 2 would be to add to generate_rmd() following code:
+#     rel_path <- sub("\\\\", "\\\\\\\\", rel_path) # "\\\\\\\\" will be written as "\\" in generated .Rmd file, if I keep only "\\\\" then there's only "\" in generated .Rmd file which wouldn't work correctly
+#   plus in generate_html(), replace temp_name_Rmd <- base::gsub("/", "--", path_orig_Rmd) for
+#     temp_name_Rmd <- base::gsub("\\\\", "--", base::gsub("/", "--", path_orig_Rmd))
+#   Goal of both options is to ensure that temporary .Rmd file will contain "/" or "\\" in path to a relevant temporary (knitr) .Rmd file defined in r chunk code created in function base::cat() used in function generate_rmd().
 }
