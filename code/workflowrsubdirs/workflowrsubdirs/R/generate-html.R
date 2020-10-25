@@ -13,6 +13,8 @@
 #' @param dir
 #' character (default: "code-Rmd").
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
+#' @param only_subdirs
+#' I will add a description later.
 #' @param path_orig_Rmd
 #' character (default: NULL).
 #' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
@@ -33,26 +35,35 @@
 #'   generate_html("code-Rmd", c("subPages1\\testPrint1.Rmd", "subPages2\\testPrint2.Rmd"), F)
 #' }
 
-generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
+generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd = NULL, commit = F) {
   base::setwd(here::here())           # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
-  initial_checks(dir, path_orig_Rmd)  # has to be after base::setwd(here::here()) in order to be sure that checks start in main workflowr directory
+  initial_checks(dir, only_subdirs, path_orig_Rmd)  # has to be after base::setwd(here::here()) in order to be sure that checks start in main workflowr directory
 
-
+  # initial settings for NULL values
   if (base::is.null(path_orig_Rmd)) path_orig_Rmd = "/*.(R|r)md"
+  if (!base::is.null(only_subdirs)) {  # only_subdirs contains at least one subdirectory name
+    lf_recursive <- F  # listing will not recurse into directories
+    lf_dir <- file.path(dir, only_subdirs)      # lf = abbreviation for list_files
+  } else {
+    lf_recursive <- T
+    lf_dir <- dir
+  }
 
-  # create a list of files
-  # if (base::is.null(path_orig_Rmd)) {
-  path_orig_Rmd <- base::list.files(  # generate paths (not only file names) to .Rmd files in subdirectories under directory in parameter "dir"
-    dir,
-    recursive = T,
-    include.dirs = T,
-    pattern = path_orig_Rmd  # e.g. "./*.(r|R)md" (quotation marks included) : get all .Rmd and .rmd files from directory defined in dir and also any subdirectories (thanks to recursive = T) of this directory
-  ) # temporary comment: pattern	- an optional regular expression. Only file names which match the regular expression will be returned.
-  # }
+  # create (return) a list of visible (all.files = FALSE) files
+  path_orig_Rmd <- mapply(
+    base::list.files,
+    path = lf_dir,
+    full.names = T,      # example of full name: code-Rmd/eToro/testToDelete.Rmd so base::file.path(dir, path_knitr_Rmd) can be deleted???
+    recursive = lf_recursive,
+    # include.dirs = F,  # T would mean that if a subdirectory match the pattern, then it's included in path_orig_Rmd
+    pattern = path_orig_Rmd
+  )
 
-
-  path_knitr_Rmd <- sub(".Rmd", "_knitr.Rmd", path_orig_Rmd)     # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
-  base::mapply(knitr::knit, base::file.path(dir, path_orig_Rmd), base::file.path(dir, path_knitr_Rmd))  # render path_orig_Rmd to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
+  # escape dot https://stackoverflow.com/questions/6638072/escaped-periods-in-r-regular-expressions
+  # update checks in initial_checks() in a way that a directory cannot contain text .Rmd???
+  path_knitr_Rmd <- sub("\\.Rmd", "_knitr.Rmd", path_orig_Rmd)     # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
+  # base::file.path(dir, path_knitr_Rmd) can be deleted because I've set full.names = T???
+  base::mapply(knitr::knit, path_orig_Rmd, path_knitr_Rmd)  # render path_orig_Rmd to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
 
   temp_name_Rmd <- base::gsub("/", "--", path_orig_Rmd)  # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
   analysis_Rmd <- base::file.path("analysis", temp_name_Rmd)    # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
@@ -64,13 +75,13 @@ generate_html <- function(dir = "code-Rmd", path_orig_Rmd = NULL, commit = F) {
   }
   workflowr::wflow_build(analysis_Rmd)  # generate .html files from temporary .Rmd files
   base::file.remove(analysis_Rmd)       # delete temporary .Rmd files from directory "analysis"
-  base::file.remove(base::file.path(dir, path_knitr_Rmd))  # delete file created using knitr::knit(); I will look at this file.path() and also other file.path() in this function generate_html() and also generate_rmd() and try to simplify them (delete uneccessary parts)???
+  base::file.remove(path_knitr_Rmd)  # delete file created using knitr::knit(); I will look at this file.path() and also other file.path() in this function generate_html() and also generate_rmd() and try to simplify them (delete uneccessary parts)???
 
-# Notes
-# Explanation for usage of (Option 1): path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)
-#   Option 2 would be to add to generate_rmd() following code:
-#     rel_path <- sub("\\\\", "\\\\\\\\", rel_path) # "\\\\\\\\" will be written as "\\" in generated .Rmd file, if I keep only "\\\\" then there's only "\" in generated .Rmd file which wouldn't work correctly
-#   plus in generate_html(), replace temp_name_Rmd <- base::gsub("/", "--", path_orig_Rmd) for
-#     temp_name_Rmd <- base::gsub("\\\\", "--", base::gsub("/", "--", path_orig_Rmd))
-#   Goal of both options is to ensure that temporary .Rmd file will contain "/" or "\\" in path to a relevant temporary (knitr) .Rmd file defined in r chunk code created in function base::cat() used in function generate_rmd().
+  # Notes
+  # Explanation for usage of (Option 1): path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)
+  #   Option 2 would be to add to generate_rmd() following code:
+  #     rel_path <- sub("\\\\", "\\\\\\\\", rel_path) # "\\\\\\\\" will be written as "\\" in generated .Rmd file, if I keep only "\\\\" then there's only "\" in generated .Rmd file which wouldn't work correctly
+  #   plus in generate_html(), replace temp_name_Rmd <- base::gsub("/", "--", path_orig_Rmd) for
+  #     temp_name_Rmd <- base::gsub("\\\\", "--", base::gsub("/", "--", path_orig_Rmd))
+  #   Goal of both options is to ensure that temporary .Rmd file will contain "/" or "\\" in path to a relevant temporary (knitr) .Rmd file defined in r chunk code created in function base::cat() used in function generate_rmd().
 }

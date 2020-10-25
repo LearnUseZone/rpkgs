@@ -20,12 +20,12 @@
 #' }
 
 generate_rmd <- function(dir = "code-Rmd", path_Rmd = NULL, temp_name_Rmd = NULL) {
-  rel_path <- base::file.path(".", dir, path_Rmd)          # relative path to an original .Rmd file that will be rendered to .html file inside function wflow_build_dir(), "." is used for setting a correct path in parameter "child" of "r chunk" below
+  rel_path <- base::file.path(".", path_Rmd)          # relative path to an original .Rmd file that will be rendered to .html file inside function wflow_build_dir(), "." is used for setting a correct path in parameter "child" of "r chunk" below
   base::cat(
     "---\n",
     yaml::as.yaml(rmarkdown::yaml_front_matter(rel_path)),  # YAML header from an original .Rmd file
     "---\n\n",
-    "**Source file:** ", base::file.path(dir, path_Rmd),  # link to original .Rmd file from workflowr subdirectory
+    "**Source file:** ", path_Rmd,  # link to original .Rmd file from workflowr subdirectory
     "\n\n",
 
     # r chunk code (not YAML header)

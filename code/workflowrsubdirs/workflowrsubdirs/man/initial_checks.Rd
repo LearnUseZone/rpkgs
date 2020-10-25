@@ -4,11 +4,13 @@
 \alias{initial_checks}
 \title{Check if rendering .html files from .Rmd files from subdirectories is possible}
 \usage{
-initial_checks(dir = "code-Rmd", path_orig_Rmd = NULL)
+initial_checks(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd = NULL)
 }
 \arguments{
 \item{dir}{character (default: "code-Rmd").
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
+
+\item{only_subdirs}{I will add a description later.}
 
 \item{path_orig_Rmd}{character (default: NULL).
 Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
