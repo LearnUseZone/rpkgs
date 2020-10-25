@@ -20,19 +20,24 @@
 #' }
 
 generate_rmd <- function(dir = "code-Rmd", path_Rmd = NULL, temp_name_Rmd = NULL) {
-  rel_path <- base::file.path(".", path_Rmd)          # relative path to an original .Rmd file that will be rendered to .html file inside function wflow_build_dir(), "." is used for setting a correct path in parameter "child" of "r chunk" below
+  rel_path <- base::file.path(".", path_Rmd)  # relative path to an original .Rmd file that will be rendered to .html file inside function wflow_build_dir(), "." is used for setting a correct path in parameter "child" of "r chunk" below
   base::cat(
     "---\n",
     yaml::as.yaml(rmarkdown::yaml_front_matter(rel_path)),  # YAML header from an original .Rmd file
     "---\n\n",
-    "**Source file:** ", path_Rmd,  # link to original .Rmd file from workflowr subdirectory
+    "**Source file:** ", path_Rmd,            # link to original .Rmd file from workflowr subdirectory
     "\n\n",
 
-    # r chunk code (not YAML header)
-    "```{r child = base::file.path(knitr::opts_knit$get(\"output.dir\"), \".", rel_path, "\")}\n```",  # [lit 4]; ...\".",... - this dot is REQUIRED here because knitr::opts_knit$get(\"output.dir\") returns "analysis" as output directory in this case so "child" parameter of "r chunk" has to firstly go one directory up (rel_path starts with "./")
+    # r chunk code (not YAML header); [lit 4]
+    "```{r child = base::file.path(knitr::opts_knit$get(\"output.dir\"), \".", rel_path, "\")}\n```",
 
-    file = base::file.path("analysis", temp_name_Rmd),  # a name of file that will be created
+    file = base::file.path("analysis", temp_name_Rmd),  # file = a name of file that will be created
     sep = "",
-    append = F                                      # overwrite a content of a file
+    append = F  # overwrite a content of a file
   )
+  # Notes #
+  # Explanation of usage dot defined by \"." in r child in r chunk code
+  #   - A dot defined by \"." is required because knitr::opts_knit$get(\"output.dir\") returns "analysis"
+  #     as output directory in this case so "child" parameter of "r chunk"
+  #     has to 1stly go one directory up (rel_path starts with "./" + following \"." => ../)
 }
