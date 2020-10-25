@@ -41,7 +41,7 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd =
   initial_checks(dir, only_subdirs, path_orig_Rmd)  # it's after setwd(here()) to ensure that checks start in main workflowr directory
 
   # initial settings for NULL values #
-  if (base::is.null(path_orig_Rmd)) path_orig_Rmd = "/*.(R|r)md"
+  if (base::is.null(path_orig_Rmd)) path_orig_Rmd = "^.*\\.(R|r)md$"
   if (!base::is.null(only_subdirs)) {       # if only_subdirs contains at least one subdirectory name
     lf_recursive <- F                       # listing will not recurse into directories
     lf_dir <- file.path(dir, only_subdirs)  # lf = abbreviation for list_files
@@ -64,12 +64,12 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd =
   )
 
   # update checks in initial_checks() in a way that a directory cannot contain text .Rmd???
-  path_knitr_Rmd <- sub("\\.Rmd", "_knitr.Rmd", path_orig_Rmd)    # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
+  path_knitr_Rmd <- sub("\\.Rmd$", "_knitr.Rmd", path_orig_Rmd)    # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
   base::mapply(knitr::knit, path_orig_Rmd, path_knitr_Rmd)        # render path_orig_Rmd to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
 
   temp_name_Rmd <- base::gsub("/", "--", path_orig_Rmd)           # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
   analysis_Rmd <- base::file.path("analysis", temp_name_Rmd)      # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
-  base::file.remove(base::file.path("analysis", dir(path = "analysis", pattern = ".*\\-\\-.*.Rmd")))  # ensure that there are no temporary .Rmd files in directory "analysis" otherwise you may receive message like following one after trying to run function wflow_git_commit(...): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
+  base::file.remove(base::file.path("analysis", dir(path = "analysis", pattern = "^.*\\-\\-.*.Rmd")))  # ensure that there are no temporary .Rmd files in directory "analysis" otherwise you may receive message like following one after trying to run function wflow_git_commit(...): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
 
   base::mapply(generate_rmd, dir, path_knitr_Rmd, temp_name_Rmd)  # generate temporary .Rmd files
   if (commit == T) {
