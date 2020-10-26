@@ -38,12 +38,69 @@ initial_checks <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd 
   # check existence of files defined manually and without using regular expression #
   #   - One "if" (using "&") causes error "argument is of length zero" if path_orig_Rmd is NULL.
   if (!base::is.null(path_orig_Rmd)) {
-    if (base::substr(path_orig_Rmd, nchar(path_orig_Rmd) - 7, nchar(path_orig_Rmd)) != ".(R|r)md") {
+    ###if (!base::all(base::grepl("(.*R\\|?r?\\)?md\\$$|.*r\\|?R?\\)?md\\$$)", path_orig_Rmd))) {  # if path_orig_Rmd is not regular expression ($ is required as the last character to determine that it's meant to be a regular expression)
+    if (!base::all(  # following regular expression define that .Rmd (case insensitive) has to be defined in path_orig_Rmd
+      stringr::str_detect(path_orig_Rmd, "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$$")  # stringr package is needed because if regular expressions with special characters is used then functions like grep() may fail (e.g. when excaping "]")
+    )) { # if path_orig_Rmd is not regular expression ($ is required as the last character to determine that it's meant to be a regular expression)
+      ### if (base::substr(path_orig_Rmd, nchar(path_orig_Rmd) - 7, nchar(path_orig_Rmd)) != ".(R|r)md") {
       path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # see explanation in "Notes" at the end of this function
-      for (iteration_path_Rmd in path_orig_Rmd) {              # is any apply function better then this for()???
-        dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
-        if (!base::file.exists(dir_path_Rmd)) stop(base::paste0("File doesn't exist: ", dir_path_Rmd))  # if a file doesn't exist a message is written and code stops
+      for (iteration_path_Rmd in path_orig_Rmd) {              # is any apply function better then this for()???; in this for() I have to solve a situation where more only_subdirs are specified and path_orig_Rmd is not a regular expression???
+        if (is.null(only_subdirs)) {
+          dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
+        } else {
+          dir_path_Rmd <- base::file.path(only_subdirs, iteration_path_Rmd)
+        }
+        for (iteration in 1:base::length(dir_path_Rmd)) { # only_subdirs can contain more strings while path_orig_Rmd is not a regular expression
+          if (!base::file.exists(dir_path_Rmd[iteration])) stop(base::paste0("File ", dir_path_Rmd[iteration], " doesn't exist or regular expression without $ as the last character is used or a regular expression doesn't point to file with extension .Rmd."))
+        }
       }
+
+    } else {  # this part is for situation where only_subdirs is defined and path_orig_Rmd is set to regular expression but no such file is found in specified only_subdirs, e.g. generate_html(dir = "code-Rmd", only_subdirs = "eToro1", path_orig_Rmd = "testToDelete.Rmd$"); if path_orig_Rmd isn't specified as a regular expression than this situation is solved in if (!base::all(base::grepl("(.*R\\|?r?\\)?md\\$$|.*r\\|?R?\\)?md\\$$)", path_orig_Rmd)))
+      path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)  # see explanation in "Notes" at the end of this function
+      path_orig_Rmd <- base::gsub("\\$$", "", path_orig_Rmd)   # remove last $ (this is not in previous part (but still it could be optimized)???
+      # for (iteration_path_Rmd in path_orig_Rmd) {              # is any apply function better then this for()???
+      #   if (is.null(only_subdirs)) {
+      #     dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
+      #   } else {
+      #     dir_path_Rmd <- base::file.path(only_subdirs, iteration_path_Rmd)
+      #   }
+      #   # following error message differs from previous for (but still it could be optimized)???
+      #   for (iteration in 1:base::length(dir_path_Rmd)) {  # only_subdirs can contain more strings while path_orig_Rmd is a regular expression
+      #     if (!base::file.exists(dir_path_Rmd[iteration])) stop(base::paste0("File ", dir_path_Rmd[iteration], " doesn't exist."))
+      #   }
+      # }
+      tryCatch({
+        if (base::is.null(path_orig_Rmd)) path_orig_Rmd = "^.*\\.(R|r)md$"
+        if (!base::is.null(only_subdirs)) {       # if only_subdirs contains at least one subdirectory name
+          lf_recursive <- F                       # listing will not recurse into directories
+          lf_dir <- file.path(dir, only_subdirs)  # lf = abbreviation for list_files
+        } else {
+          lf_recursive <- T
+          lf_dir <- dir
+        }
+
+        path_orig_Rmd <- mapply(
+          base::list.files,
+          path = lf_dir,
+          full.names = T,      # example of a full name: code-Rmd/subPages/test.Rmd; file.path() in many other code parts is not needed anymore
+          recursive = lf_recursive,
+          pattern = path_orig_Rmd
+
+          # Notes
+          #   include.dirs = T would mean that if a subdirectory matches a regular expression, then this subdirectory is included in path_orig_Rmd
+          #   all.files = FALSE means that only visible files are processed
+        )
+      }, warning = function() {
+        print("WARNING: Some file doesn't exit.")
+      }, error = function() {
+        print("ERROR: Some file doesn't exist.")
+      }, finally = {
+        print("OK")
+      }
+      )  # end - tryCatch
+
+
+
     }
   }  # if (!base::is.null(path_orig_Rmd))
 }

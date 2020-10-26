@@ -10,4 +10,11 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: testthat
-Imports: base, here, knitr, rmarkdown, workflowr, yaml
+Imports: 
+    base,
+    here,
+    knitr,
+    rmarkdown,
+    stringr,
+    workflowr,
+    yaml
