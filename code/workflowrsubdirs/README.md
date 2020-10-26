@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-10-24 19:54 GMT+2
+Last update: 2020-10-26 12:52 GMT+2
 
   - [Purpose](#purpose)
       - [Briefly about package
@@ -142,6 +142,7 @@ Last update: 2020-10-24 19:54 GMT+2
       - here
       - knitr
       - rmarkdown
+      - stringr
       - workflowr
       - yaml
 
