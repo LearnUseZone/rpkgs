@@ -92,6 +92,7 @@ knitr::opts_chunk$set(
   - here
   - knitr
   - rmarkdown
+  - stringi
   - stringr
   - workflowr
   - yaml
