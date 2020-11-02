@@ -101,11 +101,4 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd =
   base::file.remove(analysis_Rmd)       # delete temporary .Rmd files from directory "analysis"
   base::file.remove(path_knitr_Rmd)     # delete file created using knitr::knit(); I will look at this file.path() and also other file.path() in this function generate_html() and also generate_rmd() and try to simplify them (delete uneccessary parts)???
 
-  # Notes #
-  # Explanation for usage of (Option 1): path_orig_Rmd <- base::gsub("\\\\", "/", path_orig_Rmd)
-  #   Option 2 would be to add to generate_rmd() following code:
-  #     rel_path <- sub("\\\\", "\\\\\\\\", rel_path) # "\\\\\\\\" will be written as "\\" in generated .Rmd file, if I keep only "\\\\" then there's only "\" in generated .Rmd file which wouldn't work correctly
-  #   plus in generate_html(), replace temp_name_Rmd <- base::gsub("/", "--", path_orig_Rmd) for
-  #     temp_name_Rmd <- base::gsub("\\\\", "--", base::gsub("/", "--", path_orig_Rmd))
-  #   Goal of both options is to ensure that temporary .Rmd file will contain "/" or "\\" in path to a relevant temporary (knitr) .Rmd file defined in r chunk code created in function base::cat() used in function generate_rmd().
 }
