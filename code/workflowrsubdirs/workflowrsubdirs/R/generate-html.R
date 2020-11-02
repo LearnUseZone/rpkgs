@@ -36,6 +36,7 @@
 #' }
 
 generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd = NULL, commit = F) {
+  # only_subdirs can contain also text .Rmd (write to README.Rmd)???
   # initial settings #
   base::setwd(here::here())  # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
   real_path_orig_Rmd <- initial_checks(dir, only_subdirs, path_orig_Rmd)  # it's after setwd(here()) to ensure that checks start in main workflowr directory
@@ -55,19 +56,16 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd =
     slash_location <- stringi::stri_locate_last(real_path_orig_Rmd, fixed = "/")  # look for another way than using stringi???
     path_orig_Rmd <- mapply(
       base::list.files,
-      path = stringr::str_sub(real_path_orig_Rmd, 1, slash_location[,1]-1),
+      path = stringr::str_sub(real_path_orig_Rmd, 1, slash_location[,1] - 1),
       full.names = T,      # example of a full name: code-Rmd/subPages/test.Rmd; file.path() in many other code parts is not needed anymore
       recursive = lf_recursive,
-      pattern = stringr::str_sub(real_path_orig_Rmd, slash_location[,1]+1, nchar(real_path_orig_Rmd))
+      pattern = stringr::str_sub(real_path_orig_Rmd, slash_location[,1] + 1, nchar(real_path_orig_Rmd))
 
       # Notes
       #   include.dirs = T would mean that if a subdirectory matches a regular expression, then this subdirectory is included in path_orig_Rmd
       #   all.files = FALSE means that only visible files are processed
     )
   } else {
-
-
-
     # create a list of visible files #
     path_orig_Rmd <- mapply(
       base::list.files,
@@ -75,18 +73,16 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd =
       full.names = T,      # example of a full name: code-Rmd/subPages/test.Rmd; file.path() in many other code parts is not needed anymore
       recursive = lf_recursive,
       pattern = path_orig_Rmd
-
-      # Notes
-      #   include.dirs = T would mean that if a subdirectory matches a regular expression, then this subdirectory is included in path_orig_Rmd
-      #   all.files = FALSE means that only visible files are processed
+      # all.files = F      # only visible files are processed
+      # include.dirs = T   # include a subdirectory that matches a regular expression in path_orig_Rmd
     )
   }
 
-  # for tests
-  print(path_orig_Rmd)
-  print(length(path_orig_Rmd))
-  # update checks in initial_checks() in a way that a directory cannot contain text .Rmd???
-  path_knitr_Rmd <- sub("\\.Rmd$", "_knitr.Rmd", path_orig_Rmd)    # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
+  ### # for tests
+  ### print(path_orig_Rmd)
+  ### print(length(path_orig_Rmd))
+
+  path_knitr_Rmd <- sub("\\.Rmd$", "_knitr.Rmd", path_orig_Rmd)   # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
   base::mapply(knitr::knit, path_orig_Rmd, path_knitr_Rmd)        # render path_orig_Rmd to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
 
   temp_name_Rmd <- base::gsub("/", "--", path_orig_Rmd)           # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
