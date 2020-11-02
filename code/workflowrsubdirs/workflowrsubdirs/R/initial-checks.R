@@ -49,13 +49,14 @@ initial_checks <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd 
       }
       lf_recursive <- F                  # listing will not recurse into directories; lf = abbreviation for list_files
       lf_dir <- only_subdirs
-
+      iteration_steps = length(only_subdirs)
     } else {  # if only_subdirs = NULL
       for (iteration_path_Rmd in path_orig_Rmd) {  # is any function from "apply" family better than this for()???; in this for() I have to solve a situation where more only_subdirs are specified and path_orig_Rmd is not a regular expression???
         dir_path_Rmd <- base::file.path(dir, iteration_path_Rmd)
       }
       lf_recursive <- T
       lf_dir <- dir
+      iteration_steps = 1
     }
 
     if (!stringr::str_detect( # if path_orig_Rmd is not a regular expression pointing to .Rmd (all letters are case insensitive) file(s)
@@ -67,13 +68,7 @@ initial_checks <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd 
       }
     } else {  # if path_orig_Rmd is a regular expression pointing to .Rmd (all letters are case insensitive) file(s)
       num_of_existing_files = 0  # initialize a new variable
-
-      if (!is.null(only_subdirs)) {  # needed because of situation where only_subdirs = NULL but path_orig_Rmd is a regular expression
-        steps = length(only_subdirs)
-      } else {
-        steps = 1
-      }
-      for (iteration in 1:steps) {
+      for (iteration in 1:iteration_steps) {
         try (   # result_of_try <- try (...) is not needed because result_of_try would be the same as result_path_orig_Rmd in this case
           { result_path_orig_Rmd <- mapply(
             base::list.files,
