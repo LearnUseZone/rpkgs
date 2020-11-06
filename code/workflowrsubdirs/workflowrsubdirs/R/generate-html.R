@@ -36,51 +36,13 @@
 #' }
 
 generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd = NULL, commit = F) {
-  # only_subdirs can contain also text .Rmd (write to README.Rmd)???
-  # initial settings #
-  base::setwd(here::here())  # set .Rproj (workflowr) project directory as a working directory (in case it was changed after opening .Rproj file)
-  real_path_orig_Rmd <- initial_checks(dir, only_subdirs, path_orig_Rmd)  # it's after setwd(here()) to ensure that checks start in main workflowr directory
+  #  only_subdirs can contain also text .Rmd (write to README.Rmd)???
+  #  if path_orig_Rmd = NULL then search for all files in set directory (dir or only_subdirs) (write to README.Rmd) - the problems are when .Rmd file contains space e.g. "testToDelete1 2.Rmd"
 
-  # initial settings for NULL values #
-  if (base::is.null(path_orig_Rmd)) path_orig_Rmd = "^.*\\.(R|r)md$"
-  if (!base::is.null(only_subdirs)) {       # if only_subdirs contains at least one subdirectory name
-    lf_recursive <- F                       # listing will not recurse into directories
-    lf_dir <- file.path(dir, only_subdirs)  # lf = abbreviation for list_files
-  } else {
-    lf_recursive <- T
-    lf_dir <- dir
-  }
+  # initial settings
+  base::setwd(here::here())  # setting of project (.Rproj) directory as a working directory in case it was changed after opening .Rproj file; it's necessary to have some of following steps after this setting
+  path_orig_Rmd <- initial_checks(dir, only_subdirs, path_orig_Rmd) # generate paths to original .Rmd files for future rendering (change initial_checks to generate_paths???)
 
-  # create a list of visible files #
-  if (length(real_path_orig_Rmd) > 0) {
-    slash_location <- stringi::stri_locate_last(real_path_orig_Rmd, fixed = "/")  # look for another way than using stringi???
-    path_orig_Rmd <- mapply(
-      base::list.files,
-      path = stringr::str_sub(real_path_orig_Rmd, 1, slash_location[,1] - 1),
-      full.names = T,      # example of a full name: code-Rmd/subPages/test.Rmd; file.path() in many other code parts is not needed anymore
-      recursive = lf_recursive,
-      pattern = stringr::str_sub(real_path_orig_Rmd, slash_location[,1] + 1, nchar(real_path_orig_Rmd))
-
-      # Notes
-      #   include.dirs = T would mean that if a subdirectory matches a regular expression, then this subdirectory is included in path_orig_Rmd
-      #   all.files = FALSE means that only visible files are processed
-    )
-  } else {
-    # create a list of visible files #
-    path_orig_Rmd <- mapply(
-      base::list.files,
-      path = lf_dir,
-      full.names = T,      # example of a full name: code-Rmd/subPages/test.Rmd; file.path() in many other code parts is not needed anymore
-      recursive = lf_recursive,
-      pattern = path_orig_Rmd
-      # all.files = F      # only visible files are processed
-      # include.dirs = T   # include a subdirectory that matches a regular expression in path_orig_Rmd
-    )
-  }
-
-  ### # for tests
-  ### print(path_orig_Rmd)
-  ### print(length(path_orig_Rmd))
 
   path_knitr_Rmd <- sub("\\.Rmd$", "_knitr.Rmd", path_orig_Rmd)   # work with path_knitr_Rmd has to be after check of existence of path_orig_Rmd
   base::mapply(knitr::knit, path_orig_Rmd, path_knitr_Rmd)        # render path_orig_Rmd to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
@@ -96,5 +58,4 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, path_orig_Rmd =
   workflowr::wflow_build(analysis_Rmd)  # generate .html files from temporary .Rmd files
   base::file.remove(analysis_Rmd)       # delete temporary .Rmd files from directory "analysis"
   base::file.remove(path_knitr_Rmd)     # delete file created using knitr::knit(); I will look at this file.path() and also other file.path() in this function generate_html() and also generate_rmd() and try to simplify them (delete uneccessary parts)???
-
 }

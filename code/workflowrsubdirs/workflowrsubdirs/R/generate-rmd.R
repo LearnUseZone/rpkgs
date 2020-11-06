@@ -35,9 +35,10 @@ generate_rmd <- function(dir = "code-Rmd", path_Rmd = NULL, temp_name_Rmd = NULL
     sep = "",
     append = F  # overwrite a content of a file
   )
-  # Notes #
-  # Explanation of usage dot defined by \"." in r child in r chunk code
-  #   - A dot defined by \"." is required because knitr::opts_knit$get(\"output.dir\") returns "analysis"
-  #     as output directory in this case so "child" parameter of "r chunk"
-  #     has to 1stly go one directory up (rel_path starts with "./" + following \"." => ../)
+  # Notes
+  #   Explanation of usage dot defined by \"." in r child in r chunk code
+  #    - A dot defined by \"." is required because knitr::opts_knit$get(\"output.dir\") returns "analysis"
+  #      as output directory in this case so "child" parameter of "r chunk"
+  #      has to 1stly go one directory up (rel_path starts with "./" + following \"." => ../)
 }
+
