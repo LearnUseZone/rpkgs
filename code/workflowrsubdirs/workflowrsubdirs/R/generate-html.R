@@ -46,16 +46,16 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, orig_Rmd_patter
   path_knitr_Rmd <- base::sub("\\.Rmd$", "_knitr.Rmd", orig_Rmd_path) # work with path_knitr_Rmd has to be after check of existence of orig_Rmd_path
   base::mapply(knitr::knit, orig_Rmd_path, path_knitr_Rmd)            # render orig_Rmd_path to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
 
-  temp_name_Rmd <- base::gsub("/", "--", orig_Rmd_path)       # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
-  analysis_Rmd <- base::file.path("analysis", temp_name_Rmd)  # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
+  temp_Rmd_name <- base::gsub("/", "--", orig_Rmd_path)       # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
+  temp_Rmd_path <- base::file.path("analysis", temp_Rmd_name) # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
 
-  base::mapply(generate_rmd, dir, path_knitr_Rmd, temp_name_Rmd)  # generate temporary .Rmd files
+  base::mapply(generate_rmd, dir, path_knitr_Rmd, temp_Rmd_name)  # generate temporary .Rmd files
   if (commit == T) {
     workflowr::wflow_git_commit("analysis/*--*Rmd", "separate commit of temporary .Rmd files", all = T)
   }
-  workflowr::wflow_build(analysis_Rmd)  # generate .html files from temporary .Rmd files
+  workflowr::wflow_build(temp_Rmd_path)  # render .html files from temporary .Rmd files
 
   # delete temporary helping .Rmd files
-  base::file.remove(analysis_Rmd)       # delete temporary .Rmd files from directory "analysis"
-  base::file.remove(path_knitr_Rmd)     # delete file created using knitr::knit()
+  base::file.remove(temp_Rmd_path)
+  base::file.remove(path_knitr_Rmd)
 }

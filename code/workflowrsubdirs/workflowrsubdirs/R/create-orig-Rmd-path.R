@@ -33,16 +33,16 @@ create_orig_Rmd_path <- function(dir = "code-Rmd", only_subdirs = NULL, orig_Rmd
 
   # check .Rmd files in directory analysis
   #   ensure that there are no temporary .Rmd files in directory "analysis" otherwise you may receive message like following one after trying to run function wflow_git_commit(...): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
-  analysis_Rmd_temp <- base::file.path("analysis", base::dir(path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd"))
-  if (base::length(analysis_Rmd_temp) > 0) {  # if some "*--*.Rmd" file was found
-    base::cat(
-      paste0(
-        "Rmd files containing \"--\" are not allowed in directory \"analysis\".\n",
-        "Please choose one of the following options:\n",
-        "1 - Files will be deleted automatically and rendering of .Rmd files will continue.\n",
-        "2 - Rendering of .Rmd files will stop and I will take care of relevant .Rmd files manually."
-      )
-    )
+  #   Maybe I will move this if to a separate function and also add there similar checks for   base::file.remove(temp_Rmd_path) and base::file.remove(path_knitr_Rmd) from generate_html()???
+  if (base::length(base::file.path("analysis",
+                                   base::dir(path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd")
+                                  )) > 0) {  # if some "*--*.Rmd" file was found
+    base::cat(paste0(
+      "Rmd files containing \"--\" are not allowed in directory \"analysis\".\n",
+      "Please choose one of the following options:\n",
+      "1 - Files will be deleted automatically and rendering of .Rmd files will continue.\n",
+      "2 - Rendering of .Rmd files will stop and I will take care of relevant .Rmd files manually."
+    ))
     option <- readline(prompt = "Please choose the option 1 or 2: ")
     if (option == 1) {
       base::file.remove(base::file.path("analysis", base::dir(path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd")))
