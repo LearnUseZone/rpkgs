@@ -25,9 +25,11 @@ knitr::opts_chunk$set(
 - I suggest to create a new directory, for your .Rmd files saved in subdirectories, directly in your workflowr project's working directory (and not in directory "analysis").
   - For example: create folder "code-Rmd" in the same directory as folder "code".
 
+## General rules
+- .Rmd files containing "--" (two hyphens) are not allowed in directory "analysis".,
 
 
-### Briefly about package functions
+## Briefly about package functions
 - Following information adds more clarity to information accessible using help (F1).
 
 #### generate_rmd()
@@ -38,7 +40,7 @@ knitr::opts_chunk$set(
   - to have the same structure of some folders (analysis, code, code-Rmd, docs) as for workflowr, or
   - to adjust code lines referencing to any path and it's not effective to do it only because of checking.
 
-#### initial_checks()
+#### create_orig_Rmd_path()
 - It cannot be called.
 
 #### generate_html()
@@ -62,7 +64,6 @@ knitr::opts_chunk$set(
     knitr::knit(relPath, <file_path_to_output_file.Rmd>)
     which firstly creates a new .Rmd file which is used in yaml::as.yaml(rmarkdown::yaml_front_matter(<file_path_to_output_file.Rmd>)).\
     I’ve also added base::file.remove(base::file.path(dir, path_knitr_Rmd)).
-
 
 
 ## Installation
@@ -92,7 +93,6 @@ knitr::opts_chunk$set(
   - here
   - knitr
   - rmarkdown
-  - stringr
   - workflowr
   - yaml
 
@@ -105,6 +105,10 @@ knitr::opts_chunk$set(
 - Now, because you have .Rmd files in subdirectories under directory code-Rmd, use this package workflowrsubdir to render .html files.
 - A real example with .Rmd files in subdirectories (under directory codeRmd in this case) can be found [here](https://github.com/LearnUseZone/workflowrSubfolders).
 - More about usage of workflowr folders is [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
+- Example: let's say you have file "testToDelete2.Rmd" in directory "test_eToro2.Rmd" and you want to find it based on it's name:
+  - you have 2 options:
+    - 1st) generate_html(dir = "code-Rmd", only_subdirs = NULL, orig_Rmd_pattern = "testToDelete2.Rmd")
+    - 2nd) generate_html(dir = "code-Rmd", only_subdirs = "test_eToro2.Rmd", orig_Rmd_pattern = "testToDelete2.Rmd")
 
 
 ### Usage of workflowrsubdirs after it’s installed from the source tar.gz file

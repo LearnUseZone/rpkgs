@@ -15,6 +15,5 @@ Imports:
     here,
     knitr,
     rmarkdown,
-    stringr,
     workflowr,
     yaml

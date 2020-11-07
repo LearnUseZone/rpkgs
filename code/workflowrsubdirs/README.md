@@ -1,11 +1,14 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-06 17:14 GMT+2
+Last update: 2020-11-07 20:11 GMT+2
 
   - [Purpose](#purpose)
-      - [Briefly about package
-        functions](#briefly-about-package-functions)
+  - [General rules](#general-rules)
+  - [Briefly about package functions](#briefly-about-package-functions)
+      - [generate\_rmd()](#generate_rmd)
+      - [create\_orig\_Rmd\_path()](#create_orig_rmd_path)
+      - [generate\_html()](#generate_html)
   - [Installation](#installation)
       - [Try following steps if the package weren’t installed
         successfully:  
@@ -33,7 +36,12 @@ Last update: 2020-11-06 17:14 GMT+2
       - For example: create folder “code-Rmd” in the same directory as
         folder “code”.
 
-### Briefly about package functions
+## General rules
+
+  - .Rmd files containing “–” (two hyphens) are not allowed in directory
+    “analysis”.,
+
+## Briefly about package functions
 
   - Following information adds more clarity to information accessible
     using help (F1).
@@ -51,7 +59,7 @@ Last update: 2020-11-06 17:14 GMT+2
       - to adjust code lines referencing to any path and it’s not
         effective to do it only because of checking.
 
-#### initial\_checks()
+#### create\_orig\_Rmd\_path()
 
   - It cannot be called.
 
@@ -142,7 +150,6 @@ Last update: 2020-11-06 17:14 GMT+2
       - here
       - knitr
       - rmarkdown
-      - stringr
       - workflowr
       - yaml
 
@@ -169,6 +176,14 @@ Last update: 2020-11-06 17:14 GMT+2
     [here](https://github.com/LearnUseZone/workflowrSubfolders).
   - More about usage of workflowr folders is
     [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
+  - Example: let’s say you have file “testToDelete2.Rmd” in directory
+    “test\_eToro2.Rmd” and you want to find it based on it’s name:
+      - you have 2 options:
+          - 1st) generate\_html(dir = “code-Rmd”, only\_subdirs = NULL,
+            orig\_Rmd\_pattern = “testToDelete2.Rmd”)
+          - 2nd) generate\_html(dir = “code-Rmd”, only\_subdirs =
+            “test\_eToro2.Rmd”, orig\_Rmd\_pattern =
+            “testToDelete2.Rmd”)
 
 ### Usage of workflowrsubdirs after it’s installed from the source tar.gz file
 

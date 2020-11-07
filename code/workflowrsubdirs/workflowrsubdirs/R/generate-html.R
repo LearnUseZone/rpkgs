@@ -14,7 +14,10 @@
 #' character (default: "code-Rmd").
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
 #' @param only_subdirs
-#' I will add a description later.
+#' character (default: NULL). It's case insensitive.
+#' If only_subdirs == NULL then all subdirectories and files within directory in input parameter dir are processed, otherwise only files in subdirectories in this input parameter only_subdirs are processed.
+#' If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
+#' Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")
 #' @param orig_Rmd_pattern
 #' character (default: NULL).
 #' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
