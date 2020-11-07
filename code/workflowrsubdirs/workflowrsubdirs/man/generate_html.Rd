@@ -7,7 +7,7 @@
 generate_html(
   dir = "code-Rmd",
   only_subdirs = NULL,
-  path_orig_Rmd = NULL,
+  orig_Rmd_pattern = NULL,
   commit = F
 )
 }
@@ -17,7 +17,7 @@ Path to a directory, under a main workflowr subdirectory, where original Rmd fil
 
 \item{only_subdirs}{I will add a description later.}
 
-\item{path_orig_Rmd}{character (default: NULL).
+\item{orig_Rmd_pattern}{character (default: NULL).
 Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
 Example when directories subPagesX are saved in directory dir = "code-Rmd":
 file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")

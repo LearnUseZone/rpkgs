@@ -41,4 +41,3 @@ generate_rmd <- function(dir = "code-Rmd", path_Rmd = NULL, temp_name_Rmd = NULL
   #      as output directory in this case so "child" parameter of "r chunk"
   #      has to 1stly go one directory up (rel_path starts with "./" + following \"." => ../)
 }
-
