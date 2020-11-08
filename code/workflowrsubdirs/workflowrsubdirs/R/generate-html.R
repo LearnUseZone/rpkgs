@@ -39,8 +39,6 @@
 #' }
 
 generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, orig_Rmd_pattern = NULL, commit = F) {
-  #  only_subdirs can contain also text .Rmd (write to README.Rmd)???
-  #  if orig_Rmd_pattern = NULL then search for all files in set directory (dir or only_subdirs) the problems are when .Rmd file contains space e.g. "testToDelete1 2.Rmd"; path to file(s) .Rmd or .rmd - process only relevant files defined by directory in dir and path written in orig_Rmd_pattern, pattern - process files based on pattern considering directory in dir and and subdirectories (if any) written as a part of patterns (don't process any other subdirectories or files) (write to README.Rmd)???
 
   # initial settings
   base::setwd(here::here())  # setting of project (.Rproj) directory as a working directory in case it was changed after opening .Rproj file; it's necessary to have some of following steps after this setting
