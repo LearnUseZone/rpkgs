@@ -43,15 +43,17 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, orig_rmd_patter
   # initial settings
   base::setwd(here::here())  # setting of project (.Rproj) directory as a working directory in case it was changed after opening .Rproj file; it's necessary to have some of following steps after this setting
   initial_checks(dir, only_subdirs, orig_rmd_pattern)  # has the "power" to stop following processing
-  orig_rmd_path <- create_orig_rmd_path(dir, only_subdirs, orig_rmd_pattern) # get path to original .Rmd files for future rendering
+  orig_rmd_path <- create_orig_rmd_path(dir, only_subdirs, orig_rmd_pattern) # get paths to original .Rmd files for future rendering
 
   path_knitr_Rmd <- base::sub("\\.Rmd$", "_knitr.Rmd", orig_rmd_path) # work with path_knitr_Rmd has to be after check of existence of orig_rmd_path
   base::mapply(knitr::knit, orig_rmd_path, path_knitr_Rmd)            # render orig_rmd_path to path_knitr_Rmd in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
 
-  temp_rmd_name <- base::gsub("/", "--", orig_rmd_path)       # change "/" in paths to .Rmd files to generate file names (not paths) with "--", these are new file names of .Rmd files that will be generated in directory "analysis"
-  temp_rmd_path <- base::file.path("analysis", temp_rmd_name) # paths to temporary .Rmd files that will be also deleted after .html files are rendered from them
+  temp_rmd_path <- base::file.path(
+    "analysis",
+    base::gsub("/", "--", orig_rmd_path)  # generate file names (not paths) with "--"
+  )     # paths to temporary (will be deleted after .html files are rendered) .Rmd files
+  base::mapply(generate_rmd, dir, path_knitr_Rmd, temp_rmd_path)  # generate temporary .Rmd files in "analysis"
 
-  base::mapply(generate_rmd, dir, path_knitr_Rmd, temp_rmd_name)  # generate temporary .Rmd files
   if (commit == T) {
     workflowr::wflow_git_commit("analysis/*--*Rmd", "separate commit of temporary .Rmd files", all = T)
   }

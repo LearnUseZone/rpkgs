@@ -69,5 +69,5 @@ create_orig_rmd_path <- function(dir = "code-Rmd", only_subdirs = NULL, orig_rmd
 
   # Notes
   #   If there's more complex regular expression like the following one, use package "stringr" because it solves e.g. problems with escaping "]" that package function like "grepl()" has.
-  #     if (!stringr::str_detect(orig_rmd_pattern[iteration_path_Rmd], "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$$"))
+  #     if (!stringr::str_detect(orig_rmd_pattern[iteration_path_rmd], "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$$"))
 }

@@ -4,16 +4,16 @@
 \alias{generate_rmd}
 \title{Generate temporary .Rmd files}
 \usage{
-generate_rmd(dir = "code-Rmd", path_Rmd = NULL, temp_name_Rmd = NULL)
+generate_rmd(dir = "code-Rmd", orig_rmd_path = NULL, temp_rmd_path = NULL)
 }
 \arguments{
 \item{dir}{character (default: "code-Rmd").
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
 
-\item{path_Rmd}{character (default: NULL).
+\item{orig_rmd_path}{character (default: NULL).
 Path to an original .Rmd file. Path ignores dir (see the 1st parameter).}
 
-\item{temp_name_Rmd}{character (default: NULL).
+\item{temp_rmd_path}{character (default: NULL).
 Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
 This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{generate_html}}.}
 }
