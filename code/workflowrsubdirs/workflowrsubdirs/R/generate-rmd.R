@@ -21,7 +21,7 @@
 #' }
 
 generate_rmd <- function(dir = "code-Rmd", orig_rmd_path = NULL, temp_rmd_path = NULL) {
-  orig_rmd_rel_path <- base::file.path(".", orig_rmd_path)  # relative path to an original .Rmd file
+  orig_rmd_rel_path <- base::file.path(".", orig_rmd_path)  # relative path to an original .Rmd file, "." is used for setting a correct path in parameter "child" of "r chunk" below
   base::cat(
     "---\n",
     yaml::as.yaml(rmarkdown::yaml_front_matter(orig_rmd_rel_path)),  # YAML header from an original .Rmd file

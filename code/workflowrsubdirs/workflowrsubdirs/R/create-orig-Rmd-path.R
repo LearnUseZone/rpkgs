@@ -49,7 +49,7 @@ create_orig_rmd_path <- function(dir = "code-Rmd", only_subdirs = NULL, orig_rmd
   # generate a character vector of .Rmd files for further rendering
   ## create a character vector or a list of visible files #
   for (iii in 1:subdirs_count) {
-    result_orig_rmd_pattern <- try ({ # result_of_try <- try (...) would be the same as result_orig_rmd_pattern in this case; it's better to have result_orig_rmd_pattern <- try, in case that something in mapply() fails
+    result_orig_rmd_pattern <- try({ # result_of_try <- try (...) would be the same as result_orig_rmd_pattern in this case; it's better to have result_orig_rmd_pattern <- try, in case that something in mapply() fails
       base::mapply(
         base::list.files,    # if some file doesn't exist then list.files() produces list (instead of a character vector)
         path = lf_dir[iii],  # path consisting of directories and subdirectories
@@ -65,7 +65,10 @@ create_orig_rmd_path <- function(dir = "code-Rmd", only_subdirs = NULL, orig_rmd
     orig_rmd_path <- base::append(orig_rmd_path, result_orig_rmd_pattern)           # append() - because each for () cycle may generate new result_orig_rmd_pattern
   }
   if (length(orig_rmd_path) == 0) stop("Processing ends because no file meets criteria.")
-  return(orig_rmd_path)  # return a vector of real paths
+
+  # return a vector of real paths of original rmd files under directory in dir
+  return(orig_rmd_path)
+
 
   # Notes
   #   If there's more complex regular expression like the following one, use package "stringr" because it solves e.g. problems with escaping "]" that package function like "grepl()" has.
