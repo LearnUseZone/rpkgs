@@ -1,4 +1,5 @@
-#' @title Generate temporary .Rmd files
+#' @title
+#' Generate temporary .Rmd files
 #' @description
 #' It generates .Rmd files from their original .Rmd files that are saved in subdirectories and saves them into directory "analysis".
 #' These generated .Rmd files are meant to be temporary and they will be deleted at the end of function \code{\link{generate_html}} after final .html files are rendered.
