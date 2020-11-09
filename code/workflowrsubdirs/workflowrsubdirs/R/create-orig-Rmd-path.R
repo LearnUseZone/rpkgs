@@ -12,6 +12,7 @@
 #' Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")
 #' @param orig_rmd_pattern
 #' character (default: NULL).
+#' If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
 #' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
 #' Example when directories subPagesX are saved in directory dir = "code-Rmd":
 #' file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")
