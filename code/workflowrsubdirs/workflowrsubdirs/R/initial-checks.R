@@ -36,14 +36,14 @@ initial_checks <- function(dir = "code-Rmd", only_subdirs = NULL, orig_rmd_patte
   #   ensure that there are no temporary .Rmd files in directory "analysis" otherwise you may receive message like following one after trying to run function wflow_git_commit(...): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
   if (base::length(
     double_hyphen_paths <- base::dir(
-      path = c("analysis", dir),
+      path = "analysis",
       pattern = "(?i)^.*\\-\\-.*.rmd",
       full.names = T,
       recursive = T
     )) > 0) {  # if some "*--*.Rmd" file was found
 
     base::cat(
-      "Following .Rmd files contain \"--\" which is not allowed in written directories:\n",
+      "Following .Rmd files contain \"--\" which is not allowed in directory \"analysis\":\n",
       double_hyphen_paths,
       "\nPlease choose one of the following options:",
       "1 - Files will be deleted automatically and rendering of .Rmd files will continue.",
