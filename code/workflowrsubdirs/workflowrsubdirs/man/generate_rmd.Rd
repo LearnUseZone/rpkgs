@@ -4,14 +4,17 @@
 \alias{generate_rmd}
 \title{Generate temporary .Rmd files}
 \usage{
-generate_rmd(dir = "code-Rmd", orig_rmd_path = NULL, temp_rmd_path = NULL)
+generate_rmd(dirs = "code-rmd", orig_rmd_path = NULL, temp_rmd_path = NULL)
 }
 \arguments{
-\item{dir}{character (default: "code-Rmd").
-Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
+\item{dirs}{character (default: "code-rmd").
+Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
+Examples:
+dirs = "code-rmd"
+dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")}
 
 \item{orig_rmd_path}{character (default: NULL).
-Path to an original .Rmd file. Path ignores dir (see the 1st parameter).}
+Path to an original .Rmd file. Path ignores dirs (see the 1st parameter).}
 
 \item{temp_rmd_path}{character (default: NULL).
 Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
@@ -21,13 +24,11 @@ This temporary file is generated from its original .Rmd file specified in path_R
 Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used to generate final .html file.
 }
 \description{
-It generates .Rmd files from their original .Rmd files that are saved in subdirectories and saves them into directory "analysis".
-These generated .Rmd files are meant to be temporary and they will be deleted at the end of function \code{\link{generate_html}} after final .html files are rendered.
-}
-\examples{
-\dontrun{
-  generate_rmd("code-Rmd", "subPages1/testPrint1.Rmd", "subPages1--testPrint1.Rmd")
-}
+Generate temporary .Rmd files from their original .Rmd files,
+usually saved in directory "code" and its subdirectories,
+and save them into directory "analysis".
+These generated .Rmd files will be deleted at the end of function \code{\link{generate_html}}
+after final .html files are rendered.
 }
 \keyword{subdirectory}
 \keyword{workflowr,}

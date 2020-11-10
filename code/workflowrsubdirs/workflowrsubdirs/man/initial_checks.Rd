@@ -2,35 +2,36 @@
 % Please edit documentation in R/initial-checks.R
 \name{initial_checks}
 \alias{initial_checks}
-\title{Create paths to original .Rmd files for future rendering}
+\title{Check rules for directories and subdirectories}
 \usage{
-initial_checks(dirs = "code-Rmd", subdirs = T, orig_rmd_pattern = NULL)
+initial_checks(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL)
 }
 \arguments{
-\item{dirs}{character (default: "code-Rmd").
+\item{dirs}{character (default: "code-rmd").
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
 
-\item{subdirs}{character (default: NULL). It's case insensitive.
-If only_subdirs == NULL then all subdirectories and files within directory in input parameter dir are processed, otherwise only files in subdirectories in this input parameter only_subdirs are processed.
-If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
-Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")}
+\item{subdirs}{character (default: "code-rmd").
+Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
+Examples:
+dirs = "code-rmd"
+dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")}
 
-\item{orig_rmd_pattern}{character (default: NULL).
-If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
-Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-Example when directories subPagesX are saved in directory dir = "code-Rmd":
-file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")
-file_path = c("subPages2\\testPrint1.Rmd", "subPages3\\testPrint2.Rmd")}
+\item{orig_rmd_pattern}{character (default: NULL). Vector of paths to original .Rmd files.
+If NULL, process all .Rmd files based values in parameters dir and subdirs.
+If not NULL, process files matching written regular expression.
+Examples:
+orig_rmd_pattern = "^.\emph{page.}.[  R , r ]md$")
+orig_rmd_pattern = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 }
 \value{
-None, but stop processing if any of checks fails.
+None but stop processing if no file meets criteria.
 }
 \description{
-Check if rendering .html files from .Rmd files from subdirectories is possible.
+Check rules for directories and subdirectories to evaluate if rendering of .html files is possible.
 }
 \examples{
 \dontrun{
-  initial_checks(dir, path_orig_Rmd)
+  initial_checks(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
 }
 }
 \keyword{subdirectory}

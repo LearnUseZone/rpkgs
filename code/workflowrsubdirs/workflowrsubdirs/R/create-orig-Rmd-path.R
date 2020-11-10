@@ -1,30 +1,33 @@
 #' @title
 #' Create paths to original .Rmd files for future rendering
 #' @description
-#' Create paths to original .Rmd files for future rendering otherwise stop processing.
+#' Create paths to original .Rmd files for future rendering into .html.
+#' If no file for rendering is found, processing ends.
 #' @param dirs
-#' character (default: "code-Rmd").
-#' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
+#' character (default: "code-rmd").
+#' Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
+#' Examples:
+#' dirs = "code-rmd"
+#' dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")
 #' @param subdirs
-#' character (default: NULL). It's case insensitive.
-#' If only_subdirs == NULL then all subdirectories and files within directory in input parameter dir are processed, otherwise only files in subdirectories in this input parameter only_subdirs are processed.
-#' If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
-#' Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")
+#' logical (default: TRUE).
+#' If TRUE, file listing will also recurse into directories in parameter dir.
+#' If FALSE, file listing will be only directly from directories in parameter dir.
 #' @param orig_rmd_pattern
-#' character (default: NULL).
-#' If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
-#' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-#' Example when directories subPagesX are saved in directory dir = "code-Rmd":
-#' file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")
-#' file_path = c("subPages2\\testPrint1.Rmd", "subPages3\\testPrint2.Rmd")
+#' character (default: NULL). Vector of paths to original .Rmd files.
+#' If NULL, process all .Rmd files based values in parameters dir and subdirs.
+#' If not NULL, process files matching written regular expression.
+#' Examples:
+#' orig_rmd_pattern = "^.*page.*.\[  R , r \]md$")
+#' orig_rmd_pattern = c("page1.Rmd", ".*page2.*.Rmd")
 #' @keywords workflowr, subdirectory
-#' @return None, but stop processing if any of checks fails.
+#' @return Character vector "orig_rmd_path" but stop processing if no file meets criteria.
 #' @examples
 #' \dontrun{
-#'   initial_checks(dir, path_orig_Rmd)
+#'   create_orig_rmd_path(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
 #' }
 
-create_orig_rmd_path <- function(dirs = "code-Rmd", subdirs = T, orig_rmd_pattern = NULL) {
+create_orig_rmd_path <- function(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL) {
   # variable initialization
   orig_rmd_path <- c()  # return variable for created original .Rmd paths; initialization required because of append() below
 
@@ -41,7 +44,7 @@ create_orig_rmd_path <- function(dirs = "code-Rmd", subdirs = T, orig_rmd_patter
       base::mapply(
         base::list.files,    # if some file doesn't exist then list.files() produces list (instead of a character vector)
         path = dirs[iterate_dirs],  # path consisting of directories and subdirectories; lf = list_files
-        full.names = T,      # example of a full name: code-Rmd/subPages/test.Rmd
+        full.names = T,      # example of a full name: code-rmd/subPages/test.Rmd
         recursive = subdirs,
         pattern = orig_rmd_pattern
         # Notes

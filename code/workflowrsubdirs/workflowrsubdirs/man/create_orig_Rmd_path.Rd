@@ -4,33 +4,36 @@
 \alias{create_orig_rmd_path}
 \title{Create paths to original .Rmd files for future rendering}
 \usage{
-create_orig_rmd_path(dirs = "code-Rmd", subdirs = T, orig_rmd_pattern = NULL)
+create_orig_rmd_path(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL)
 }
 \arguments{
-\item{dirs}{character (default: "code-Rmd").
-Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
+\item{dirs}{character (default: "code-rmd").
+Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
+Examples:
+dirs = "code-rmd"
+dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")}
 
-\item{subdirs}{character (default: NULL). It's case insensitive.
-If only_subdirs == NULL then all subdirectories and files within directory in input parameter dir are processed, otherwise only files in subdirectories in this input parameter only_subdirs are processed.
-If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
-Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")}
+\item{subdirs}{logical (default: TRUE).
+If TRUE, file listing will also recurse into directories in parameter dir.
+If FALSE, file listing will be only directly from directories in parameter dir.}
 
-\item{orig_rmd_pattern}{character (default: NULL).
-If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
-Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-Example when directories subPagesX are saved in directory dir = "code-Rmd":
-file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")
-file_path = c("subPages2\\testPrint1.Rmd", "subPages3\\testPrint2.Rmd")}
+\item{orig_rmd_pattern}{character (default: NULL). Vector of paths to original .Rmd files.
+If NULL, process all .Rmd files based values in parameters dir and subdirs.
+If not NULL, process files matching written regular expression.
+Examples:
+orig_rmd_pattern = "^.\emph{page.}.[  R , r ]md$")
+orig_rmd_pattern = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 }
 \value{
-None, but stop processing if any of checks fails.
+Character vector "orig_rmd_path" but stop processing if no file meets criteria.
 }
 \description{
-Create paths to original .Rmd files for future rendering otherwise stop processing.
+Create paths to original .Rmd files for future rendering into .html.
+If no file for rendering is found, processing ends.
 }
 \examples{
 \dontrun{
-  initial_checks(dir, path_orig_Rmd)
+  create_orig_rmd_path(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
 }
 }
 \keyword{subdirectory}

@@ -12,7 +12,7 @@
 #'    - So the resulting .html files are associated with their original .Rmd files (temporary .Rmd files are simply product of a helping step).
 #' 6. Delete temporary .Rmd files from directory "analysis".
 #' @param dirs
-#' character (default: "code-Rmd").
+#' character (default: "code-rmd").
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
 #' @param subdirs
 #' character (default: NULL). It's case insensitive.
@@ -23,7 +23,7 @@
 #' character (default: NULL).
 #' If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
 #' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-#' Example when directories subPagesX are saved in directory dir = "code-Rmd":
+#' Example when directories subPagesX are saved in directory dir = "code-rmd":
 #' file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")
 #' file_path = c("subPages2\\testPrint1.Rmd", "subPages3\\testPrint2.Rmd")
 #' @param commit
@@ -36,11 +36,11 @@
 #' @examples
 #' \dontrun{
 #'   generate_html()
-#'   generate_html("code-Rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
-#'   generate_html("code-Rmd", c("subPages1\\testPrint1.Rmd", "subPages2\\testPrint2.Rmd"), F)
+#'   generate_html("code-rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
+#'   generate_html("code-rmd", c("subPages1\\testPrint1.Rmd", "subPages2\\testPrint2.Rmd"), F)
 #' }
 
-generate_html <- function(dirs = "code-Rmd", subdirs = T, orig_rmd_pattern = NULL, commit = F) {
+generate_html <- function(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL, commit = F) {
   # initial settings
   base::setwd(here::here())  # setting of project (.Rproj) directory as a working directory in case it was changed after opening .Rproj file; it's necessary to have some of following steps after this setting
   dirs <- base::gsub("\\\\", "/", dirs)  # e.g. for mapply() in create_orig_rmd_path()

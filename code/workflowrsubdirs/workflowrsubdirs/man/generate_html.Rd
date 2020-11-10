@@ -5,14 +5,14 @@
 \title{Render .html files from their original .Rmd files stored in subdirectories}
 \usage{
 generate_html(
-  dirs = "code-Rmd",
+  dirs = "code-rmd",
   subdirs = T,
   orig_rmd_pattern = NULL,
   commit = F
 )
 }
 \arguments{
-\item{dirs}{character (default: "code-Rmd").
+\item{dirs}{character (default: "code-rmd").
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
 
 \item{subdirs}{character (default: NULL). It's case insensitive.
@@ -23,7 +23,7 @@ Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")}
 \item{orig_rmd_pattern}{character (default: NULL).
 If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
 Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-Example when directories subPagesX are saved in directory dir = "code-Rmd":
+Example when directories subPagesX are saved in directory dir = "code-rmd":
 file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")
 file_path = c("subPages2\\testPrint1.Rmd", "subPages3\\testPrint2.Rmd")}
 
@@ -57,8 +57,8 @@ Processed steps:
 \examples{
 \dontrun{
   generate_html()
-  generate_html("code-Rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
-  generate_html("code-Rmd", c("subPages1\\\\testPrint1.Rmd", "subPages2\\\\testPrint2.Rmd"), F)
+  generate_html("code-rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
+  generate_html("code-rmd", c("subPages1\\\\testPrint1.Rmd", "subPages2\\\\testPrint2.Rmd"), F)
 }
 }
 \keyword{subdirectory}

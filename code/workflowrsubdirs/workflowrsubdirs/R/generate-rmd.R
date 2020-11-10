@@ -1,26 +1,28 @@
 #' @title
 #' Generate temporary .Rmd files
 #' @description
-#' It generates .Rmd files from their original .Rmd files that are saved in subdirectories and saves them into directory "analysis".
-#' These generated .Rmd files are meant to be temporary and they will be deleted at the end of function \code{\link{generate_html}} after final .html files are rendered.
-#' @param dir
-#' character (default: "code-Rmd").
-#' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
+#' Generate temporary .Rmd files from their original .Rmd files,
+#' usually saved in directory "code" and its subdirectories,
+#' and save them into directory "analysis".
+#' These generated .Rmd files will be deleted at the end of function \code{\link{generate_html}}
+#' after final .html files are rendered.
+#' @param dirs
+#' character (default: "code-rmd").
+#' Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
+#' Examples:
+#' dirs = "code-rmd"
+#' dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")
 #' @param orig_rmd_path
 #' character (default: NULL).
-#' Path to an original .Rmd file. Path ignores dir (see the 1st parameter).
+#' Path to an original .Rmd file. Path ignores dirs (see the 1st parameter).
 #' @param temp_rmd_path
 #' character (default: NULL).
 #' Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
 #' This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{generate_html}}.
 #' @keywords workflowr, subdirectory
 #' @return Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used to generate final .html file.
-#' @examples
-#' \dontrun{
-#'   generate_rmd("code-Rmd", "subPages1/testPrint1.Rmd", "subPages1--testPrint1.Rmd")
-#' }
 
-generate_rmd <- function(dir = "code-Rmd", orig_rmd_path = NULL, temp_rmd_path = NULL) {
+generate_rmd <- function(dirs = "code-rmd", orig_rmd_path = NULL, temp_rmd_path = NULL) {
   orig_rmd_rel_path <- base::file.path(".", orig_rmd_path)  # relative path to an original .Rmd file, "." is used for setting a correct path in parameter "child" of "r chunk" below
   base::cat(
     "---\n",
@@ -29,11 +31,11 @@ generate_rmd <- function(dir = "code-Rmd", orig_rmd_path = NULL, temp_rmd_path =
     "**Source file:** ", orig_rmd_path,  # link to original .Rmd file from workflowr subdirectory
     "\n\n",
 
-    # r chunk code (not YAML header); [lit 4]
+    # r chunk code (not YAML header)
     "```{r child = base::file.path(knitr::opts_knit$get(\"output.dir\"), \".", orig_rmd_rel_path, "\")}\n```",
     file = temp_rmd_path,  # file = a name of file that will be created
     sep = "",
-    append = F  # overwrite a content of a file
+    append = F
   )
   # Notes
   #   Explanation of usage dot defined by \"." in r child in r chunk code
