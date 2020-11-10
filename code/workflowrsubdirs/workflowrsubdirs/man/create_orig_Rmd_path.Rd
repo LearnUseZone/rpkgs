@@ -4,17 +4,13 @@
 \alias{create_orig_rmd_path}
 \title{Create paths to original .Rmd files for future rendering}
 \usage{
-create_orig_rmd_path(
-  dir = "code-Rmd",
-  only_subdirs = NULL,
-  orig_rmd_pattern = NULL
-)
+create_orig_rmd_path(dirs = "code-Rmd", subdirs = T, orig_rmd_pattern = NULL)
 }
 \arguments{
-\item{dir}{character (default: "code-Rmd").
+\item{dirs}{character (default: "code-Rmd").
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
 
-\item{only_subdirs}{character (default: NULL). It's case insensitive.
+\item{subdirs}{character (default: NULL). It's case insensitive.
 If only_subdirs == NULL then all subdirectories and files within directory in input parameter dir are processed, otherwise only files in subdirectories in this input parameter only_subdirs are processed.
 If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
 Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")}

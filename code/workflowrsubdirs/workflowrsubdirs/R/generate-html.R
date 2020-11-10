@@ -11,10 +11,10 @@
 #' 5. Generate .html files from temporary .Rmd files.
 #'    - So the resulting .html files are associated with their original .Rmd files (temporary .Rmd files are simply product of a helping step).
 #' 6. Delete temporary .Rmd files from directory "analysis".
-#' @param dir
+#' @param dirs
 #' character (default: "code-Rmd").
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
-#' @param only_subdirs
+#' @param subdirs
 #' character (default: NULL). It's case insensitive.
 #' If only_subdirs == NULL then all subdirectories and files within directory in input parameter dir are processed, otherwise only files in subdirectories in this input parameter only_subdirs are processed.
 #' If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
@@ -40,11 +40,12 @@
 #'   generate_html("code-Rmd", c("subPages1\\testPrint1.Rmd", "subPages2\\testPrint2.Rmd"), F)
 #' }
 
-generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, orig_rmd_pattern = NULL, commit = F) {
+generate_html <- function(dirs = "code-Rmd", subdirs = T, orig_rmd_pattern = NULL, commit = F) {
   # initial settings
   base::setwd(here::here())  # setting of project (.Rproj) directory as a working directory in case it was changed after opening .Rproj file; it's necessary to have some of following steps after this setting
-  initial_checks(dir, only_subdirs, orig_rmd_pattern)  # has the "power" to stop following processing
-  orig_rmd_path <- create_orig_rmd_path(dir, only_subdirs, orig_rmd_pattern) # get paths to original .Rmd files for future rendering
+  dirs <- base::gsub("\\\\", "/", dirs)  # e.g. for mapply() in create_orig_rmd_path()
+  initial_checks(dirs, subdirs, orig_rmd_pattern)  # has the "power" to stop following processing
+  orig_rmd_path <- create_orig_rmd_path(dirs, subdirs, orig_rmd_pattern) # get paths to original .Rmd files for future rendering
 
   # render orig_rmd_path to a new path_knitr_Rmd file in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
   path_knitr_Rmd <- base::sub("\\.Rmd$", "_knitr.Rmd", orig_rmd_path)
@@ -59,7 +60,7 @@ generate_html <- function(dir = "code-Rmd", only_subdirs = NULL, orig_rmd_patter
   )
 
   # generate temporary .Rmd files in directory "analysis"
-  base::mapply(generate_rmd, dir, path_knitr_Rmd, temp_rmd_path)
+  base::mapply(generate_rmd, dirs, path_knitr_Rmd, temp_rmd_path)
 
   # commit and render temporary .Rmd files in directory "analysis" using package "workflowr"
   if (commit == T) {
