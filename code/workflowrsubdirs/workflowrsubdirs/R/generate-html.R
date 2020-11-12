@@ -60,7 +60,7 @@ generate_html <- function(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NUL
   )
 
   # generate temporary .Rmd files in directory "analysis"
-  base::mapply(generate_rmd, dirs, path_knitr_Rmd, temp_rmd_path)
+  base::mapply(generate_rmd, orig_rmd_path = path_knitr_Rmd, temp_rmd_path = temp_rmd_path)
 
   # commit and render temporary .Rmd files in directory "analysis" using package "workflowr"
   if (commit == T) {

@@ -4,19 +4,13 @@
 \alias{generate_rmd}
 \title{Generate temporary .Rmd files}
 \usage{
-generate_rmd(dirs = "code-rmd", orig_rmd_path = NULL, temp_rmd_path = NULL)
+generate_rmd(orig_rmd_path, temp_rmd_path)
 }
 \arguments{
-\item{dirs}{character (default: "code-rmd").
-Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
-Examples:
-dirs = "code-rmd"
-dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")}
+\item{orig_rmd_path}{character
+Path to an original .Rmd knitr file.}
 
-\item{orig_rmd_path}{character (default: NULL).
-Path to an original .Rmd file. Path ignores dirs (see the 1st parameter).}
-
-\item{temp_rmd_path}{character (default: NULL).
+\item{temp_rmd_path}{character
 Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
 This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{generate_html}}.}
 }
