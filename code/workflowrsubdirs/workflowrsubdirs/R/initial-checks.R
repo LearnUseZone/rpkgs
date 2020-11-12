@@ -42,9 +42,11 @@ initial_checks <- function(dirs, subdirs, orig_rmd_pattern) {
   }
   if (dirs_count == 0) stop("Non of specified directories exist in main workflowr directory.")
 
+
   # check input parameter subdirs
-  if (base::is.null(subdirs)) stop("Input parameter subdirs cannot be NULL. Processing ends.")
-  # add check if subdirs is only one logical (vector of length 1)???
+  if (!((subdirs == F || subdirs == T) && base::length(subdirs) == 1)) {
+    stop("Input parameter subdirs can be only FALSE or TRUE. Processing ends.")
+  }
 
 
   # check .Rmd files in directories analysis and input variable dir
