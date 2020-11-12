@@ -2,17 +2,20 @@
 #' Check rules for directories and subdirectories
 #' @description
 #' Check rules for directories and subdirectories to evaluate if rendering of .html files is possible.
+#' This function is meant to be called only from function \code{\link{generate_html}} so
+#' it will be not exported therefore input variables have no default values.
 #' @param dirs
-#' character (default: "code-rmd").
+#' character
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
 #' @param subdirs
-#' character (default: "code-rmd").
+#' character
 #' Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
 #' Examples:
 #' dirs = "code-rmd"
 #' dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")
 #' @param orig_rmd_pattern
-#' character (default: NULL). Vector of paths to original .Rmd files.
+#' character
+#' Vector of paths to original .Rmd files.
 #' If NULL, process all .Rmd files based values in parameters dir and subdirs.
 #' If not NULL, process files matching written regular expression.
 #' Examples:
@@ -25,12 +28,12 @@
 #'   initial_checks(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
 #' }
 
-initial_checks <- function(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL) {
+initial_checks <- function(dirs, subdirs, orig_rmd_pattern) {
   # check an existence of a user chosen directories
   if (is.null(dirs)) stop ("At least one directory is required.")  # solving: dirs != NULL
 
-  # check if non of default workflowr directories is chosen
-  dirs_count <- 0  # how many directories in parameter "dir" exists
+  # check if at least one directory in dirs exists and if non of default workflowr directories is chosen
+  dirs_count <- 0  # number of (any) existing directories in "dirs"
   for (iterate_dirs in 1:base::length(dirs)) {
     if (base::file.exists(dirs[iterate_dirs])) dirs_count <- dirs_count + 1
     if (dirs[iterate_dirs] %in% c("analysis", "code", "data", "output", "public")) {

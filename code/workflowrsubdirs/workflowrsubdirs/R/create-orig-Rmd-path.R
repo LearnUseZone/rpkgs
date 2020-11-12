@@ -3,18 +3,21 @@
 #' @description
 #' Create paths to original .Rmd files for future rendering into .html.
 #' If no file for rendering is found, processing ends.
+#' This function is meant to be called only from function \code{\link{generate_html}} so
+#' it will be not exported therefore input variables have no default values.
 #' @param dirs
-#' character (default: "code-rmd").
+#' character
 #' Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
 #' Examples:
 #' dirs = "code-rmd"
 #' dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")
 #' @param subdirs
-#' logical (default: TRUE).
+#' logical
 #' If TRUE, file listing will also recurse into directories in parameter dir.
 #' If FALSE, file listing will be only directly from directories in parameter dir.
 #' @param orig_rmd_pattern
-#' character (default: NULL). Vector of paths to original .Rmd files.
+#' character
+#' Vector of paths to original .Rmd files.
 #' If NULL, process all .Rmd files based values in parameters dir and subdirs.
 #' If not NULL, process files matching written regular expression.
 #' Examples:
@@ -27,7 +30,7 @@
 #'   create_orig_rmd_path(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
 #' }
 
-create_orig_rmd_path <- function(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL) {
+create_orig_rmd_path <- function(dirs, subdirs, orig_rmd_pattern) {
   # variable initialization
   orig_rmd_path <- c()  # return variable for created original .Rmd paths; initialization required because of append() below
 

@@ -4,19 +4,20 @@
 \alias{initial_checks}
 \title{Check rules for directories and subdirectories}
 \usage{
-initial_checks(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL)
+initial_checks(dirs, subdirs, orig_rmd_pattern)
 }
 \arguments{
-\item{dirs}{character (default: "code-rmd").
+\item{dirs}{character
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
 
-\item{subdirs}{character (default: "code-rmd").
+\item{subdirs}{character
 Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
 Examples:
 dirs = "code-rmd"
 dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")}
 
-\item{orig_rmd_pattern}{character (default: NULL). Vector of paths to original .Rmd files.
+\item{orig_rmd_pattern}{character
+Vector of paths to original .Rmd files.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
 If not NULL, process files matching written regular expression.
 Examples:
@@ -28,6 +29,8 @@ None but stop processing if no file meets criteria.
 }
 \description{
 Check rules for directories and subdirectories to evaluate if rendering of .html files is possible.
+This function is meant to be called only from function \code{\link{generate_html}} so
+it will be not exported therefore input variables have no default values.
 }
 \examples{
 \dontrun{

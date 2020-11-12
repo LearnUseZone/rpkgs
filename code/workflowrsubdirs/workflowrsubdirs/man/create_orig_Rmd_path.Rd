@@ -4,20 +4,21 @@
 \alias{create_orig_rmd_path}
 \title{Create paths to original .Rmd files for future rendering}
 \usage{
-create_orig_rmd_path(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL)
+create_orig_rmd_path(dirs, subdirs, orig_rmd_pattern)
 }
 \arguments{
-\item{dirs}{character (default: "code-rmd").
+\item{dirs}{character
 Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
 Examples:
 dirs = "code-rmd"
 dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")}
 
-\item{subdirs}{logical (default: TRUE).
+\item{subdirs}{logical
 If TRUE, file listing will also recurse into directories in parameter dir.
 If FALSE, file listing will be only directly from directories in parameter dir.}
 
-\item{orig_rmd_pattern}{character (default: NULL). Vector of paths to original .Rmd files.
+\item{orig_rmd_pattern}{character
+Vector of paths to original .Rmd files.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
 If not NULL, process files matching written regular expression.
 Examples:
@@ -30,6 +31,8 @@ Character vector "orig_rmd_path" but stop processing if no file meets criteria.
 \description{
 Create paths to original .Rmd files for future rendering into .html.
 If no file for rendering is found, processing ends.
+This function is meant to be called only from function \code{\link{generate_html}} so
+it will be not exported therefore input variables have no default values.
 }
 \examples{
 \dontrun{

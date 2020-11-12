@@ -6,6 +6,8 @@
 #' and save them into directory "analysis".
 #' These generated .Rmd files will be deleted at the end of function \code{\link{generate_html}}
 #' after final .html files are rendered.
+#' This function is meant to be called only from function \code{\link{generate_html}} so
+#' it will be not exported therefore input variables have no default values.
 #' @param orig_rmd_path
 #' character
 #' Path to an original .Rmd knitr file.
