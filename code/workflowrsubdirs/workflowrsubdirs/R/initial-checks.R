@@ -13,13 +13,13 @@
 #' Examples:
 #' dirs = "code-rmd"
 #' dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")
-#' @param orig_rmd_pattern
+#' @param orig_rmd_patterns
 #' character
 #' Vector of paths to original .Rmd files.
 #' If NULL, process all .Rmd files based values in parameters dir and subdirs.
 #' If not NULL, process files matching written regular expression.
 #' Examples:
-#' orig_rmd_pattern = "^.*page.*.\[  R , r \]md$")
+#' orig_rmd_pattern = "^.*page.*.\[  R , r \]md$"
 #' orig_rmd_pattern = c("page1.Rmd", ".*page2.*.Rmd")
 #' @keywords workflowr, subdirectory
 #' @return None but stop processing if no file meets criteria.
@@ -28,7 +28,7 @@
 #'   initial_checks(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
 #' }
 
-initial_checks <- function(dirs, subdirs, orig_rmd_pattern) {
+initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
   # check an existence of a user chosen directories
   if (is.null(dirs)) stop ("At least one directory is required.")  # solving: dirs != NULL
 
@@ -49,8 +49,21 @@ initial_checks <- function(dirs, subdirs, orig_rmd_pattern) {
   }
 
 
-  # check .Rmd files in directories analysis and input variable dir
-  #   ensure that there are no temporary .Rmd files in directory "analysis" otherwise you may receive message like following one after trying to run function wflow_git_commit(...): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
+  # check if files with extension .Rmd or .rmd were chosen and continue only with patterns that meet this criteria
+  #   workflowr::wflow_build() expects only files with extension Rmd or rmd otherwise following appears: Error: Invalid input for argument files,  Expected input: Only files with extension Rmd or rmd,  Observed input: ...
+  if (!is.null(orig_rmd_patterns)) { # solving: orig_rmd_patterns == NULL
+    for (pattern_num in 1:base::length(orig_rmd_patterns)) {
+      if (!stringr::str_detect(orig_rmd_patterns[pattern_num], "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$")) {  # package "stringr" is used because it solves e.g. problems with escaping "]" that package function like "base::grepl()" has
+        #'' orig_rmd_patterns <- orig_rmd_patterns[-pattern_num]  # make this if () part better later - recalculate used regular expression to process at least those files that meet criteria (e.g. one pattern meets criteria, another one pattern doesn't meet criteria, so process the 1st pattern) - for this purpose to do this recalculation on this line needs to go to function create_orig_rmd_path()???
+        #'' if (base::length(orig_rmd_patterns) == 0) stop("No file meets criteria. Check parameter orig_rmd_patterns. Processing ends.")
+        stop("Check parameter orig_rmd_patterns. Part of it doesn't meet required criteria of a file with extension .Rmd or rmd. Processing ends.")
+      }
+    } # for (pattern_num in 1:base::length(orig_rmd_patterns))
+  }
+
+
+  # give the option to delete teporary .Rmd files from "analysis"
+  #   if there are temporary .Rmd files in "analysis" a message like following one may appears after trying to run function wflow_git_commit(): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
   if (base::length(
     double_hyphen_paths <- base::dir(
       path = "analysis",
@@ -71,9 +84,9 @@ initial_checks <- function(dirs, subdirs, orig_rmd_pattern) {
     if (option == 1) {
       base::file.remove(double_hyphen_paths)
     } else if (option == 2) {
-      base::stop("Processing ends based on your chosen option.")
+      base::stop("You chose to stop rendering. Processing ends.")
     } else (
-      base::stop("Processing ends because you chose not available option.")
+      base::stop("You chose a not available option. Processing ends")
     )
   }
 }

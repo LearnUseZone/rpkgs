@@ -4,7 +4,7 @@
 \alias{create_orig_rmd_path}
 \title{Create paths to original .Rmd files for future rendering}
 \usage{
-create_orig_rmd_path(dirs, subdirs, orig_rmd_pattern)
+create_orig_rmd_path(dirs, subdirs, orig_rmd_patterns)
 }
 \arguments{
 \item{dirs}{character
@@ -17,7 +17,7 @@ dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")}
 If TRUE, file listing will also recurse into directories in parameter dir.
 If FALSE, file listing will be only directly from directories in parameter dir.}
 
-\item{orig_rmd_pattern}{character
+\item{orig_rmd_patterns}{character
 Vector of paths to original .Rmd files.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
 If not NULL, process files matching written regular expression.
@@ -36,7 +36,7 @@ it will be not exported therefore input variables have no default values.
 }
 \examples{
 \dontrun{
-  create_orig_rmd_path(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
+  create_orig_rmd_path(dirs = "code-rmd", subdirs = T, orig_rmd_patterns = ".*page.*.(R|r)md$")
 }
 }
 \keyword{subdirectory}

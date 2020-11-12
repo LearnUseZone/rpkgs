@@ -7,7 +7,7 @@
 generate_html(
   dirs = "code-rmd",
   subdirs = T,
-  orig_rmd_pattern = NULL,
+  orig_rmd_patterns = NULL,
   commit = F
 )
 }
@@ -20,7 +20,7 @@ If only_subdirs == NULL then all subdirectories and files within directory in in
 If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
 Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")}
 
-\item{orig_rmd_pattern}{character (default: NULL).
+\item{orig_rmd_patterns}{character (default: NULL).
 If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
 Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
 Example when directories subPagesX are saved in directory dir = "code-rmd":

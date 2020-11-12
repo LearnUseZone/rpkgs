@@ -19,7 +19,7 @@
 #' If only_subdirs == NULL then all subdirectories and files within directory in input parameter dir are processed, otherwise only files in subdirectories in this input parameter only_subdirs are processed.
 #' If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
 #' Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")
-#' @param orig_rmd_pattern
+#' @param orig_rmd_patterns
 #' character (default: NULL).
 #' If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
 #' Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
@@ -40,12 +40,12 @@
 #'   generate_html("code-rmd", c("subPages1\\testPrint1.Rmd", "subPages2\\testPrint2.Rmd"), F)
 #' }
 
-generate_html <- function(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = NULL, commit = F) {
+generate_html <- function(dirs = "code-rmd", subdirs = T, orig_rmd_patterns = NULL, commit = F) {
   # initial settings
   base::setwd(here::here())  # setting of project (.Rproj) directory as a working directory in case it was changed after opening .Rproj file; it's necessary to have some of following steps after this setting
   dirs <- base::gsub("\\\\", "/", dirs)  # e.g. for mapply() in create_orig_rmd_path()
-  initial_checks(dirs, subdirs, orig_rmd_pattern)  # has the "power" to stop following processing
-  orig_rmd_path <- create_orig_rmd_path(dirs, subdirs, orig_rmd_pattern) # get paths to original .Rmd files for future rendering
+  initial_checks(dirs, subdirs, orig_rmd_patterns)  # has the "power" to stop following processing
+  orig_rmd_path <- create_orig_rmd_path(dirs, subdirs, orig_rmd_patterns) # get paths to original .Rmd files for future rendering
 
   # render orig_rmd_path to a new path_knitr_Rmd file in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
   path_knitr_Rmd <- base::sub("\\.Rmd$", "_knitr.Rmd", orig_rmd_path)
