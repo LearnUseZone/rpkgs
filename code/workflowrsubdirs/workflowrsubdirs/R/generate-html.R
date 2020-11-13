@@ -47,20 +47,17 @@ generate_html <- function(dirs = "code-rmd", subdirs = T, orig_rmd_patterns = NU
   initial_checks(dirs, subdirs, orig_rmd_patterns)  # has the "power" to stop following processing
   orig_rmd_path <- create_orig_rmd_path(dirs, subdirs, orig_rmd_patterns) # get paths to original .Rmd files for future rendering
 
-  # render orig_rmd_path to a new path_knitr_Rmd file in order to get correctly "calculated" inline R code in YAML header; find out if (maybe it's not possible at all or it's not worth it) is it possible to use knitr to get only YAML header and then join it with the rest of .Rmd code (let's start with https://stackoverflow.com/questions/39885363/importing-common-yaml-in-rstudio-knitr-document)???
-  path_knitr_Rmd <- base::sub("\\.Rmd$", "_knitr.Rmd", orig_rmd_path)
-  base::mapply(knitr::knit, orig_rmd_path, path_knitr_Rmd)
-
-  # create paths to temporary (will be deleted after .html files are rendered) .Rmd files under directory in dir
+  # create paths to temporary .Rmd file in directory "analysis"
+  #   this temporary .Rmd file name will not contain (see substr() below) a name of directory in the 1st part (before the 1st slash) in "dir"
   slash_pos <- base::regexpr("/", orig_rmd_path)
-  orig_rmd_path <- base::substr(orig_rmd_path, slash_pos + 1, base::nchar(orig_rmd_path))
   temp_rmd_path <- base::file.path(
     "analysis",
-    base::gsub("/", "--", orig_rmd_path)  # create file names (not paths) with "--"
+    base::gsub("/", "--",  # .Rmd file name saved under "analysis" cannot contain "/" so they will be replaced
+               base::substr(orig_rmd_path, slash_pos + 1, base::nchar(orig_rmd_path)))  # ignor the 1st part (before the 1st slash) in "dir"
   )
 
   # generate temporary .Rmd files in directory "analysis"
-  base::mapply(generate_rmd, orig_rmd_path = path_knitr_Rmd, temp_rmd_path = temp_rmd_path)
+  base::mapply(generate_rmd, orig_rmd_path = orig_rmd_path, temp_rmd_path = temp_rmd_path)
 
   # commit and render temporary .Rmd files in directory "analysis" using package "workflowr"
   if (commit == T) {
@@ -70,5 +67,4 @@ generate_html <- function(dirs = "code-rmd", subdirs = T, orig_rmd_patterns = NU
 
   # delete temporary helping .Rmd files
   base::file.remove(temp_rmd_path)
-  base::file.remove(path_knitr_Rmd)
 }

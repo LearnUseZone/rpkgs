@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-12 18:08 GMT+2
+Last update: 2020-11-13 18:20 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -40,6 +40,29 @@ Last update: 2020-11-12 18:08 GMT+2
 
   - .Rmd files containing “–” (two hyphens) are not allowed in directory
     “analysis”.,
+
+  - How to solve problems when YAML header of .Rmd files in
+    subdirectories contains inline R code like:  
+    date:    "\`r paste(\\“Last update:\\”,
+    format(lubridate::with\_tz(as.POSIXct(Sys.time()) + 7200, tzone =
+    \\“GMT\\”), \\“%Y-%m-%d %H:%M GMT+2\\”))\`"  
+    
+      - " - this sign cannot be used without escaping.
+          - for workflowr::wflow\_build(“analysis/test-file-date.Rmd”):
+            Error in yaml::yaml.load(…, eval.expr = TRUE) : Parser
+            error: while parsing a block mapping at …
+      - If “’” is used then “’’” is created in YAML header in file
+        temp\_rmd\_path.
+          - for workflowr::wflow\_build(“analysis/test-file-date.Rmd”)
+            the sign “’” is working
+      - \\’ returns Scanner error: while parsing a quoted scalar at line
+        3, column 10 found unknown escape character at line 3, column 20
+          - for workflowr::wflow\_build(“analysis/test-file-date.Rmd”)
+            is this error also returned
+      - \\" (escaping " sign) works
+          - for workflowr::wflow\_build(“analysis/test-file-date.Rmd”) -
+            Error: callr subprocess failed: <text>:1:7: unexpected input
+            1: paste(\\
 
 ## Briefly about package functions
 
@@ -94,24 +117,6 @@ Last update: 2020-11-12 18:08 GMT+2
           - “base::mapply(generate\_rmd, dir, file\_path, temp\_file)”
             is called inside function
             “workflowrsubdirs::generate\_html()”.
-  - Version 0.0.0.0300 contains possibility to use inline R code in YAML
-    header if .Rmd file is saved in a subdirectory.  
-      - Previously, one of generate\_rmd behavior was:  
-        rmarkdown::yaml\_front\_matter(relPath) with relPath = (e.g.)
-        ./code-Rmd/\<file\_name.Rmd\> and following YAML header date
-        part of this \<file\_name.Rmd\>  
-        date:    "\`r format (Sys.time(), format=‘%Y-%m-%d %H:%M:%S
-        %z’)\`"  
-        returned following as one element of a list  
-        '\`r format (Sys.time(), format=‘%Y-%m-%d %H:%M:%S %z’)\`'  
-        instead of e.g. '2020-10-22 14:29:49 +0200'.
-      - In order to update previous behavior, I’ve added several lines
-        of code (all changes were made in “generate\_html()”), among
-        them knitr::knit(relPath, \<file\_path\_to\_output\_file.Rmd\>)
-        which firstly creates a new .Rmd file which is used in
-        yaml::as.yaml(rmarkdown::yaml\_front\_matter(\<file\_path\_to\_output\_file.Rmd\>)).  
-        I’ve also added base::file.remove(base::file.path(dir,
-        path\_knitr\_Rmd)).
 
 ## Installation
 

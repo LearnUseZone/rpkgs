@@ -29,6 +29,21 @@ knitr::opts_chunk$set(
 - .Rmd files containing "--" (two hyphens) are not allowed in directory "analysis".,
 
 
+- How to solve problems when YAML header of .Rmd files in subdirectories contains inline R code like:\
+date:&nbsp;&nbsp;&nbsp;&nbsp;\"&#x060;r paste(\\"Last update:\\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200, tzone = \\"GMT\\"), \\"%Y-%m-%d %H:%M GMT+2\\"))&#x060;\"\
+  - " - this sign cannot be used without escaping.
+      -  for workflowr::wflow_build("analysis/test-file-date.Rmd"): Error in yaml::yaml.load(..., eval.expr = TRUE) :   Parser error: while parsing a block mapping at ...
+  - If "'" is used then "''" is created in YAML header in file temp_rmd_path.
+      - for workflowr::wflow_build("analysis/test-file-date.Rmd") the sign "'" is working
+  - \\' returns Scanner error: while parsing a quoted scalar at line 3, column 10 found unknown escape character at line 3, column 20
+      - for workflowr::wflow_build("analysis/test-file-date.Rmd") is this error also returned
+  - \\" (escaping " sign) works
+      - for workflowr::wflow_build("analysis/test-file-date.Rmd") - Error: callr subprocess failed: <text>:1:7: unexpected input  1: paste(\\
+
+
+
+
+
 ## Briefly about package functions
 - Following information adds more clarity to information accessible using help (F1).
 
@@ -53,17 +68,6 @@ knitr::opts_chunk$set(
   Error in base::mapply(generate_rmd, dir, file_path, temp_file) : 
   zero-length inputs cannot be mixed with those of non-zero length
     - "base::mapply(generate_rmd, dir, file_path, temp_file)" is called inside function "workflowrsubdirs::generate_html()".
-- Version 0.0.0.0300 contains possibility to use inline R code in YAML header if .Rmd file is saved in a subdirectory.\
-  - Previously, one of generate_rmd behavior was:\
-    rmarkdown::yaml_front_matter(relPath) with relPath = (e.g.) ./code-Rmd/<file_name.Rmd> and following YAML header date part of this <file_name.Rmd>\
-    date:&nbsp;&nbsp;&nbsp;&nbsp;\"&#x060;r format (Sys.time(), format='%Y-%m-%d %H:%M:%S %z')&#x060;\"\
-    returned following as one element of a list\
-    \'&#x060;r format (Sys.time(), format='%Y-%m-%d %H:%M:%S %z')&#x060;\'\
-    instead of e.g. \'2020-10-22 14:29:49 +0200\'.
-  - In order to update previous behavior, I’ve added several lines of code (all changes were made in     “generate_html()”), among them
-    knitr::knit(relPath, <file_path_to_output_file.Rmd>)
-    which firstly creates a new .Rmd file which is used in yaml::as.yaml(rmarkdown::yaml_front_matter(<file_path_to_output_file.Rmd>)).\
-    I’ve also added base::file.remove(base::file.path(dir, path_knitr_Rmd)).
 
 
 ## Installation
