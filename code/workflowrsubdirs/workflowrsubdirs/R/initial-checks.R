@@ -29,25 +29,18 @@
 #' }
 
 initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
-  # check an existence of a user chosen directories
-  if (is.null(dirs)) stop ("At least one directory is required.")  # solving: dirs != NULL
-
-  # check if at least one directory in dirs exists and if non of default workflowr directories is chosen
-  dirs_count <- 0  # number of (any) existing directories in "dirs"
-  for (iterate_dirs in 1:base::length(dirs)) {
-    if (base::file.exists(dirs[iterate_dirs])) dirs_count <- dirs_count + 1
-    if (dirs[iterate_dirs] %in% c("analysis", "code", "data", "output", "public")) {
-      stop(base::paste0("Choose other than default workflowr directory."))
-    }
+  # check an existence of a user chosen directory
+  if (base::is.null(dirs)) stop ("A directory is required. Processing ends.")  # solving: dirs != NULL
+  if (base::length(dirs) != 1) stop("Exactly one directory path is required. Processing ends.")
+  if (dirs == "") stop("Parameter dirs cannot be empty string. Processing ends.")
+  if (dirs %in% c("analysis", "code", "data", "output", "public")) {
+    stop("Choose other than default workflowr directory. Processing ends.")
   }
-  if (dirs_count == 0) stop("Non of specified directories exist in main workflowr directory.")
-
 
   # check input parameter subdirs
   if (!((subdirs == F || subdirs == T) && base::length(subdirs) == 1)) {
     stop("Input parameter subdirs can be only FALSE or TRUE. Processing ends.")
   }
-
 
   # check if files with extension .Rmd or .rmd were chosen and continue only with patterns that meet this criteria
   #   workflowr::wflow_build() expects only files with extension Rmd or rmd otherwise following appears: Error: Invalid input for argument files,  Expected input: Only files with extension Rmd or rmd,  Observed input: ...
@@ -60,7 +53,6 @@ initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
       }
     } # for (pattern_num in 1:base::length(orig_rmd_patterns))
   }
-
 
   # give the option to delete teporary .Rmd files from "analysis"
   #   if there are temporary .Rmd files in "analysis" a message like following one may appears after trying to run function wflow_git_commit(): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
