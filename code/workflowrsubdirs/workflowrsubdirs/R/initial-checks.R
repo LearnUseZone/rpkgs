@@ -54,8 +54,8 @@ initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
   if (!is.null(orig_rmd_patterns)) { # solving: orig_rmd_patterns == NULL
     for (pattern_num in 1:base::length(orig_rmd_patterns)) {
       if (!stringr::str_detect(orig_rmd_patterns[pattern_num], "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$")) {  # package "stringr" is used because it solves e.g. problems with escaping "]" that package function like "base::grepl()" has
-        #'' orig_rmd_patterns <- orig_rmd_patterns[-pattern_num]  # make this if () part better later - recalculate used regular expression to process at least those files that meet criteria (e.g. one pattern meets criteria, another one pattern doesn't meet criteria, so process the 1st pattern) - for this purpose to do this recalculation on this line needs to go to function create_orig_rmd_path()???
-        #'' if (base::length(orig_rmd_patterns) == 0) stop("No file meets criteria. Check parameter orig_rmd_patterns. Processing ends.")
+        #   orig_rmd_patterns <- orig_rmd_patterns[-pattern_num]  # make this if () part better later - recalculate used regular expression to process at least those files that meet criteria (e.g. one pattern meets criteria, another one pattern doesn't meet criteria, so process the 1st pattern) - for this purpose to do this recalculation on this line needs to go to function create_orig_rmd_path()???
+        #   if (base::length(orig_rmd_patterns) == 0) stop("No file meets criteria. Check parameter orig_rmd_patterns. Processing ends.")
         stop("Check parameter orig_rmd_patterns. Part of it doesn't meet required criteria of a file with extension .Rmd or rmd. Processing ends.")
       }
     } # for (pattern_num in 1:base::length(orig_rmd_patterns))

@@ -61,6 +61,7 @@ create_orig_rmd_path <- function(dirs, subdirs, orig_rmd_patterns) {
   } # for (iterate_dirs in 1:base::length(dir))
 
   if (length(orig_rmd_path) == 0) stop("No file meets criteria. Processing ends.")
+  orig_rmd_path <- base::unique(orig_rmd_path)  # if orig_rmd_patterns contains link to the same files then those files have to be processed only once, otherwise such files will be build (with wflow_build()) only once but following warning message pops-up: cannot remove file xxx, reason 'No such file or directory'
 
   # return a vector of real paths of original rmd files under directory in dir
   return(orig_rmd_path)

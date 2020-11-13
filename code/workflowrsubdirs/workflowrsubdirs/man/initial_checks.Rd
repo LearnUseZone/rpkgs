@@ -32,5 +32,10 @@ Check rules for directories and subdirectories to evaluate if rendering of .html
 This function is meant to be called only from function \code{\link{generate_html}} so
 it will be not exported therefore input variables have no default values.
 }
+\examples{
+\dontrun{
+  initial_checks(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
+}
+}
 \keyword{subdirectory}
 \keyword{workflowr,}
