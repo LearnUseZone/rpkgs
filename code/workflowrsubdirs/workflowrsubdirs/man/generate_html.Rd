@@ -62,7 +62,7 @@ Processed steps:
 \examples{
 \dontrun{
   generate_html()
-  generate_html(dirs = "code-rmd\\\\subdir", subdirs = F)
+  generate_html(dirs = c("code-rmd\\\\subdir"), subdirs = F)
   generate_html("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
 }
 }
