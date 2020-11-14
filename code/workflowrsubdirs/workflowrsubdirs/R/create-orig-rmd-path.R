@@ -7,12 +7,14 @@
 #' it will be not exported therefore input variables have no default values.
 #' @param dirs
 #' character
-#' Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
+#' Path to subdirectory, under a main workflowr directory, where original .Rmd files are saved.
+#' It can be only of length = 1.
 #' Examples:
 #' dirs = "code-rmd"
-#' dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")
+#' dirs = c("code-rmd/subdir1\\subdir2")
 #' @param subdirs
 #' logical
+#' It can be only of length = 1.
 #' If TRUE, file listing will also recurse into directories in parameter dir.
 #' If FALSE, file listing will be only directly from directories in parameter dir.
 #' @param orig_rmd_patterns
@@ -21,8 +23,8 @@
 #' If NULL, process all .Rmd files based values in parameters dir and subdirs.
 #' If not NULL, process files matching written regular expression.
 #' Examples:
-#' orig_rmd_pattern = "^.*page.*.\[  R , r \]md$")
-#' orig_rmd_pattern = c("page1.Rmd", ".*page2.*.Rmd")
+#' orig_rmd_patterns = "^.*page.*.\[  R , r \]md$")
+#' orig_rmd_patterns = c("page1.Rmd", ".*page2.*.Rmd")
 #' @keywords workflowr, subdirectory
 #' @return Character vector "orig_rmd_path" but stop processing if no file meets criteria.
 #' @examples
@@ -60,7 +62,15 @@ create_orig_rmd_path <- function(dirs, subdirs, orig_rmd_patterns) {
     orig_rmd_path <- base::append(orig_rmd_path, result_orig_rmd_patterns)            # append() - because each for () cycle may generate new result_orig_rmd_patterns
   } # for (iterate_dirs in 1:base::length(dir))
 
-  if (length(orig_rmd_path) == 0) stop("No file meets criteria. Processing ends.")
+  if (length(orig_rmd_path) == 0) {
+    stop("No file meets criteria. Processing ends.\n",
+         "Possible issues:\n",
+         "You wrote path to a file like subdir/filename.Rmd.\n",
+         "Case sensitivity isn't met like you can have file file.Rmd but you wrote e.g. File.Rmd or file.rmd and similarly for a regular expression(s).",
+         "Chosen file name(s) simply don't exist or chosen regular expression(s) didn't find any matching file.",
+         call. = F  # error call (e.g. a function where the error is generated) is not written
+    )
+  }
   orig_rmd_path <- base::unique(orig_rmd_path)  # if orig_rmd_patterns contains link to the same files then those files have to be processed only once, otherwise such files will be build (with wflow_build()) only once but following warning message pops-up: cannot remove file xxx, reason 'No such file or directory'
 
   # return a vector of real paths of original rmd files under directory in dir

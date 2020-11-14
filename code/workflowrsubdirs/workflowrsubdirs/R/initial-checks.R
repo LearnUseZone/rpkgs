@@ -1,26 +1,29 @@
 #' @title
-#' Check rules for directories and subdirectories
+#' Check rules for directories and files
 #' @description
-#' Check rules for directories and subdirectories to evaluate if rendering of .html files is possible.
+#' Check rules for directories and .Rmd files to evaluate if rendering of .html files is possible.
 #' This function is meant to be called only from function \code{\link{generate_html}} so
 #' it will be not exported therefore input variables have no default values.
 #' @param dirs
 #' character
 #' Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
-#' @param subdirs
-#' character
-#' Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
+#' It can be only of length = 1.
 #' Examples:
 #' dirs = "code-rmd"
-#' dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")
+#' dirs = c("code-rmd/subdir1\\subdir2")
+#' @param subdirs
+#' logical
+#' It can be only of length = 1.
+#' If TRUE, file listing will also recurse into directories in parameter dir.
+#' If FALSE, file listing will be only directly from directories in parameter dir.
 #' @param orig_rmd_patterns
 #' character
 #' Vector of paths to original .Rmd files.
 #' If NULL, process all .Rmd files based values in parameters dir and subdirs.
 #' If not NULL, process files matching written regular expression.
 #' Examples:
-#' orig_rmd_pattern = "^.*page.*.\[  R , r \]md$"
-#' orig_rmd_pattern = c("page1.Rmd", ".*page2.*.Rmd")
+#' orig_rmd_patterns = "^.*page.*.\[  R , r \]md$")
+#' orig_rmd_patterns = c("page1.Rmd", ".*page2.*.Rmd")
 #' @keywords workflowr, subdirectory
 #' @return None but stop processing if no file meets criteria.
 #' @examples
@@ -30,16 +33,16 @@
 
 initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
   # check an existence of a user chosen directory
-  if (base::is.null(dirs)) stop ("A directory is required. Processing ends.")  # solving: dirs != NULL
-  if (base::length(dirs) != 1) stop("Exactly one directory path is required. Processing ends.")
-  if (dirs == "") stop("Parameter dirs cannot be empty string. Processing ends.")
+  if (base::is.null(dirs)) stop ("A directory is required. Processing ends.", call. = F)  # solving: dirs != NULL
+  if (base::length(dirs) != 1) stop("Exactly one directory path is required. Processing ends.", call. = F)
+  if (dirs == "") stop("Parameter dirs cannot be empty string. Processing ends.", call. = F)
   if (dirs %in% c("analysis", "code", "data", "output", "public")) {
-    stop("Choose other than default workflowr directory. Processing ends.")
+    stop("Choose other than default workflowr directory. Processing ends.", call. = F)
   }
 
   # check input parameter subdirs
   if (!((subdirs == F || subdirs == T) && base::length(subdirs) == 1)) {
-    stop("Input parameter subdirs can be only FALSE or TRUE. Processing ends.")
+    stop("Input parameter subdirs can be only FALSE or TRUE. Processing ends.", call. = F)
   }
 
   # check if files with extension .Rmd or .rmd were chosen and continue only with patterns that meet this criteria
@@ -49,7 +52,7 @@ initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
       if (!stringr::str_detect(orig_rmd_patterns[pattern_num], "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$")) {  # package "stringr" is used because it solves e.g. problems with escaping "]" that package function like "base::grepl()" has
         #   orig_rmd_patterns <- orig_rmd_patterns[-pattern_num]  # make this if () part better later - recalculate used regular expression to process at least those files that meet criteria (e.g. one pattern meets criteria, another one pattern doesn't meet criteria, so process the 1st pattern) - for this purpose to do this recalculation on this line needs to go to function create_orig_rmd_path()???
         #   if (base::length(orig_rmd_patterns) == 0) stop("No file meets criteria. Check parameter orig_rmd_patterns. Processing ends.")
-        stop("Check parameter orig_rmd_patterns. Part of it doesn't meet required criteria of a file with extension .Rmd or rmd. Processing ends.")
+        stop("Parameter orig_rmd_patterns doesn't point to file(s) with extension .Rmd or rmd. Processing ends.", call. = F)
       }
     } # for (pattern_num in 1:base::length(orig_rmd_patterns))
   }
@@ -76,9 +79,9 @@ initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
     if (option == 1) {
       base::file.remove(double_hyphen_paths)
     } else if (option == 2) {
-      base::stop("You chose to stop rendering. Processing ends.")
+      base::stop("You chose to stop rendering. Processing ends.", call. = F)
     } else (
-      base::stop("You chose a not available option. Processing ends")
+      base::stop("You chose a not available option. Processing ends", call. = F)
     )
   }
 }

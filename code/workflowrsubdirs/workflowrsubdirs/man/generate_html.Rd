@@ -13,19 +13,24 @@ generate_html(
 }
 \arguments{
 \item{dirs}{character (default: "code-rmd").
-Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
+Path to subdirectory, under a main workflowr directory, where original .Rmd files are saved.
+It can be only of length = 1.
+Examples:
+dirs = "code-rmd"
+dirs = c("code-rmd/subdir1\\subdir2")}
 
-\item{subdirs}{character (default: NULL). It's case insensitive.
-If only_subdirs == NULL then all subdirectories and files within directory in input parameter dir are processed, otherwise only files in subdirectories in this input parameter only_subdirs are processed.
-If only_subdirs != NULL then it's a vector of subdirectories in directory specified in input parameter dir.
-Examples: only_subdirs = NULL; only_subdirs == c("subdir1", "subdir.Rmd")}
+\item{subdirs}{logical
+It can be only of length = 1.
+If TRUE, file listing will also recurse into directories in parameter dir.
+If FALSE, file listing will be only directly from directories in parameter dir.}
 
 \item{orig_rmd_patterns}{character (default: NULL).
-If orig_rmd_pattern == NULL then search for all files in directories set by dir or only_subdirs.
-Vector of paths to original .Rmd files. These file paths start with a name of the 1st subdirectory of a directory specified in variable "dir".
-Example when directories subPagesX are saved in directory dir = "code-rmd":
-file_path = c("subPages2/testPrint1.Rmd", "subPages3/testPrint2.Rmd")
-file_path = c("subPages2\\testPrint1.Rmd", "subPages3\\testPrint2.Rmd")}
+Vector of paths to original .Rmd files.
+If NULL, process all .Rmd files based values in parameters dir and subdirs.
+If not NULL, process files matching written regular expression.
+Examples:
+orig_rmd_patterns = "^.\emph{page.}.[  R , r ]md$")
+orig_rmd_patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 
 \item{commit}{character (default: FALSE).
 commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in directory "analysis").
@@ -57,8 +62,8 @@ Processed steps:
 \examples{
 \dontrun{
   generate_html()
-  generate_html("code-rmd", c("subPages1/testPrint1.Rmd", "subPages2/testPrint2.Rmd"), T)
-  generate_html("code-rmd", c("subPages1\\\\testPrint1.Rmd", "subPages2\\\\testPrint2.Rmd"), F)
+  generate_html(dirs = "code-rmd\\\\subdir", subdirs = F)
+  generate_html("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
 }
 }
 \keyword{subdirectory}

@@ -1,13 +1,13 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-13 18:20 GMT+2
+Last update: 2020-11-14 14:39 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
+      - [Avoid problems with YAML header of .Rmd files in
+        subdirectories](#avoid-problems-with-yaml-header-of-.rmd-files-in-subdirectories)
   - [Briefly about package functions](#briefly-about-package-functions)
-      - [generate\_rmd()](#generate_rmd)
-      - [create\_orig\_Rmd\_path()](#create_orig_rmd_path)
       - [generate\_html()](#generate_html)
   - [Installation](#installation)
       - [Try following steps if the package weren’t installed
@@ -15,9 +15,8 @@ Last update: 2020-11-13 18:20 GMT+2
         ](#try-following-steps-if-the-package-werent-installed-successfully)
   - [Needed packages](#needed-packages)
   - [Example](#example)
-      - [Usage of workflowrsubdirs after it’s installed from the source
-        tar.gz
-        file](#usage-of-workflowrsubdirs-after-its-installed-from-the-source-tar.gz-file)
+      - [Usage of workflowrsubdirs after it's
+        installed](#usage-of-workflowrsubdirs-after-its-installed)
   - [Additional notes](#additional-notes)
 
 ## Purpose
@@ -26,97 +25,104 @@ Last update: 2020-11-13 18:20 GMT+2
     [workflowr](https://github.com/jdblischak/workflowr) in order to be
     able to render .html pages from .Rmd files saved in subdirectories
     of a workflowr project.
-      - Use workflowr if .Rmd files from directory “analysis” are
+      - Use workflowr if .Rmd files from directory "analysis" are
         rendered.
       - Use workflowrsubdirs if .Rmd files from subdirectories are
         rendered.
   - I suggest to create a new directory, for your .Rmd files saved in
     subdirectories, directly in your workflowr project’s working
-    directory (and not in directory “analysis”).
-      - For example: create folder “code-Rmd” in the same directory as
-        folder “code”.
+    directory (and not in directory "analysis").
+      - For example: create directory "code-rmd" in the same directory
+        as directory "code".
 
 ## General rules
 
-  - .Rmd files containing “–” (two hyphens) are not allowed in directory
-    “analysis”.,
+  - This package is an extension for package "workflowr" therefore it’s
+    needed to have the same structure of directories "analysis", "code"
+    and "docs" as for workflowr.
+      - When you create your directory for .Rmd files in subdirectories
+          - it has to be in the same directory as previous 3
+            directories.
+          - I suggest to create a directory "code-rmd" as this is also
+            the default directory in function generate\_html() (see
+            below).
+  - .Rmd files containing "--" (two hyphens) are not allowed in
+    directory "analysis".
 
-  - How to solve problems when YAML header of .Rmd files in
-    subdirectories contains inline R code like:  
-    date:    "\`r paste(\\“Last update:\\”,
+### Avoid problems with YAML header of .Rmd files in subdirectories
+
+  - Example of inline R code that can cause problems with rendering .Rmd
+    file to .html file:  
+    date:    "\`r paste("Last update:",
     format(lubridate::with\_tz(as.POSIXct(Sys.time()) + 7200, tzone =
-    \\“GMT\\”), \\“%Y-%m-%d %H:%M GMT+2\\”))\`"  
-    
-      - " - this sign cannot be used without escaping.
-          - for workflowr::wflow\_build(“analysis/test-file-date.Rmd”):
-            Error in yaml::yaml.load(…, eval.expr = TRUE) : Parser
-            error: while parsing a block mapping at …
-      - If “’” is used then “’’” is created in YAML header in file
-        temp\_rmd\_path.
-          - for workflowr::wflow\_build(“analysis/test-file-date.Rmd”)
-            the sign “’” is working
-      - \\’ returns Scanner error: while parsing a quoted scalar at line
-        3, column 10 found unknown escape character at line 3, column 20
-          - for workflowr::wflow\_build(“analysis/test-file-date.Rmd”)
-            is this error also returned
-      - \\" (escaping " sign) works
-          - for workflowr::wflow\_build(“analysis/test-file-date.Rmd”) -
-            Error: callr subprocess failed: <text>:1:7: unexpected input
-            1: paste(\\
+    "GMT"), "%Y-%m-%d %H:%M GMT+2"))\`"  
+  - Summary:
+      - Use single quotation marks for inline R codes in YAML header in
+        .Rmd files saved in directory analysis, e.g.:  
+        "\`r paste('Last update:', …
+      - Use escaped double quotation marks for inline R codes in YAML
+        header in .Rmd files saved in subdirectories, e.g.:  
+        "\`r paste(\\"Last update:\\", …
+  - More information:
+      - If a single quotation mark (') is used then two consecutive
+        single quotation marks ('') are created in YAML header in a
+        temporary .Rmd file (will be deleted after .html file is
+        rendere) that is temporarily created in directory analysis (this
+        file is used to render a final .html file).
+          - Usage of a single quotation marks is working for
+            workflowr::wflow\_build("analysis/test-file-date.Rmd").
+      - If a double quotation mark (") is used then error is displayed.
+          - The same error is displayed also for
+            workflowr::wflow\_build("analysis/test-file-date.Rmd").
+      - If an escaped single quotation mark (\\’) is used then error is
+        displayed.
+          - The same error is displayed also for
+            workflowr::wflow\_build("analysis/test-file-date.Rmd").
+      - If an escaped double quotation mark (\\") is used then rendering
+        a temporary .Rmd file to .html file works.
+          - An error is displayed for
+            workflowr::wflow\_build("analysis/test-file-date.Rmd").
 
 ## Briefly about package functions
 
   - Following information adds more clarity to information accessible
     using help (F1).
 
-#### generate\_rmd()
-
-  - It cannot be called.
-  - It’s only used in generate\_html().
-  - @examples (file generate\_rmd.R) are set to not run.
-  - If you want to use devtools::check() also with checking @examples,
-    then remember that this package is an extension of workflowr and in
-    order to ensure that example not fails, it’s needed
-      - to have the same structure of some folders (analysis, code,
-        code-Rmd, docs) as for workflowr, or
-      - to adjust code lines referencing to any path and it’s not
-        effective to do it only because of checking.
-
-#### create\_orig\_Rmd\_path()
-
-  - It cannot be called.
-
 #### generate\_html()
 
-  - It can be called.
-  - It manages process of rendering .html pages from .Rmd files from
-    subdirectories, so this is the only one function needed to be
-    called.
-  - Rendered .html files are again prepared in folder “docs” (for
-    GitHub) or folder “public” (for GitLab). Each such file name
-    consists of “‐‐” which are delimiters for paths to original .Rmd
+  - This is the only one function that can be called.
+  - It uses 3 more package functions (that cannot be called):
+      - initial\_checks() - it checks rules for directories and .Rmd
+        files to evaluate if rendering of .html files is possible.
+      - create\_orig\_rmd\_path() - it creates paths to original .Rmd
+        files for future rendering into .html.
+      - generate\_rmd() - it generates temporary .Rmd files from their
+        original .Rmd files and save them into directory “analysis”.
+  - Rendered .html files are again prepared in directory "docs" (for
+    GitHub) or directory "public" (for GitLab). Each such file name
+    consists of "--" which are delimiters for paths to original .Rmd
     files paths.
   - After look at workflowr button of opened .html file, under tab
-    “Checks” can be found “R Markdown file: uncommitted changes”. This
+    "Checks" can be found "R Markdown file: uncommitted changes". This
     is in line with workflowr package and it means that also your
     temporary files were committed separately, these new .html files
     have to be commited, too (e.g. using
     workflowr::wflow\_git\_commit())
   - If other than workflowr project is originally opened using its
     .Rproj file then this function fails because
-    “base::setwd(here::here())” in this function sets a working
+    "base::setwd(here::here())" in this function sets a working
     directory to an original .Rproj working directory regardless a
     current working directory (e.g. set after opening .Rproj).
     Potentially if a relevant .Rproj working directory have the same
     structure then it could work but I didn’t test it, yet.
       - This type of issue can be considered after running
-        “workflowrsubdirs::generate\_html()”, the following error
-        message arises in “Console” tab: Error in
+        "workflowrsubdirs::generate\_html()", the following error
+        message arises in "Console" tab: Error in
         base::mapply(generate\_rmd, dir, file\_path, temp\_file) :
         zero-length inputs cannot be mixed with those of non-zero length
-          - “base::mapply(generate\_rmd, dir, file\_path, temp\_file)”
+          - "base::mapply(generate\_rmd, dir, file\_path, temp\_file)"
             is called inside function
-            “workflowrsubdirs::generate\_html()”.
+            "workflowrsubdirs::generate\_html()".
 
 ## Installation
 
@@ -133,14 +139,15 @@ Last update: 2020-11-13 18:20 GMT+2
       - Build (from top menu) -\> Build Source Package -\> wait until
         .tar.gz file is created.
       - Run R code: install.packages(\<path\_to\_tar.gz\_file\>, repos =
-        NULL, type = “source”)
+        NULL, type = "source")
 
 ### Try following steps if the package weren’t installed successfully:  
 
-1.  Check if the package is in RStudio “Packages” tab and if yes,
+1.  Check if the package is in RStudio "Packages" tab and if yes,
     uninstall it.
-2.  Check if folder “workflowrsubdirs” exists within folder “library”
-    with your installed R packages and if it exists, delete it.
+2.  Check if directory "workflowrsubdirs" exists within directory
+    “library” with your installed R packages and if it exists, delete
+    it.
 3.  Restart R session e.g. using RStudio -\> Session -\> Restart R.
 4.  Install the package again using  
     a) Install and Restart (Ctrl+Shift+B) or  
@@ -161,60 +168,70 @@ Last update: 2020-11-13 18:20 GMT+2
 
 ## Example
 
-  - If you have created a workflowr project, it’s required to create
-    .Rmd files in folder “analysis” in order to render them to .html
-    files.
+  - At the beginning a working directory of package "workflowr" needs to
+    be prepared. You can find relevant steps together with more
+    information like usage of (required and optional) workflowr
+    subdirectories
+    [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
   - You can use directory “code” for codes that might not be appropriate
     to include in R Markdown format (e.g. for pre-processing the data,
     or for long-running code). You can have also subdirectories here.
-  - If you want to have .Rmd files showing results of your .R files from
-    folder “code”, you have to create them in folder “analysis” if you
-    want to use purely package workflowr.
+  - If you want to render .Rmd files (showing results of your .R files
+    from directory "code") to .html files using purely package
+    "workflowr", save relevant .Rmd files into directory "analysis".
   - If you like to have the same structure as .R files also for your
-    .Rmd files, you can create a new folder, e.g. code-Rmd, and create
-    relevant subdirectories together with associated .Rmd files (these
-    .Rmd files could be also in subdirectories of folder “code” but I
-    think it could be less organized or clear).
-  - Now, because you have .Rmd files in subdirectories under directory
-    code-Rmd, use this package workflowrsubdir to render .html files.
-  - A real example with .Rmd files in subdirectories (under directory
-    codeRmd in this case) can be found
+    .Rmd files, you can create a new directory, e.g. "code-rmd", and
+    create relevant subdirectories together with associated .Rmd files
+    (these .Rmd files could be also in subdirectories of directory
+    “code” but I think it could be less organized or clear).
+      - Don’t use directory "analysis" for this purpose. Now, because
+        you have .Rmd files in subdirectories under directory code-rmd,
+        use this package workflowrsubdir to render .html files.
+  - Examples: Consider following files  
+      - "code-rmd/subdir/testfile1.Rmd",
+      - "code-rmd/subdir/testfile2.rmd",
+      - "code-rmd/subdir/testdir/testfile1.Rmd",
+      - "code-rmd/subdir/testdir/my-analyses.Rmd"
+      - If you want to render all those files, you can use several
+        options, like:
+          - workflowrsubdirs::generate\_html() \# if there are other
+            files in "code-rmd" or it’s subdirectories, those files will
+            be processed, too
+          - workflowrsubdirs::generate\_html(dirs = "code-rmd/subdir")
+            \# all files in directories and subdirectories of
+            "code-rmd/subdir" will be processed
+          - workflowrsubdirs::generate\_html(dirs =
+            "code-rmd\\\\subdir") \# all files in directories and
+            subdirectories of "code-rmd/subdir" will be processed
+          - workflowrsubdirs::generate\_html(dirs = "code-rmd/subdir",
+            orig\_rmd\_patterns = ".\*.(r|R)md$")
+          - workflowrsubdirs::generate\_html(dirs = "code-rmd/subdir",
+            orig\_rmd\_patterns = c("^test.\*.rmd$", "file1.Rmd",
+            "-.\*.\[ R , r \]md"))
+  - Important note: If orig\_rmd\_patterns isn’t NULL then it always has
+    to end with .rmd, .Rmd, .rmd$, .Rmd$ or a relevant regular
+    expression that after evaluation point to one of those 4 extensions.
+      - This is made in accordance to behaviour of package "workflowr"
+        which allows only .rmd or .Rmd extensions.
+  - Note: A real example with .Rmd files in subdirectories (under
+    directory codeRmd in this case) can be found
     [here](https://github.com/LearnUseZone/workflowrSubfolders).
-  - More about usage of workflowr folders is
-    [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
-  - Example: let’s say you have file “testToDelete2.Rmd” in directory
-    “test\_eToro2.Rmd” and you want to find it based on it’s name:
-      - you have 2 options:
-          - 1st) generate\_html(dir = “code-Rmd”, only\_subdirs = NULL,
-            orig\_Rmd\_pattern = “testToDelete2.Rmd”)
-          - 2nd) generate\_html(dir = “code-Rmd”, only\_subdirs =
-            “test\_eToro2.Rmd”, orig\_Rmd\_pattern =
-            “testToDelete2.Rmd”)
+      - Use this only for your better overview of managing directories
+        because this package is enhanced against the original version
+        used in "workflowrSubfolders".
 
-### Usage of workflowrsubdirs after it’s installed from the source tar.gz file
+### Usage of workflowrsubdirs after it's installed
 
 1.  After workflowrsubdirs is installed, open your workflowr project
     (run .Rproj file).
 2.  Use workflowrsubdirs::generate\_html().
-
-<!-- end list -->
-
-  - If you downloaded my
-    [repository](https://github.com/LearnUseZone/workflowrSubfolders),
-    then you can test it by running an example code that you can find
-    also in help for function “generate\_html()”:
-    workflowrsubdirs::generate\_html(“code-Rmd”,
-    c(“subPages1/testPrint1.Rmd”, “subPages2/testPrint2.Rmd”), T)
-
-<!-- end list -->
-
 3.  Remember that although commit of temporary .Rmd files were made
     within function workflowrsubdirs::generate\_html(), you still have
     to commit the rest of files. You can use for this purpose e.g.:
 
 <!-- end list -->
 
-  - 3a. GitHub Desktop
+  - 3a. GitHub Desktop, Sourcetree or other Git desktop client.
   - 3b. Git Bash (also set as Terminal in RStudio) with git commands
     like:  
     git branch -a \# I prefer to check whitch branch is checked out  
@@ -225,27 +242,23 @@ Last update: 2020-11-13 18:20 GMT+2
     workflowr::wflow\_git\_commit(c(“docs/subPages1–testPrint1.html”,
     “docs/subPages2–testPrint2.html”), “tested: package
     workflowrsubdirs with workflowr”, all = TRUE)  
-    workflowr::wflow\_use\_github(“LearnUseZone”, “workflowrSubfolders”)
+    workflowr::wflow\_use\_github("LearnUseZone", "workflowrSubfolders")
     \# usually choose a default option which is 2  
-    workflowr::wflow\_git\_push() \# use your credentials  
-      - As it’s shown in 3b – simply make sure that you are in a correct
-        branch and feel free to use workflowr functions which push your
-        changes to checked out branch.
+    workflowr::wflow\_git\_push() \# use your credentials to push your
+    changes to checked out branch.  
 
 ## Additional notes
 
   - I assume that you are using RStudio and therefore some parts of this
     or other documents may be focused on this assumption but of course
     the relevant associated steps (you need to know them) work also if
-    you don’t use RStudio.
+    you don't use RStudio.
   - I’m still working on improvements therefore it can still be found
     for example
-      - some placeholders like “tests-generate\_rmd.R” and
+      - some placeholders like "tests-generate\_rmd.R" and
       - notes for future improvements.
-  - Logic of functions generate\_rmd() and generate\_html() is inspired
-    by these
-    [comments](https://github.com/jdblischak/workflowr/issues/95) but
-    then they are upgraded e.g. for a better consistency with package
-    workflowr.  
-  - [Here](https://github.com/jdblischak/workflowr/issues/220) can be
-    found my discussion with a creator of package workflowr.
+  - Initial inspiration for this package is from
+    [here](https://github.com/jdblischak/workflowr/issues/95).  
+  - A related discussion with John Blischak (a creator of package
+    workflowr) about a base set-up can be found
+    [here](https://github.com/jdblischak/workflowr/issues/220).

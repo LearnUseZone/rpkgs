@@ -17,6 +17,10 @@
 #' This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{generate_html}}.
 #' @keywords workflowr, subdirectory
 #' @return Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used to generate final .html file.
+#' @examples
+#' \dontrun{
+#'   generate_rmd("code-rmd/subdir/testfile.Rmd", "analysis/subdir--testfile.Rmd")
+#' }
 
 generate_rmd <- function(orig_rmd_path, temp_rmd_path) {
   orig_rmd_rel_path <- base::file.path(".", orig_rmd_path)  # relative path to an original .Rmd file, "." is used for setting a correct path in parameter "child" of "r chunk" below

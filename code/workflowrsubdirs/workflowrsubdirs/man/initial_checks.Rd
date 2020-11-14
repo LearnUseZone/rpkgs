@@ -2,33 +2,36 @@
 % Please edit documentation in R/initial-checks.R
 \name{initial_checks}
 \alias{initial_checks}
-\title{Check rules for directories and subdirectories}
+\title{Check rules for directories and files}
 \usage{
 initial_checks(dirs, subdirs, orig_rmd_patterns)
 }
 \arguments{
 \item{dirs}{character
-Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.}
-
-\item{subdirs}{character
-Paths to directories, under a main workflowr directory, where original .Rmd files are saved.
+Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
+It can be only of length = 1.
 Examples:
 dirs = "code-rmd"
-dirs = c("code-rmd/subpage", "code-rmd/subpage1\\subpage2")}
+dirs = c("code-rmd/subdir1\\subdir2")}
+
+\item{subdirs}{logical
+It can be only of length = 1.
+If TRUE, file listing will also recurse into directories in parameter dir.
+If FALSE, file listing will be only directly from directories in parameter dir.}
 
 \item{orig_rmd_patterns}{character
 Vector of paths to original .Rmd files.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
 If not NULL, process files matching written regular expression.
 Examples:
-orig_rmd_pattern = "^.\emph{page.}.[  R , r ]md$"
-orig_rmd_pattern = c("page1.Rmd", ".\emph{page2.}.Rmd")}
+orig_rmd_patterns = "^.\emph{page.}.[  R , r ]md$")
+orig_rmd_patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 }
 \value{
 None but stop processing if no file meets criteria.
 }
 \description{
-Check rules for directories and subdirectories to evaluate if rendering of .html files is possible.
+Check rules for directories and .Rmd files to evaluate if rendering of .html files is possible.
 This function is meant to be called only from function \code{\link{generate_html}} so
 it will be not exported therefore input variables have no default values.
 }

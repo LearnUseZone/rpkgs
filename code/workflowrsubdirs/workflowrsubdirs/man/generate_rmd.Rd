@@ -26,5 +26,10 @@ after final .html files are rendered.
 This function is meant to be called only from function \code{\link{generate_html}} so
 it will be not exported therefore input variables have no default values.
 }
+\examples{
+\dontrun{
+  generate_rmd("code-rmd/subdir/testfile.Rmd", "analysis/subdir--testfile.Rmd")
+}
+}
 \keyword{subdirectory}
 \keyword{workflowr,}
