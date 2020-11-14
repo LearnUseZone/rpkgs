@@ -33,9 +33,11 @@
 
 initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
   # check an existence of a user chosen directory
-  if (base::is.null(dirs)) stop ("A directory is required. Processing ends.", call. = F)  # solving: dirs != NULL
-  if (base::length(dirs) != 1) stop("Exactly one directory path is required. Processing ends.", call. = F)
+  if (base::is.null(dirs)) stop ("Parameter dirs cannot be NULL. Processing ends.", call. = F)  # solving: dirs != NULL
   if (dirs == "") stop("Parameter dirs cannot be empty string. Processing ends.", call. = F)
+  if (base::length(dirs) != 1) stop("Parameter dirs can contain only one path to a directory. Processing ends.", call. = F)
+  if (!file.exists(dirs)) stop("Parameter dirs contain a directory that doesn't exist. Processing ends.", call. = F)
+  if (base::regexpr("//", dirs) > 0) stop("Parameter dirs contain \"//\" instead of \"/\" or \"\\\\\".", call. = F)   # file.exists() doesn't catch path like dir//subdir (only one / should be used); potential issues with "\" is solved by R error message
   if (dirs %in% c("analysis", "code", "data", "output", "public")) {
     stop("Choose other than default workflowr directory. Processing ends.", call. = F)
   }
