@@ -8,7 +8,7 @@ generate_rmd(orig_rmd_path, temp_rmd_path)
 }
 \arguments{
 \item{orig_rmd_path}{character
-Path to an original .Rmd knitr file.}
+Path to an original .Rmd file saved in workflowr subdirectory.}
 
 \item{temp_rmd_path}{character
 Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
