@@ -2,6 +2,7 @@
 #' Check rules for directories and files
 #' @description
 #' Check rules for directories and .Rmd files to evaluate if rendering of .html files is possible.
+#' If some check doesn't pass, processing ends.
 #' This function is meant to be called only from function \code{\link{generate_html}} so
 #' it will be not exported therefore input variables have no default values.
 #' @param dirs
@@ -32,12 +33,17 @@
 #' }
 
 initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
-  # check an existence of a user chosen directory
-  if (base::is.null(dirs)) stop ("Parameter dirs cannot be NULL. Processing ends.", call. = F)  # solving: dirs != NULL
-  if (dirs == "") stop("Parameter dirs cannot be empty string. Processing ends.", call. = F)
-  if (base::length(dirs) != 1) stop("Parameter dirs can contain only one path to a directory. Processing ends.", call. = F)
-  if (!file.exists(dirs)) stop("Parameter dirs contain a directory that doesn't exist. Processing ends.", call. = F)
-  if (base::regexpr("//", dirs) > 0) stop("Parameter dirs contain \"//\" instead of \"/\" or \"\\\\\".", call. = F)   # file.exists() doesn't catch path like dir//subdir (only one / should be used); potential issues with "\" is solved by R error message
+  # check input parameter dirs
+  if (base::is.null(dirs))
+    stop ("Parameter dirs cannot be NULL. Processing ends.", call. = F)
+  if (dirs == "")
+    stop("Parameter dirs cannot be empty string. Processing ends.", call. = F)
+  if (base::length(dirs) != 1)
+    stop("Parameter dirs can contain only one path to a directory. Processing ends.", call. = F)
+  if (!file.exists(dirs))
+    stop("Parameter dirs contain a directory that doesn't exist. Processing ends.", call. = F)
+  if (base::regexpr("//", dirs) > 0)   # file.exists() doesn't catch path like dir//subdir (only one / should be used); potential issues with "\" is solved by R error message
+    stop("Parameter dirs contain \"//\" instead of \"/\" or \"\\\\\".", call. = F)
   if (dirs %in% c("analysis", "code", "data", "output", "public")) {
     stop("Choose other than default workflowr directory. Processing ends.", call. = F)
   }
@@ -47,34 +53,35 @@ initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
     stop("Input parameter subdirs can be only FALSE or TRUE. Processing ends.", call. = F)
   }
 
-  # check if files with extension .Rmd or .rmd were chosen and continue only with patterns that meet this criteria
-  #   workflowr::wflow_build() expects only files with extension Rmd or rmd otherwise following appears: Error: Invalid input for argument files,  Expected input: Only files with extension Rmd or rmd,  Observed input: ...
-  if (!is.null(orig_rmd_patterns)) { # solving: orig_rmd_patterns == NULL
+  # check input parameter orig_rmd_patterns
+  if (!is.null(orig_rmd_patterns)) {
+    ## if chosen files are set (not NULL) then check if all chosen files ends with .Rmd or .rmd
+    ##   workflowr::wflow_build() expects only files with extension Rmd or rmd otherwise:
+    ##     Error: ...  Expected input: Only files with extension Rmd or rmd,  Observed input: ...
     for (pattern_num in 1:base::length(orig_rmd_patterns)) {
-      if (!stringr::str_detect(orig_rmd_patterns[pattern_num], "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$")) {  # package "stringr" is used because it solves e.g. problems with escaping "]" that package function like "base::grepl()" has
-        #   orig_rmd_patterns <- orig_rmd_patterns[-pattern_num]  # make this if () part better later - recalculate used regular expression to process at least those files that meet criteria (e.g. one pattern meets criteria, another one pattern doesn't meet criteria, so process the 1st pattern) - for this purpose to do this recalculation on this line needs to go to function create_orig_rmd_path()???
-        #   if (base::length(orig_rmd_patterns) == 0) stop("No file meets criteria. Check parameter orig_rmd_patterns. Processing ends.")
-        stop("Parameter orig_rmd_patterns doesn't point to file(s) with extension .Rmd or rmd. Processing ends.", call. = F)
+      if (!stringr::str_detect(  # package "stringr" solves some problems, e.g. with escaping "]", that functions like "base::grepl()" has
+        orig_rmd_patterns[pattern_num],
+        "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$")) {
+        ##   it can still happen that no file will exist but this is solved in create_orig_rmd_path
+        stop("Not all parameters orig_rmd_patterns point to file(s) with extension .Rmd or rmd. Processing ends.", call. = F)
       }
-    } # for (pattern_num in 1:base::length(orig_rmd_patterns))
+    }
   }
 
-  # give the option to delete teporary .Rmd files from "analysis"
-  #   if there are temporary .Rmd files in "analysis" a message like following one may appears after trying to run function wflow_git_commit(): Error: Commit failed because no files were added. Attempted to commit the following files: (list of file paths) Any untracked files must manually specified even if `all = TRUE`.
-  if (base::length(
+  # offer the option to delete temporary .Rmd files from directory "analysis"
+  #   if not deleted then calling function wflow_git_commit() ends with an error
+  if (base::length(  # if some ".*--.*.Rmd" file exists in "analysis"
     double_hyphen_paths <- base::dir(
-      path = "analysis",
-      pattern = "(?i)^.*\\-\\-.*.rmd",
-      full.names = T,
-      recursive = T
-    )) > 0) {  # if some "*--*.Rmd" file was found
+      path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd",
+      full.names = T,    recursive = T
+    )) > 0) {
 
     base::cat(
-      "Following .Rmd files contain \"--\" which is not allowed in directory \"analysis\":\n",
+      "Following .(R|r)md files contain \"--\" which is not allowed in directory \"analysis\":\n",
       double_hyphen_paths,
       "\nPlease choose one of the following options:",
-      "1 - Files will be deleted automatically and rendering of .Rmd files will continue.",
-      "2 - Rendering of .Rmd files will stop and I will take care of relevant .Rmd files manually.",
+      "1 - Delete listed files automatically and continue with rendering to .html files.",
+      "2 - Stop rendering. I will manage relevant .Rmd files manually.",
       sep = "\n"
     )
     option <- base::readline(prompt = "Choose 1 or 2: ")

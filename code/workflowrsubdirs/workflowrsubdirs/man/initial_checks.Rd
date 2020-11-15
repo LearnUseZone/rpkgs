@@ -32,6 +32,7 @@ None but stop processing if no file meets criteria.
 }
 \description{
 Check rules for directories and .Rmd files to evaluate if rendering of .html files is possible.
+If some check doesn't pass, processing ends.
 This function is meant to be called only from function \code{\link{generate_html}} so
 it will be not exported therefore input variables have no default values.
 }
