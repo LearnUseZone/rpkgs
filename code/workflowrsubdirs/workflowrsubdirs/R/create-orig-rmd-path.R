@@ -33,36 +33,26 @@
 #' }
 
 create_orig_rmd_path <- function(dirs, subdirs, orig_rmd_patterns) {
-  # variable initialization
-  orig_rmd_path <- c()  # return variable for created original .Rmd paths; initialization required because of append() below
-
   # initial settings based on orig_rmd_patterns for mapply() below
-  ## solving: orig_rmd_patterns == NULL
-  if (base::is.null(orig_rmd_patterns)) orig_rmd_patterns = "(?i)^.*\\.rmd$"  # if orig_rmd_patterns == NULL then search for all files in set directory in dir
+  if (base::is.null(orig_rmd_patterns)) orig_rmd_patterns = "(?i)^.*\\.rmd$"
 
+  # try to create a character vector of .Rmd visible files for further rendering
+  orig_rmd_path <- try({    # orig_rmd_path = original .Rmd file paths created based on all input parameters
+    base::mapply(           # assignment of try (rather than mapply) is better when something in mapply() fails
+      base::list.files,     # if some file doesn't exist then list.files() produces a list instead of a character vector
+      path = dirs,          # lf = list_files
+      full.names = T,       # example of a full name: code-rmd/subdir/testfile.Rmd
+      recursive = subdirs,  # recursive == T => listing will recurse into subdirectories
+      pattern = orig_rmd_patterns
+      # Notes
+      #   all.files = F    # process only visible files
+      #   include.dirs = T # include a subdirectory that matches a regular expression in orig_rmd_patterns
+    )
+  })
+  orig_rmd_path <- base::unname(base::unlist(orig_rmd_path))  # remove unwanted list elements if some of orig_rmd_patterns doesn't exist
 
-  # generate a character vector of .Rmd files for further rendering
-  ## create a character vector or a list of visible files #
-  result_orig_rmd_patterns <- c()
-  for (iterate_dirs in 1:base::length(dirs)) {
-    result_orig_rmd_patterns <- try({  # result_of_try <- try (...) would be the same as result_orig_rmd_patterns in this case; it's better to have result_orig_rmd_patterns <- try, in case that something in mapply() fails
-      base::mapply(
-        base::list.files,    # if some file doesn't exist then list.files() produces list (instead of a character vector)
-        path = dirs[iterate_dirs],  # path consisting of directories and subdirectories; lf = list_files
-        full.names = T,      # example of a full name: code-rmd/subPages/test.Rmd
-        recursive = subdirs,
-        pattern = orig_rmd_patterns
-        # Notes
-        #   all.files = F    # only visible files are processed
-        #   recursive = F    # listing will not recurse into subdirectories
-        #   include.dirs = T # include a subdirectory that matches a regular expression in orig_rmd_patterns
-      )
-    })
-    result_orig_rmd_patterns <- base::unname(base::unlist(result_orig_rmd_patterns))  # remove unwanted list elements if some of orig_rmd_patterns doesn't exist; also if result_orig_rmd_patterns is a matrix, size will be lowered
-    orig_rmd_path <- base::append(orig_rmd_path, result_orig_rmd_patterns)            # append() - because each for () cycle may generate new result_orig_rmd_patterns
-  } # for (iterate_dirs in 1:base::length(dir))
-
-  if (length(orig_rmd_path) == 0) {
+  # check file paths created from all input parameters
+  if (length(orig_rmd_path) == 0) {  # it's not worth to make more checks for separated stops
     stop("No file meets criteria. Processing ends.\n",
          "Possible issues:\n",
          "You wrote path to a file like subdir/filename.Rmd.\n",
@@ -71,8 +61,7 @@ create_orig_rmd_path <- function(dirs, subdirs, orig_rmd_patterns) {
          call. = F  # error call (e.g. a function where the error is generated) is not written
     )
   }
-  orig_rmd_path <- base::unique(orig_rmd_path)  # if orig_rmd_patterns contains link to the same files then those files have to be processed only once, otherwise such files will be build (with wflow_build()) only once but following warning message pops-up: cannot remove file xxx, reason 'No such file or directory'
 
-  # return a vector of real paths of original rmd files under directory in dir
-  return(orig_rmd_path)
+  # if more parts of orig_rmd_patterns point to the same file path, return (process) such file only once
+  return(base::unique(orig_rmd_path))
 }
