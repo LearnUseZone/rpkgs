@@ -68,25 +68,27 @@ initial_checks <- function(dirs, subdirs, orig_rmd_patterns) {
     }
   }
 
-  # offer the option to delete temporary .Rmd files from directory "analysis"
-  #   if not deleted then calling function wflow_git_commit() ends with an error
+  # delete unwanted temporary .Rmd files from "analysis" if chosen by an user
+  #   may occur if these files weren't removed at the end of generate_html() because of some fail
+  #   if not deleted then calling function wflow_git_commit() in generate_html() ends with an error
   if (base::length(  # if some ".*--.*.Rmd" file exists in "analysis"
-    double_hyphen_paths <- base::dir(
+    temp_rmd_paths <- base::dir(
       path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd",
       full.names = T,    recursive = T
     )) > 0) {
 
-    base::cat(
-      "Following .(R|r)md files contain \"--\" which is not allowed in directory \"analysis\":\n",
-      double_hyphen_paths,
+    base::message(base::paste(
+      "Following file names contain \"--\" and that's not allowed in directory \"analysis\":",
+      base::paste(temp_rmd_paths, collapse = "\n"),
       "\nPlease choose one of the following options:",
-      "1 - Delete listed files automatically and continue with rendering to .html files.",
+      "1 - Delete listed files automatically and continue with rendering.",
       "2 - Stop rendering. I will manage relevant .Rmd files manually.",
       sep = "\n"
-    )
+    ))
+
     option <- base::readline(prompt = "Choose 1 or 2: ")
     if (option == 1) {
-      base::file.remove(double_hyphen_paths)
+      base::file.remove(temp_rmd_paths)
     } else if (option == 2) {
       base::stop("You chose to stop rendering. Processing ends.", call. = F)
     } else (
