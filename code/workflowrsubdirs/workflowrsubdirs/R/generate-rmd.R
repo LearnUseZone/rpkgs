@@ -13,10 +13,13 @@
 #' Path to an original .Rmd file saved in workflowr subdirectory.
 #' @param temp_rmd_path
 #' character
-#' Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
-#' This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{render_html}}.
+#' Name ("--" is usually part of it's name) of a temporary .Rmd file that will be
+#' temporarily saved into directory "analysis".
+#' This temporary file is generated from its original .Rmd file specified in path_Rmd,
+#' then it will be deleted within \code{\link{render_html}}.
 #' @keywords workflowr, subdirectory
-#' @return Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used to generate final .html file.
+#' @return Temporary .Rmd file, from its original .Rmd file saved in a subdirectory,
+#' used to generate final .html file.
 #' @examples
 #' \dontrun{
 #'   generate_rmd("code-rmd/subdir/testfile.Rmd", "analysis/subdir--testfile.Rmd")

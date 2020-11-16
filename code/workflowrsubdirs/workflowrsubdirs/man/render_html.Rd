@@ -28,14 +28,18 @@ patterns = "^.\emph{page.}.[  R , r ]md$")
 patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 
 \item{commit}{character (default: FALSE).
-commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in directory "analysis").
-Suggestion: Use commit = TRUE only after your original .Rmd files saved in subdirectories are tested properly and so are completely ready, otherwise you could have pointlessly many commits.}
+commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in "analysis").
+Suggestion: Use commit = TRUE only after your original .Rmd files saved
+in subdirectories are tested properly and so are completely ready,
+otherwise you could have pointlessly many commits.}
 }
 \value{
 Final .html file from its original .Rmd file saved in a subdirectory.
 }
 \description{
-Similarly as for workflowr package, when specifying path to directories or files in function generate_html(), you can start by typing directory name, so for example, you can write "analysis" instead of "./analysis".
+Similarly as for workflowr package, when specifying path to directories or files in function
+this function render_html(), you can start by typing directory name,
+so for example, you can write "analysis" instead of "./analysis".
 Processed steps:
 \enumerate{
 \item Check existence of .Rmd file in a chosen subdirectory.
@@ -45,11 +49,14 @@ Processed steps:
 }
 \enumerate{
 \item Prepare temporary file names by substitution  of "/" in file path by "‐‐".
-\item Function generate_rmd() is used to generate temporary .Rmd files from their original .Rmd files that are saved in subdirectories and save them into directory "analysis".
-\item If commit = TRUE, create a commit of these temporary .Rmd files with text "separate commit of temporary .Rmd files".
+\item Function generate_rmd() is used to generate temporary .Rmd files from their original
+.Rmd files that are saved in subdirectories and save them into directory "analysis".
+\item If commit = TRUE, create a commit of these temporary .Rmd files with text
+"separate commit of temporary .Rmd files".
 \item Generate .html files from temporary .Rmd files.
 \itemize{
-\item So the resulting .html files are associated with their original .Rmd files (temporary .Rmd files are simply product of a helping step).
+\item So the resulting .html files are associated with their original .Rmd files
+(temporary .Rmd files are simply product of a helping step).
 }
 \item Delete temporary .Rmd files from directory "analysis".
 }

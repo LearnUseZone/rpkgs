@@ -3,7 +3,8 @@
 #' @description
 #' Create paths to (usually) original .Rmd files, based on input parameters,
 #' for future rendering into .html.
-#' If no file for rendering is found, processing ends.
+#' If path to a file doesn't exist then such file is not rendered and only those files which exist
+#' are rendered. If no file for rendering is found, processing ends.
 #' This function is meant to be called only from function \code{\link{render_html}} so
 #' it will be not exported therefore input variables have no default values.
 #' @param dir_path

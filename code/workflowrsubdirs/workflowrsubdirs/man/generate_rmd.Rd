@@ -11,11 +11,14 @@ generate_rmd(orig_rmd_path, temp_rmd_path)
 Path to an original .Rmd file saved in workflowr subdirectory.}
 
 \item{temp_rmd_path}{character
-Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
-This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{render_html}}.}
+Name ("--" is usually part of it's name) of a temporary .Rmd file that will be
+temporarily saved into directory "analysis".
+This temporary file is generated from its original .Rmd file specified in path_Rmd,
+then it will be deleted within \code{\link{render_html}}.}
 }
 \value{
-Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used to generate final .html file.
+Temporary .Rmd file, from its original .Rmd file saved in a subdirectory,
+used to generate final .html file.
 }
 \description{
 Generate temporary .Rmd files from their original .Rmd files,
