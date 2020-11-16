@@ -11,57 +11,57 @@
 #' 5. Generate .html files from temporary .Rmd files.
 #'    - So the resulting .html files are associated with their original .Rmd files (temporary .Rmd files are simply product of a helping step).
 #' 6. Delete temporary .Rmd files from directory "analysis".
-#' @param dirs
+#' @param dir_path
 #' character (default: "code-rmd").
 #' Path to subdirectory, under a main workflowr directory, where original .Rmd files are saved.
 #' It can be only of length = 1.
 #' Examples:
-#' dirs = "code-rmd"
-#' dirs = c("code-rmd/subdir1\\subdir2")
+#' dir_path = "code-rmd"
+#' dir_path = c("code-rmd/subdir1\\subdir2")
 #' @param subdirs
 #' logical
 #' It can be only of length = 1.
 #' If TRUE, file listing will also recurse into directories in parameter dir.
 #' If FALSE, file listing will be only directly from directories in parameter dir.
-#' @param orig_rmd_patterns
+#' @param patterns
 #' character (default: NULL).
 #' Vector of paths to original .Rmd files.
 #' If NULL, process all .Rmd files based values in parameters dir and subdirs.
 #' If not NULL, process files matching written regular expression.
 #' Examples:
-#' orig_rmd_patterns = "^.*page.*.\[  R , r \]md$")
-#' orig_rmd_patterns = c("page1.Rmd", ".*page2.*.Rmd")
+#' patterns = "^.*page.*.\[  R , r \]md$")
+#' patterns = c("page1.Rmd", ".*page2.*.Rmd")
 #' @param commit
 #' character (default: FALSE).
 #' commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in directory "analysis").
 #' Suggestion: Use commit = TRUE only after your original .Rmd files saved in subdirectories are tested properly and so are completely ready, otherwise you could have pointlessly many commits.
 #' @keywords workflowr, subdirectory
 #' @return Final .html file from its original .Rmd file saved in a subdirectory.
-#' @export generate_html
+#' @export render_html
 #' @examples
 #' \dontrun{
-#'   generate_html()
-#'   generate_html(dirs = c("code-rmd\\subdir"), subdirs = F)
-#'   generate_html("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
+#'   render_html()
+#'   render_html(dir_path = c("code-rmd\\subdir"), subdirs = F)
+#'   render_html("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
 #' }
 
-generate_html <- function(dirs = "code-rmd", subdirs = T, orig_rmd_patterns = NULL, commit = F) {
+render_html <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F) {
   # initial settings
   base::setwd(here::here())  # a project working directory could be changed after opening .Rproj
-  dirs <- base::gsub("\\\\", "/", dirs)  # clearer to work (with one type of slash) with "/"
-  initial_checks(dirs, subdirs, orig_rmd_patterns)
-  orig_rmd_path <- create_orig_rmd_path(dirs, subdirs, orig_rmd_patterns)
+  dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work (with one type of slash) with "/"
+  initial_checks(dir_path, subdirs, patterns)
+  orig_rmd_path <- create_rmd_paths(dir_path, subdirs, patterns)
 
   # create paths to temporary .Rmd files (with "--") in directory "analysis"
-  slash_pos <- base::regexpr("/", orig_rmd_path)  # to cut off the 1st directory in "dirs"
-  temp_rmd_path <- base::file.path(
+  slash_pos <- base::regexpr("/", orig_rmd_path)  # to cut off the 1st directory in "dir_path"
+  temp_rmd_paths <- base::file.path(
     "analysis",
     base::gsub("/", "--",  # a file name cannot contain "/"
                base::substr(orig_rmd_path, slash_pos + 1, base::nchar(orig_rmd_path)))
   )
 
   # generate temporary .Rmd files in directory "analysis"
-  base::mapply(generate_rmd, orig_rmd_path = orig_rmd_path, temp_rmd_path = temp_rmd_path)
+  base::mapply(generate_rmd, orig_rmd_path = orig_rmd_path, temp_rmd_path = temp_rmd_paths)
 
   # commit temporary .Rmd files in directory "analysis" using package "workflowr"
   if (commit == T) {
@@ -69,8 +69,8 @@ generate_html <- function(dirs = "code-rmd", subdirs = T, orig_rmd_patterns = NU
   }
 
   # render temporary .Rmd files in directory "analysis" using package "workflowr"
-  workflowr::wflow_build(temp_rmd_path)
+  workflowr::wflow_build(temp_rmd_paths)
 
   # delete temporary helping .Rmd files
-  base::file.remove(temp_rmd_path)
+  base::file.remove(temp_rmd_paths)
 }

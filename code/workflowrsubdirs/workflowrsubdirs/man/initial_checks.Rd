@@ -4,28 +4,28 @@
 \alias{initial_checks}
 \title{Check rules for directories and files}
 \usage{
-initial_checks(dirs, subdirs, orig_rmd_patterns)
+initial_checks(dir_path, subdirs, patterns)
 }
 \arguments{
-\item{dirs}{character
+\item{dir_path}{character
 Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
 It can be only of length = 1.
 Examples:
-dirs = "code-rmd"
-dirs = c("code-rmd/subdir1\\subdir2")}
+dir_path = "code-rmd"
+dir_path = c("code-rmd/subdir1\\subdir2")}
 
 \item{subdirs}{logical
 It can be only of length = 1.
 If TRUE, file listing will also recurse into directories in parameter dir.
 If FALSE, file listing will be only directly from directories in parameter dir.}
 
-\item{orig_rmd_patterns}{character
-Vector of paths to original .Rmd files.
+\item{patterns}{character
+Vector of paths or/and regular expression(s) to original .Rmd files.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
 If not NULL, process files matching written regular expression.
 Examples:
-orig_rmd_patterns = "^.\emph{page.}.[  R , r ]md$")
-orig_rmd_patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
+patterns = "^.\emph{page.}.[  R , r ]md$")
+patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 }
 \value{
 None but stop processing if no file meets criteria.
@@ -33,12 +33,12 @@ None but stop processing if no file meets criteria.
 \description{
 Check rules for directories and .Rmd files to evaluate if rendering of .html files is possible.
 If some check doesn't pass, processing ends.
-This function is meant to be called only from function \code{\link{generate_html}} so
+This function is meant to be called only from function \code{\link{render_html}} so
 it will be not exported therefore input variables have no default values.
 }
 \examples{
 \dontrun{
-  initial_checks(dirs = "code-rmd", subdirs = T, orig_rmd_pattern = ".*page.*.(R|r)md$")
+  initial_checks(dir_path = "code-rmd", subdirs = T, patterns = ".*page.*.(R|r)md$")
 }
 }
 \keyword{subdirectory}

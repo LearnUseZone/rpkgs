@@ -12,7 +12,7 @@ Path to an original .Rmd file saved in workflowr subdirectory.}
 
 \item{temp_rmd_path}{character
 Name ("--" is usually part of it's name) of a temporary .Rmd file that will be temporarily saved into directory "analysis".
-This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{generate_html}}.}
+This temporary file is generated from its original .Rmd file specified in path_Rmd, then it will be deleted within \code{\link{render_html}}.}
 }
 \value{
 Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used to generate final .html file.
@@ -21,9 +21,9 @@ Temporary .Rmd file, from its original .Rmd file saved in a subdirectory, used t
 Generate temporary .Rmd files from their original .Rmd files,
 usually saved in directory "code" and its subdirectories,
 and save them into directory "analysis".
-These generated .Rmd files will be deleted at the end of function \code{\link{generate_html}}
+These generated .Rmd files will be deleted at the end of function \code{\link{render_html}}
 after final .html files are rendered.
-This function is meant to be called only from function \code{\link{generate_html}} so
+This function is meant to be called only from function \code{\link{render_html}} so
 it will be not exported therefore input variables have no default values.
 }
 \examples{
