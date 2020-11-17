@@ -51,7 +51,33 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
       #   include.dirs = T # include a subdirectory that matches a regular expression in "patterns"
     )
   })
-  orig_rmd_path <- base::unname(base::unlist(orig_rmd_path))  # remove unwanted list elements if some of patterns doesn't exist
+
+
+  # solving: patterns point to files that doesn't exist
+  #   remove empty (unwanted) list elements when some of patterns point to files that doesn't exist
+  #     empty list element: orig_rmd_path[[index]] (from mapply() above) returns character(0)
+  #     example: render_html(dir_path = "code-rmd\\eToro1", subdirs = T, patterns = c("testToDelete.Rmd", "testToDelete1.Rmd", "testToDelete3.Rmd", "^test.*-+.*.Rmd$", ".*Copy.*.Rmd"))
+  orig_rmd_path <- base::unname(base::unlist(orig_rmd_path))     # create character of length X for situation above but keep matrix for situation below but after this code line run matrix has named all columns
+
+  # solving: mapply() from above creates matrix with more columns
+  #   note: when more than one pattern points to the same file path, mapply() from above creates (then it's saved to orig_rmd_path) a) list or b) matrix with more than 1 columns
+  #   create a character vector of all file paths defined by input parameters if orig_rmd_path created by mapply() in create_rmd_paths() is matrix with more than 1 column
+  #       examples: render_html(dir_path = "code-rmd", subdirs = T, patterns = c("testToDelete1.Rmd", "testToDelete1.Rmd"))
+  #                 render_html(dir_path = c("code-rmd/eToro1"), subdirs = F, patterns = "^.*test.*.[  R , r ]md$")
+  if (base::class(orig_rmd_path)[1] == "matrix") {
+    if (base::length(class(orig_rmd_path)) == 2 &&  # class(orig_rmd_path) should return "matrix" "array" if it's a matrix
+        base::dim(orig_rmd_path)[2] > 1 &&          # process only matrix with more than 1 column
+        base::class(orig_rmd_path)[2] == "array") {
+      orig_rmd_path <- base::paste0(orig_rmd_path, collapse = "\t")  # create character of length 1
+      orig_rmd_path <- base::strsplit(orig_rmd_path, "\t")           # create list of length 1
+      orig_rmd_path <- base::unname(base::unlist(orig_rmd_path))     # create character of length X
+    }
+  }
+
+
+  # remove duplicated rows when more than one pattern points to the same file path
+  orig_rmd_path <- base::unique(orig_rmd_path)  # unique processes values by columns
+
 
   # check file paths created from all input parameters
   if (length(orig_rmd_path) == 0) {  # it's not worth to make more checks for separated stops
@@ -64,6 +90,6 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
     )
   }
 
-  # if more parts of "patterns" point to the same file path, return (process) such file only once
-  return(base::unique(orig_rmd_path))
+  # return file paths for later rendering to .html
+  return(orig_rmd_path)
 }
