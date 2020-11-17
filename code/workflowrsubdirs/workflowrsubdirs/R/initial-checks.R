@@ -78,22 +78,17 @@ initial_checks <- function(dir_path, subdirs, patterns) {
       full.names = T,    recursive = T
     )) > 0) {
 
-    base::message(base::paste(
-      "Following file names contain \"--\" and that's not allowed in directory \"analysis\":",
+    base::message(prompt = base::paste(
+      "Following file names contain \"--\" which isn't allowed:",
       base::paste(temp_rmd_paths, collapse = "\n"),
-      "\nPlease choose one of the following options:",
-      "1 - Delete listed files automatically and continue with rendering.",
-      "2 - Stop rendering. I will manage relevant .Rmd files manually.",
+      "\nChoose - y or Y - to automatically delete listed files and continue with rendering.",
+      "Choose anything else - to stop process and manage relevant files manually.",
       sep = "\n"
     ))
 
-    option <- base::readline(prompt = "Choose 1 or 2: ")
-    if (option == 1) {
-      base::file.remove(temp_rmd_paths)
-    } else if (option == 2) {
-      base::stop("You chose to stop rendering. Processing ends.", call. = F)
-    } else (
-      base::stop("You chose a not available option. Processing ends", call. = F)
-    )
+    choice <- base::readline(prompt = "My choice: ")
+
+    if (choice %in% c("y", "Y")) { base::file.remove(temp_rmd_paths) }
+    else { stop("You chose to stop rendering. Processing ends.", call. = F) }
   }
 }
