@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-14 14:39 GMT+2
+Last update: 2020-11-17 20:29 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -108,6 +108,12 @@ Last update: 2020-11-14 14:39 GMT+2
     temporary files were committed separately, these new .html files
     have to be commited, too (e.g. using
     workflowr::wflow\_git\_commit())
+      - Even when “separate commit of temporary .Rmd files” is made (in
+        render\_html()) when all files are rendered a new commit has to
+        be made out of this package and within this commit are all .Rmd
+        files (previously as a part of “separate commit of temporary
+        .Rmd files”) removed. But it is necessary to do so in order to
+        have no issues in workflowr button.
   - If other than workflowr project is originally opened using its
     .Rproj file then this function fails because
     "base::setwd(here::here())" in this function sets a working
