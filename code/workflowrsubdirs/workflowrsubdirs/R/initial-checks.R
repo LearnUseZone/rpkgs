@@ -49,7 +49,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   }
 
   # check input parameter "subdirs"
-  if (!((subdirs == F || subdirs == T) && base::length(subdirs) == 1)) {
+  if (!((subdirs %in% c(F, T)) && base::length(subdirs) == 1)) {
     stop("Input parameter subdirs can be only FALSE or TRUE. Processing ends.", call. = F)
   }
 
