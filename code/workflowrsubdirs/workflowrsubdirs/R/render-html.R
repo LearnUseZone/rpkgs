@@ -72,7 +72,7 @@ render_html <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
 
   # commit temporary .Rmd files in directory "analysis" using package "workflowr"
   if (commit == T) {
-    workflowr::wflow_git_commit("analysis/*--*Rmd", "separate commit of temporary .Rmd files", all = T)
+    workflowr::wflow_git_commit(temp_rmd_paths, "separate commit of temporary .Rmd files", all = T)
   }
 
   # render temporary .Rmd files in directory "analysis" using package "workflowr"
