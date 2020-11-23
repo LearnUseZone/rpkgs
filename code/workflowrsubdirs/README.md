@@ -1,14 +1,16 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-17 20:29 GMT+2
+Last update: 2020-11-23 15:46 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
       - [Avoid problems with YAML header of .Rmd files in
         subdirectories](#avoid-problems-with-yaml-header-of-.rmd-files-in-subdirectories)
-  - [Briefly about package functions](#briefly-about-package-functions)
-      - [generate\_html()](#generate_html)
+  - [Briefly about package function
+    render\_html()](#briefly-about-package-function-render_html)
+      - [Main steps](#main-steps)
+      - [Other important information](#other-important-information)
   - [Installation](#installation)
       - [Try following steps if the package weren’t installed
         successfully:  
@@ -83,37 +85,50 @@ Last update: 2020-11-17 20:29 GMT+2
           - An error is displayed for
             workflowr::wflow\_build("analysis/test-file-date.Rmd").
 
-## Briefly about package functions
+## Briefly about package function render\_html()
 
-  - Following information adds more clarity to information accessible
-    using help (F1).
+  - This package contains more functions but only render\_html() is
+    visible for a user.
+  - Package “workflowr” is used for commits during processing and also
+    for building .html pages.
 
-#### generate\_html()
+#### Main steps
 
-  - This is the only one function that can be called.
-  - It uses 3 more package functions (that cannot be called):
-      - initial\_checks() - it checks rules for directories and .Rmd
-        files to evaluate if rendering of .html files is possible.
-      - create\_orig\_rmd\_path() - it creates paths to original .Rmd
-        files for future rendering into .html.
-      - generate\_rmd() - it generates temporary .Rmd files from their
-        original .Rmd files and save them into directory “analysis”.
-  - Rendered .html files are again prepared in directory "docs" (for
-    GitHub) or directory "public" (for GitLab). Each such file name
-    consists of "--" which are delimiters for paths to original .Rmd
-    files paths.
-  - After look at workflowr button of opened .html file, under tab
-    "Checks" can be found "R Markdown file: uncommitted changes". This
-    is in line with workflowr package and it means that also your
-    temporary files were committed separately, these new .html files
-    have to be commited, too (e.g. using
-    workflowr::wflow\_git\_commit())
-      - Even when “separate commit of temporary .Rmd files” is made (in
-        render\_html()) when all files are rendered a new commit has to
-        be made out of this package and within this commit are all .Rmd
-        files (previously as a part of “separate commit of temporary
-        .Rmd files”) removed. But it is necessary to do so in order to
-        have no issues in workflowr button.
+1.  Evaluate if rendering of .html files is possible. If some check
+    doesn’t pass, write a reason and stop processing.
+      - Used package function: initial\_checks()
+2.  Create paths (in a form of matrix with characters or character
+    vector) to original .Rmd files intended for future rendering into
+    .html files.
+      - Used package function: create\_rmd\_paths()
+3.  Generate temporary (helping) .Rmd files, from their original .Rmd
+    files, in directory “analysis”.
+      - Used package function: generate\_rmd()
+4.  If commit == TRUE, create a commit of these temporary (helping) .Rmd
+    files with text “separate commit of temporary .Rmd files”.
+      - Used function: workflowr::wflow\_git\_commit()
+      - If these temporary (helping) .Rmd files are not committed before
+        workflowr::wflow\_build(), following unwanted error message is
+        written after opening of any prepared .html file and
+        left-clicking on “workflowr” button under tab "Checks": "R
+        Markdown file: uncommitted changes"
+          - This is also in line with "workflowr" package.
+5.  Render temporary .Rmd files in directory “analysis” into .html
+    files.
+      - Used function: workflowr::wflow\_build()
+      - Final .html files are prepared (also package workflowr is set in
+        this way) in directory "docs" (for GitHub) or directory "public"
+        (for GitLab). Each such file name contains "--" which are
+        delimiters for paths to original .Rmd files paths.
+6.  Remove temporary (helping) .Rmd files from directory “analysis”.
+
+#### Other important information
+
+  - Even when relevant temporary files were committed separately (see
+    above), it’s necessary to commit all files after .html files are
+    prepared
+      - Commit of all removed (see below) temporary .Rmd files and new
+        .html files).
   - If other than workflowr project is originally opened using its
     .Rproj file then this function fails because
     "base::setwd(here::here())" in this function sets a working
@@ -129,6 +144,9 @@ Last update: 2020-11-17 20:29 GMT+2
           - "base::mapply(generate\_rmd, dir, file\_path, temp\_file)"
             is called inside function
             "workflowrsubdirs::generate\_html()".
+  - Add better explanation for input parameters
+      - .Rmd or .rmd at the end of pattern is required (also that “.” is
+        required)
 
 ## Installation
 
