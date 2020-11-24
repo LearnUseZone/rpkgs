@@ -7,22 +7,21 @@
 create_rmd_paths(dir_path, subdirs, patterns)
 }
 \arguments{
-\item{dir_path}{character
-Path to subdirectory, under a main workflowr directory, where original .Rmd files are saved.
-It can be only of length = 1.
+\item{dir_path}{character of length = 1
+Path to a subdirectory, under a main workflowr directory, where .Rmd files for rendering are saved.
+A directory name can be first instead of using "./" etc. (e.g. "code-rmd" instead of "./code-rmd").
 Examples:
 dir_path = "code-rmd"
 dir_path = c("code-rmd/subdir1\\subdir2")}
 
-\item{subdirs}{logical
-It can be only of length = 1.
-If TRUE, file listing will also recurse into directories in parameter dir.
+\item{subdirs}{logical of length = 1
+If TRUE, file listing will recurse into directories in parameter dir.
 If FALSE, file listing will be only directly from directories in parameter dir.}
 
-\item{patterns}{character
-Vector of paths to original .Rmd files.
+\item{patterns}{character of length > 0 or NULL
+A character vector of paths to .Rmd files for rendering.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
-If not NULL, process files matching written regular expression.
+If not NULL, process files matching a regular expression.
 Examples:
 patterns = "^.\emph{page.}.[  R , r ]md$")
 patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
@@ -31,12 +30,15 @@ patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 Character vector "orig_rmd_path" but stop processing if no file meets criteria.
 }
 \description{
-Create paths to (usually) original .Rmd files, based on input parameters,
-for future rendering into .html.
-If path to a file doesn't exist then such file is not rendered and only those files which exist
-are rendered. If no file for rendering is found, processing ends.
-This function is meant to be called only from function \code{\link{render_html}} so
-it will be not exported therefore input variables have no default values.
+Create paths to original .Rmd files intended for future rendering into .html files.
+If input parameters point to
+\itemize{
+\item a .Rmd file path that doesn't exist then such file is ignored (not rendered).
+\item a .Rmd file path that exist then such file is rendered in \code{\link{render_html}} using wflow_build().
+If no file for rendering is found, processing ends.
+This function is called only from function \code{\link{render_html}} therefore
+it's not exported and its input variables have no default values.
+}
 }
 \examples{
 \dontrun{

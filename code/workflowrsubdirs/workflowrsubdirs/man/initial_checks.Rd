@@ -2,27 +2,26 @@
 % Please edit documentation in R/initial-checks.R
 \name{initial_checks}
 \alias{initial_checks}
-\title{Check rules for directories and files}
+\title{Stop process if rendering of .Rmd files into .html files is not possible}
 \usage{
 initial_checks(dir_path, subdirs, patterns)
 }
 \arguments{
-\item{dir_path}{character
-Path to a directory, under a main workflowr subdirectory, where original Rmd files are saved.
-It can be only of length = 1.
+\item{dir_path}{character of length = 1
+Path to a subdirectory, under a main workflowr directory, where .Rmd files for rendering are saved.
+A directory name can be first instead of using "./" etc. (e.g. "code-rmd" instead of "./code-rmd").
 Examples:
 dir_path = "code-rmd"
 dir_path = c("code-rmd/subdir1\\subdir2")}
 
-\item{subdirs}{logical
-It can be only of length = 1.
-If TRUE, file listing will also recurse into directories in parameter dir.
+\item{subdirs}{logical of length = 1
+If TRUE, file listing will recurse into directories in parameter dir.
 If FALSE, file listing will be only directly from directories in parameter dir.}
 
-\item{patterns}{character
-Vector of paths or/and regular expression(s) to original .Rmd files.
+\item{patterns}{character of length > 0 or NULL
+A character vector of paths to .Rmd files for rendering.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
-If not NULL, process files matching written regular expression.
+If not NULL, process files matching a regular expression.
 Examples:
 patterns = "^.\emph{page.}.[  R , r ]md$")
 patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
@@ -31,10 +30,11 @@ patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 None but stop processing if no file meets criteria.
 }
 \description{
-Check rules for directories and .Rmd files to evaluate if rendering of .html files is possible.
-If some check doesn't pass, processing ends.
-This function is meant to be called only from function \code{\link{render_html}} so
-it will be not exported therefore input variables have no default values.
+Evaluate if rendering of .Rmd files into .html files is possible
+by checking rules for directories and .Rmd files.
+If some check doesn't pass, write a reason and stop processing.
+This function is called only from function \code{\link{render_html}} therefore
+it's not exported and its input variables have no default values.
 }
 \examples{
 \dontrun{

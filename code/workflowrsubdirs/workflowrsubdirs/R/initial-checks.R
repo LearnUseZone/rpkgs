@@ -62,7 +62,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
       if (!stringr::str_detect(  # package "stringr" solves some problems, e.g. with escaping "]", that functions like "base::grepl()" has
         patterns[pattern_num],
         "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$")) {
-        ##   it can still happen that no file will exist but this is solved in create_orig_rmd_path
+        ##   it can still happen that no file will exist but this is solved in create_rmd_paths
         stop("Not all chosen patterns point to file(s) with extension .Rmd or rmd. Processing ends.", call. = F)
       }
     }
