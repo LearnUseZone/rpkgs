@@ -1,19 +1,20 @@
 #' @title
-#' Generate temporary .Rmd files
+#' Generate a temporary .Rmd file
 #' @description
-#' Generate temporary .Rmd files from their original .Rmd files,
+#' Generate a temporary (helping) .Rmd file, from its original .Rmd file
 #' specified using input parameters "dir_path", "subdirs" and "patterns" of \code{\link{render_html}},
-#' and (temporarily) save them into directory "analysis".
-#' These temporarily saved .Rmd files will be used to generate final .html file.
-#' These generated .Rmd files will be deleted at the end of function \code{\link{render_html}}
-#' after final .html files are rendered.
+#' and temporarily save it into directory "analysis".
+#' This temporarily saved .Rmd file will be used to generate final .html file and
+#' will be deleted at the end of function \code{\link{render_html}} after final .html file is prepared.
+#' This function requires that both input parameters are of length = 1 but no checks for that
+#' is made directly inside this function because this is ensured using mapply() in \code{\link{render_html}}.
 #' This function is called only from function \code{\link{render_html}} therefore
 #' it's not exported and its input variables have no default values.
 #' @param orig_rmd_path
-#' character
-#' Paths to original .Rmd files.
+#' character of length = 1
+#' A path to original .Rmd files.
 #' @param temp_rmd_path
-#' character
+#' character of length = 1
 #' Names ("--" is a part of those names) of temporary .Rmd files.
 #' @keywords workflowr, subdirectory
 #' @return Temporarily saved .Rmd files.
@@ -40,3 +41,4 @@ generate_rmd <- function(orig_rmd_path, temp_rmd_path) {
     append = F
   )
 }
+

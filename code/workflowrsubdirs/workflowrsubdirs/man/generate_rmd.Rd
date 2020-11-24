@@ -2,32 +2,30 @@
 % Please edit documentation in R/generate-rmd.R
 \name{generate_rmd}
 \alias{generate_rmd}
-\title{Generate temporary .Rmd files}
+\title{Generate a temporary .Rmd file}
 \usage{
 generate_rmd(orig_rmd_path, temp_rmd_path)
 }
 \arguments{
-\item{orig_rmd_path}{character
-Path to an original .Rmd file saved in workflowr subdirectory.}
+\item{orig_rmd_path}{character of length = 1
+A path to original .Rmd files.}
 
-\item{temp_rmd_path}{character
-Name ("--" is usually part of it's name) of a temporary .Rmd file that will be
-temporarily saved into directory "analysis".
-This temporary file is generated from its original .Rmd file specified in path_Rmd,
-then it will be deleted within \code{\link{render_html}}.}
+\item{temp_rmd_path}{character of length = 1
+Names ("--" is a part of those names) of temporary .Rmd files.}
 }
 \value{
-Temporary .Rmd file, from its original .Rmd file saved in a subdirectory,
-used to generate final .html file.
+Temporarily saved .Rmd files.
 }
 \description{
-Generate temporary .Rmd files from their original .Rmd files,
-usually saved in directory "code" and its subdirectories,
-and save them into directory "analysis".
-These generated .Rmd files will be deleted at the end of function \code{\link{render_html}}
-after final .html files are rendered.
-This function is meant to be called only from function \code{\link{render_html}} so
-it will be not exported therefore input variables have no default values.
+Generate a temporary (helping) .Rmd file, from its original .Rmd file
+specified using input parameters "dir_path", "subdirs" and "patterns" of \code{\link{render_html}},
+and temporarily save it into directory "analysis".
+This temporarily saved .Rmd file will be used to generate final .html file and
+will be deleted at the end of function \code{\link{render_html}} after final .html file is prepared.
+This function requires that both input parameters are of length = 1 but no checks for that
+is made directly inside this function because this is ensured using mapply() in \code{\link{render_html}}.
+This function is called only from function \code{\link{render_html}} therefore
+it's not exported and its input variables have no default values.
 }
 \examples{
 \dontrun{

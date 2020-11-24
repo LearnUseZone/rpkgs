@@ -44,7 +44,7 @@ render_html <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
   initial_checks(dir_path, subdirs, patterns)
   orig_rmd_path <- create_rmd_paths(dir_path, subdirs, patterns)
 
-  # create paths to temporary .Rmd files (with "--") in directory "analysis"
+  # create paths to temporary (helping) .Rmd files (with "--") in directory "analysis"
   slash_pos <- base::regexpr("/", orig_rmd_path)  # to cut off the 1st directory in "dir_path"
   temp_rmd_paths <- base::file.path(
     "analysis",
@@ -52,17 +52,17 @@ render_html <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
                base::substr(orig_rmd_path, slash_pos + 1, base::nchar(orig_rmd_path)))
   )
 
-  # generate temporary .Rmd files in directory "analysis"
-  base::mapply(generate_rmd, orig_rmd_path = orig_rmd_path, temp_rmd_path = temp_rmd_paths)
+  # generate temporary (helping) .Rmd file(s) in directory "analysis"
+  base::mapply(generate_rmd, orig_rmd_path, temp_rmd_paths)
 
-  # commit temporary .Rmd files in directory "analysis" using package "workflowr"
+  # commit temporary .Rmd file(s) in directory "analysis"
   if (commit == T) {
     workflowr::wflow_git_commit(temp_rmd_paths, "separate commit of temporary .Rmd files", all = T)
   }
 
-  # render temporary .Rmd files in directory "analysis" using package "workflowr"
+  # render temporary .Rmd files in directory "analysis" into .html files
   workflowr::wflow_build(temp_rmd_paths)
 
-  # delete temporary helping .Rmd files
+  # delete temporary .Rmd files
   base::file.remove(temp_rmd_paths)
 }

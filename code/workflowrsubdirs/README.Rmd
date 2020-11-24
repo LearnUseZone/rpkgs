@@ -70,7 +70,7 @@ date:&nbsp;&nbsp;&nbsp;&nbsp;\"&#x060;r paste(\"Last update:\", format(lubridate
 2. Create paths (in a form of matrix with characters or character vector) to original .Rmd files
    intended for future rendering into .html files.
    - Used package function: create_rmd_paths()
-3. Generate temporary (helping) .Rmd files, from their original .Rmd files, in directory "analysis".
+3. Generate a temporary (helping) .Rmd file, from its original .Rmd file, in directory "analysis".
    - Used package function: generate_rmd()
 4. If commit == TRUE, create a commit of these temporary (helping) .Rmd files with text
    "separate commit of temporary .Rmd files".
@@ -85,7 +85,7 @@ date:&nbsp;&nbsp;&nbsp;&nbsp;\"&#x060;r paste(\"Last update:\", format(lubridate
      in directory \"docs\" (for GitHub) or directory \"public\" (for GitLab).
      Each such file name contains \"\-\-\" which are delimiters
      for paths to original .Rmd files paths.
-6. Remove temporary (helping) .Rmd files from directory "analysis".
+6. Delete temporary (helping) .Rmd files from directory "analysis".
 
 
 #### Other important information

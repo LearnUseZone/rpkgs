@@ -2,64 +2,41 @@
 % Please edit documentation in R/render-html.R
 \name{render_html}
 \alias{render_html}
-\title{Render .html files from their original .Rmd files stored in subdirectories}
+\title{Render .Rmd files into .html files}
 \usage{
 render_html(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F)
 }
 \arguments{
-\item{dir_path}{character (default: "code-rmd").
-Path to subdirectory, under a main workflowr directory, where original .Rmd files are saved.
-It can be only of length = 1.
+\item{dir_path}{character of length = 1 (default: "code-rmd").
+Path to a subdirectory, under a main workflowr directory, where .Rmd files for rendering are saved.
+A directory name can be first instead of using "./" etc. (e.g. "code-rmd" instead of "./code-rmd").
 Examples:
 dir_path = "code-rmd"
 dir_path = c("code-rmd/subdir1\\subdir2")}
 
-\item{subdirs}{logical
-It can be only of length = 1.
-If TRUE, file listing will also recurse into directories in parameter dir.
+\item{subdirs}{logical of length = 1 (default: TRUE)
+If TRUE, file listing will recurse into directories in parameter dir.
 If FALSE, file listing will be only directly from directories in parameter dir.}
 
-\item{patterns}{character (default: NULL).
-Vector of paths to original .Rmd files.
+\item{patterns}{character of length > 0 or NULL (default: NULL)
+A character vector of paths to .Rmd files for rendering.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
-If not NULL, process files matching written regular expression.
+If not NULL, process files matching a regular expression.
 Examples:
 patterns = "^.\emph{page.}.[  R , r ]md$")
 patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 
-\item{commit}{character (default: FALSE).
-commit = TRUE creates a separate commit of temporary .Rmd files (temporary saved in "analysis").
-Suggestion: Use commit = TRUE only after your original .Rmd files saved
+\item{commit}{character (default: FALSE)
+If TRUE, a separate commit of temporary .Rmd files (temporary saved in "analysis") is created.
+It's suggested to use "commit = TRUE" only after original .Rmd files saved
 in subdirectories are tested properly and so are completely ready,
-otherwise you could have pointlessly many commits.}
+otherwise there could be uselessly many commits.}
 }
 \value{
-Final .html file from its original .Rmd file saved in a subdirectory.
+Final .html files from their original .Rmd files saved in subdirectories.
 }
 \description{
-Similarly as for workflowr package, when specifying path to directories or files in function
-this function render_html(), you can start by typing directory name,
-so for example, you can write "analysis" instead of "./analysis".
-Processed steps:
-\enumerate{
-\item Check existence of .Rmd file in a chosen subdirectory.
-}
-\itemize{
-\item If it doesn't exist, inform about it and stop processing.
-}
-\enumerate{
-\item Prepare temporary file names by substitution  of "/" in file path by "‐‐".
-\item Function generate_rmd() is used to generate temporary .Rmd files from their original
-.Rmd files that are saved in subdirectories and save them into directory "analysis".
-\item If commit = TRUE, create a commit of these temporary .Rmd files with text
-"separate commit of temporary .Rmd files".
-\item Generate .html files from temporary .Rmd files.
-\itemize{
-\item So the resulting .html files are associated with their original .Rmd files
-(temporary .Rmd files are simply product of a helping step).
-}
-\item Delete temporary .Rmd files from directory "analysis".
-}
+Render only those .Rmd files (based on input parameters) into .html files that meet required criteria.
 }
 \examples{
 \dontrun{
