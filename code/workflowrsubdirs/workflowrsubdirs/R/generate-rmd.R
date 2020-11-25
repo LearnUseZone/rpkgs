@@ -41,3 +41,4 @@ generate_rmd <- function(orig_rmd_path, temp_rmd_path) {
     append = F
   )
 }
+
