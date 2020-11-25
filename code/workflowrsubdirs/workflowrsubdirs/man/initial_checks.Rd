@@ -27,7 +27,8 @@ patterns = "^.\emph{page.}.[  R , r ]md$")
 patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 }
 \value{
-None but stop processing if no file meets criteria.
+FALSE if some check fails, TRUE if all checks were OK,
+a logical vector only with TRUE values of length equals to a number of deleted files from directory "analysis"
 }
 \description{
 Evaluate if rendering of .Rmd files into .html files is possible

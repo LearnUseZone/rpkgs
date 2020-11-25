@@ -28,7 +28,7 @@
 #' patterns = "^.*page.*.\[  R , r \]md$")
 #' patterns = c("page1.Rmd", ".*page2.*.Rmd")
 #' @keywords workflowr, subdirectory
-#' @return Character vector "orig_rmd_path" but stop processing if no file meets criteria.
+#' @return FALSE if no file meets criteria, a character vector if it's created.
 #' @examples
 #' \dontrun{
 #'   create_rmd_paths(dir_path = "code-rmd", subdirs = T, patterns = ".*page.*.(R|r)md$")
