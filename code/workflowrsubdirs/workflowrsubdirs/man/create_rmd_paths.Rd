@@ -27,7 +27,7 @@ patterns = "^.\emph{page.}.[  R , r ]md$")
 patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 }
 \value{
-FALSE if no file meets criteria, a character vector if it's created.
+A character vector if at least one file meets criteria, stop processing if no file meets criteria.
 }
 \description{
 Create paths to original .Rmd files intended for future rendering into .html files.

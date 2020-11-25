@@ -26,7 +26,7 @@
 #' patterns = "^.*page.*.\[  R , r \]md$")
 #' patterns = c("page1.Rmd", ".*page2.*.Rmd")
 #' @keywords workflowr, subdirectory
-#' @return FALSE if some check fails, TRUE if all checks were OK,
+#' @return FALSE if there's no error but 'silent' stop() is needed,
 #' a logical vector only with TRUE values of length equals to a number of deleted files from directory "analysis"
 #' @examples
 #' \dontrun{
