@@ -33,25 +33,23 @@
 #' }
 
 initial_checks <- function(dir_path, subdirs, patterns) {
-  # check input parameter "dir_path"
-  if (base::is.null(dir_path))
-    stop ("Parameter dir_path cannot be NULL. Processing ends.", call. = F)
-  if (dir_path == "")
-    stop("Parameter dir_path cannot be empty string. Processing ends.", call. = F)
-  if (base::length(dir_path) != 1)
-    stop("Parameter dir_path can contain only one path to a directory. Processing ends.", call. = F)
-  if (!file.exists(dir_path))
-    stop("Parameter dir_path contain a directory that doesn't exist. Processing ends.", call. = F)
-  if (base::regexpr("//", dir_path) > 0)   # file.exists() doesn't catch path like dir//subdir (only one / should be used); potential issues with "\" is solved by R error message
-    stop("Parameter dir_path contain \"//\" instead of \"/\" or \"\\\\\".", call. = F)
-  if (dir_path %in% c("analysis", "code", "data", "output", "public")) {
-    stop("Choose other than default workflowr directory. Processing ends.", call. = F)
-  }
+  # check input parameter "dir_path"; base::message...
+  if (base::is.null(dir_path)) {
+    message("Parameter dir_path cannot be NULL. Processing ends."); return(F) }
+  if (dir_path == "") {
+    message("Parameter dir_path cannot be empty string. Processing ends."); return(F) }
+  if (base::length(dir_path) != 1) {
+    message("Parameter dir_path can contain only 1 path to a directory. Processing ends."); return(F) }
+  if (!file.exists(dir_path)) {
+    message("Parameter dir_path contains a directory that doesn't exist. Processing ends."); return(F) }
+  if (base::regexpr("//", dir_path) > 0) {  # file.exists() doesn't catch path like dir//subdir, dir///subdir, dir////subdir, etc. (only one "/" has to be used); potential issues with "\" is solved by R error message
+    message("Parameter dir_path contains \"//\" instead of \"/\" or \"\\\\\". Processing ends."); return(F) }
+  if (dir_path %in% c("analysis", "code", "data", "docs", "output", "public")) {
+    message("Parameter dir_path cannot be a default workflowr directory. Processing ends."); return(F) }
 
   # check input parameter "subdirs"
   if (!((subdirs %in% c(F, T)) && base::length(subdirs) == 1)) {
-    stop("Input parameter subdirs can be only FALSE or TRUE. Processing ends.", call. = F)
-  }
+    base::message("Input parameter subdirs can be only FALSE or TRUE. Processing ends."); return(F) }
 
   # check input parameter "patterns"
   if (!is.null(patterns)) {
@@ -62,8 +60,9 @@ initial_checks <- function(dir_path, subdirs, patterns) {
       if (!stringr::str_detect(  # package "stringr" solves some problems, e.g. with escaping "]", that functions like "base::grepl()" has
         patterns[pattern_num],
         "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$")) {
-        ##   it can still happen that no file will exist but this is solved in create_rmd_paths
-        stop("Not all chosen patterns point to file(s) with extension .Rmd or rmd. Processing ends.", call. = F)
+        ##   it can still happen that no file will exist but this is solved in create_rmd_paths()
+        message("Not all chosen patterns point to file(s) with extension .Rmd or rmd. Processing ends.")
+        return(F)
       }
     }
   }
@@ -76,19 +75,22 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     temp_rmd_paths <- base::dir(
       path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd",
       full.names = T,    recursive = T
-    )) > 0) {
+    )) > 0) {  # if this part doesn't run then initial_checks() returns NULL
 
-    base::message(prompt = base::paste(
-      "Following file names contain \"--\" which isn't allowed:",
-      base::paste(temp_rmd_paths, collapse = "\n"),
-      "\nChoose - y or Y - to automatically delete listed files and continue with rendering.",
-      "Choose anything else - to stop process and manage relevant files manually.",
-      sep = "\n"
-    ))
+    base::message(
+      "Following file names contain \"--\" which isn't allowed:", "\n",  # I simply prefer "\n" between commas (if possible)
+      base::paste(temp_rmd_paths, collapse = "\n"), "\n\n",
+      "Choose 'y' or 'Y' to automatically delete listed files and continue with processing.", "\n",
+      "Choose anything else to stop process and manage relevant files manually."
+    )
 
     choice <- base::readline(prompt = "My choice: ")
 
-    if (choice %in% c("y", "Y")) { base::file.remove(temp_rmd_paths) }
-    else { stop("You chose to stop rendering. Processing ends.", call. = F) }
+    if (choice %in% c("y", "Y")) {
+      base::file.remove(temp_rmd_paths)  # if this part run then initial_checks() returns a number of TRUE equals to number of deleted files
+    } else {
+      base::message("You chose to stop rendering. Processing ends.")
+      return(F)  # if this part run then initial_checks() returns FALSE (length = 1)
+    }
   }
 }

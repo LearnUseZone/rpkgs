@@ -39,10 +39,32 @@
 
 render_html <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F) {
   # initial settings
+  #   set "silent" stop()
+  #     - no message as a part of stop() isn't written when following 2 lines are used
+  #     - stop() will end the whole process (no Continue or Stop button available)
+  opt <- base::options(show.error.messages = F)  # this and following line has to be separated
+  on.exit(base::options(opt))                    #   meaning on.exit(options(options(show....))) doesn't work
+
   base::setwd(here::here())  # a project working directory could be changed after opening .Rproj
+
+  initial_result <- initial_checks(dir_path, subdirs, patterns)
+  if (base::length(initial_result) == 1) {
+    if (initial_result == F) {
+      #   stop has to be in the function that is called by user, if it's e.g. in initial_checks() then stop() will end on "Browse[1]>" instead of completely stop script (option "Stop" in debug mode is still available)
+      stop()
+    }
+  }
+
   dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work (with one type of slash) with "/"
-  initial_checks(dir_path, subdirs, patterns)
   orig_rmd_path <- create_rmd_paths(dir_path, subdirs, patterns)
+  if (base::length(orig_rmd_path) == 1) {
+    if (orig_rmd_path == F) {
+      #   stop has to be in the function that is called by user, if it's e.g. in initial_checks() then stop() will end on "Browse[1]>" instead of completely stop script (option "Stop" in debug mode is still available)
+      stop()
+    }
+  }
+
+
 
   # create paths to temporary (helping) .Rmd files (with "--") in directory "analysis"
   slash_pos <- base::regexpr("/", orig_rmd_path)  # to cut off the 1st directory in "dir_path"
