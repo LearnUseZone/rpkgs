@@ -4,9 +4,9 @@
 #' Create paths to original .Rmd files intended for future rendering into .html files.
 #' If input parameters point to
 #'   - a .Rmd file path that doesn't exist then such file is ignored (not rendered).
-#'   - a .Rmd file path that exist then such file is rendered in \code{\link{render_html}} using wflow_build().
+#'   - a .Rmd file path that exist then such file is rendered in \code{\link{generate_htmls}} using wflow_build().
 #' If no file for rendering is found, processing ends.
-#' This function is called only from function \code{\link{render_html}} therefore
+#' This function is called only from function \code{\link{generate_htmls}} therefore
 #' it's not exported and its input variables have no default values.
 #' @param dir_path
 #' character of length = 1

@@ -4,7 +4,7 @@
 #' Evaluate if rendering of .Rmd files into .html files is possible
 #' by checking rules for directories and .Rmd files.
 #' If some check doesn't pass, write a reason and stop processing.
-#' This function is called only from function \code{\link{render_html}} therefore
+#' This function is called only from function \code{\link{generate_htmls}} therefore
 #' it's not exported and its input variables have no default values.
 #' @param dir_path
 #' character of length = 1

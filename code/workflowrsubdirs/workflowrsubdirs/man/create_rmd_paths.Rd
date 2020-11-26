@@ -34,9 +34,9 @@ Create paths to original .Rmd files intended for future rendering into .html fil
 If input parameters point to
 \itemize{
 \item a .Rmd file path that doesn't exist then such file is ignored (not rendered).
-\item a .Rmd file path that exist then such file is rendered in \code{\link{render_html}} using wflow_build().
+\item a .Rmd file path that exist then such file is rendered in \code{\link{generate_htmls}} using wflow_build().
 If no file for rendering is found, processing ends.
-This function is called only from function \code{\link{render_html}} therefore
+This function is called only from function \code{\link{generate_htmls}} therefore
 it's not exported and its input variables have no default values.
 }
 }
