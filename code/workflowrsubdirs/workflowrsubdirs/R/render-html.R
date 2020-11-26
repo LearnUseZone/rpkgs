@@ -41,18 +41,7 @@ render_html <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
   # initial settings
   base::setwd(here::here())  # a project working directory could be changed after opening .Rproj
 
-  initial_result <- initial_checks(dir_path, subdirs, patterns)
-  if (base::length(initial_result) == 1) {
-    if (initial_result == F) {
-      #   set "silent" stop()
-      #     - no message as a part of stop() isn't written when following 2 lines are used
-      #     - stop() will end the whole process (no Continue or Stop button available)
-      opt <- base::options(show.error.messages = F)  # this and following line has to be separated
-      on.exit(base::options(opt))                    #   meaning on.exit(options(options(show....))) doesn't work
-      stop()
-    }
-  }
-
+  initial_checks(dir_path, subdirs, patterns)
   dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work (with one type of slash) with "/"
   orig_rmd_path <- create_rmd_paths(dir_path, subdirs, patterns)
 

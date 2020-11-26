@@ -89,7 +89,12 @@ initial_checks <- function(dir_path, subdirs, patterns) {
       base::file.remove(temp_rmd_paths)  # if this part run then initial_checks() returns a number of TRUE equals to number of deleted files
     } else {  # this is not an error it's simply message about a user's choice
       base::message("You chose to stop rendering.")
-      return(F)  # if this part run then initial_checks() returns FALSE (length = 1)
+      #   set "silent" stop()
+      #     - no message as a part of stop() isn't written when following 2 code lines are used
+      #     - stop() will end the whole process (no Continue or Stop button available if the package is installed from built source package (.tar.gz file))
+      opt <- base::options(show.error.messages = F)  # this and following line has to be separated
+      on.exit(base::options(opt))                    #   meaning on.exit(options(options(show....))) doesn't work
+      stop()
     }
   }
 }
