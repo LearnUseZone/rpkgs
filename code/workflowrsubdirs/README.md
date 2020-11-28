@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-28 18:39 GMT+2
+Last update: 2020-11-28 20:09 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -286,7 +286,6 @@ Last update: 2020-11-28 18:39 GMT+2
     this package (loading them isn’t necessary):  
       - `base`
       - `here`
-      - `knitr`
       - `rmarkdown`
       - `stringr`
       - `workflowr`

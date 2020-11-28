@@ -222,7 +222,6 @@ knitr::opts_chunk$set(
   of this package (loading them isn't necessary): \
   - `base`
   - `here`
-  - `knitr`
   - `rmarkdown`
   - `stringr`
   - `workflowr`

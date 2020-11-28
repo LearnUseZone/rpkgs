@@ -13,7 +13,6 @@ Suggests: testthat
 Imports: 
     base,
     here,
-    knitr,
     rmarkdown,
     stringr,
     workflowr,
