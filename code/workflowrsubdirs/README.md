@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-28 10:03 GMT+2
+Last update: 2020-11-28 18:39 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -12,15 +12,16 @@ Last update: 2020-11-28 10:03 GMT+2
   - [How to easily avoid potential
     problems](#how-to-easily-avoid-potential-problems)
       - [YAML headers](#yaml-headers)
-      - [Problems when .Rmd contain space in its
-        name](#problems-when-.rmd-contain-space-in-its-name)
+      - [Problems when .Rmd file contains space in its
+        name](#problems-when-.rmd-file-contains-space-in-its-name)
   - [Additional information](#additional-information)
   - [Installation steps (for Windows)](#installation-steps-for-windows)
-      - [Try following steps if the package weren’t installed
-        successfully](#try-following-steps-if-the-package-werent-installed-successfully)
+      - [Try following steps if it seems that the package wasn't
+        installed
+        properly](#try-following-steps-if-it-seems-that-the-package-wasnt-installed-properly)
   - [Necessary packages](#necessary-packages)
   - [Example of using this package
-    "workflowrsubdirs"](#example-of-using-this-package-workflowrsubdirs)
+    `workflowrsubdirs`](#example-of-using-this-package-workflowrsubdirs)
       - [Usage of workflowrsubdirs after it's
         installed](#usage-of-workflowrsubdirs-after-its-installed)
   - [Additional notes](#additional-notes)
@@ -28,12 +29,13 @@ Last update: 2020-11-28 10:03 GMT+2
 ## Purpose
 
   - This package provides a possibility to build .html pages from their
-    associated .Rmd files saved in subdirectories of a "workflowr"
-    project.
-  - Package "workflowr" is used for .Rmd files saved in directory
-    "analysis" and also for any other functionality that package
-    "workflowr" offers.
-  - Package "workflowrsubdirs" is used only to build .html pages from
+    associated .Rmd files saved in subdirectories of a
+    [workflowr](https://github.com/jdblischak/workflowr) project.
+  - Package `workflowr` is used for .Rmd files saved in directory
+    `analysis` and of course also for anything else that [package
+    workflowr
+    offers](https://github.com/jdblischak/workflowr/blob/master/README.md).
+  - My package `workflowrsubdirs` is used only to build .html pages from
     their associated .Rmd files saved in a new directory and its
     subdirectories.
 
@@ -42,47 +44,46 @@ Last update: 2020-11-28 10:03 GMT+2
 ### Directory structure
 
   - Because this package is a kind of an (optional) extension for
-    package "[workflowr](https://github.com/jdblischak/workflowr)", it’s
-    necessary to adhere the structure of the main "workflowr" project’s
-    working directory (hereinafter "main workflowr dir"). Following
-    directories are most important to following this rule:
-      - "analysis"
-      - "code"
-      - "docs" (for GitHub) or "public" (for GitLab)
-  - More about "workflowr" directories is available
-    [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
+    package workflowr, it’s necessary to adhere the structure of the
+    main [workflowr project's working
+    directory](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
+    (hereinafter `main workflowr dir`). Following directories are most
+    important to following this rule:
+      - `analysis`
+      - `code`
+      - `docs` (for GitHub) or `public` (for GitLab)
 
 ### Subdirectories for .Rmd files
 
   - For the purpose of saving .Rmd files in subdirectories, it’s
-    necessary to create a new directory directly in "main workflowr
-    dir".
+    necessary to create a new directory directly in `main workflowr
+    dir`.
       - Don’t create subdirectories (for this purpose) in directory
-        "analysis".
-      - Suggested name of this new directory is "code-rmd" because
+        `analysis`.
+      - Suggested name of this new directory is `code-rmd` because
           - this is also the default directory used in this package
-            "workflowrsubdirs".
+            `workflowrsubdirs`.
           - .Rmd files saved in it will be usually associated to
-            solutions in directory "code".
+            solutions in directory `code`.
   - .Rmd files can be saved
       - directly in this new directory or in any of its subdirectories
-        (hereinafter "code-rmd subdirs").
-  - 1stly, "workflowr" project needs to be prepared.
+        (hereinafter `code-rmd subdirs`).
+  - 1stly, `workflowr` project needs to be prepared.
       - Relevant steps (together with more information) can be found
         [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
-  - Directory "code"
+  - Directory `code`
       - can be used for codes that might not be appropriate to include
         in R Markdown format (e.g. for pre-processing the data, or for
         long-running code).
       - can contain also subdirectories here.
   - Following 2 approaches can be used to show results of solutions from
-    directory "code" and keep them organized:
-    1.  Create associated .Rmd files to directory "analysis" and build
-        their .html files using package "workflowr".
+    directory `code` and keep them organized:
+    1.  Create associated .Rmd files to directory `analysis` and build
+        their .html files using package `workflowr`.
           - this approach cannot have the same structure as
-            subdirectories in directory "code".
-    2.  Create associated .Rmd files to "code-rmd subdirs" and build
-        their .html files using package "workflowrsubdirs".
+            subdirectories in directory `code`.
+    2.  Create associated .Rmd files to `code-rmd subdirs` and build
+        their .html files using package `workflowrsubdirs`.
           - this approach can have the same structure as directory
             "code".
 
@@ -93,14 +94,14 @@ Last update: 2020-11-28 10:03 GMT+2
   - This is currently the only one function accessible by users.
   - Main steps
     1.  Evaluate if rendering of .Rmd to .html files is possible. If
-        some check doesn’t pass, write a reason and stop processing.
+        some check doesn't pass, write a reason and stop processing.
           - Used package function: initial\_checks()
     2.  Create paths (in a form of matrix with characters or character
         vector) to original .Rmd files that will be rendered to .html
         files.
           - Used package function: create\_rmd\_paths()
     3.  Generate a temporary (helping) .Rmd file from its original .Rmd
-        file and save it to directory "analysis".
+        file and save it to directory `analysis`.
           - Used package function: generate\_rmd()
     4.  If commit == TRUE, create a commit of these temporary (helping)
         .Rmd files with text “separate commit of temporary .Rmd files”.
@@ -108,26 +109,18 @@ Last update: 2020-11-28 10:03 GMT+2
           - If these temporary (helping) .Rmd files are not committed
             before workflowr::wflow\_build(), the following error
             message is written after opening any of prepared .html file
-            and left-clicking on "workflowr" button under tab "Checks":
+            and left-clicking on `workflowr` button under tab "Checks":
             "R Markdown file: uncommitted changes"
-              - This is also inline with "workflowr" package.
-    5.  Render temporary (helping) .Rmd files in directory "analysis" to
+              - This is also inline with `workflowr` package.
+    5.  Render temporary (helping) .Rmd files in directory `analysis` to
         .html files.
           - Used function: workflowr::wflow\_build()
           - Final .html files are prepared (also package workflowr is
-            set in this way) in directory "docs" (for GitHub) or
-            directory "public" (for GitLab). Each such file name
-            contains "--" which are delimiters for paths to original
+            set in this way) in directory `docs` (for GitHub) or
+            directory `public` (for GitLab). Each such file name
+            contains `\-\-` which are delimiters for paths to original
             .Rmd files paths.
-    6.  Delete temporary (helping) .Rmd files from directory “analysis”.
-  - About parameters
-      - patterns
-          - If parameter "patterns" isn’t NULL then it has always to end
-            with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or a relevant regular
-            expression that after evaluation point to extension ".rmd"
-            or ".Rmd" (case sensitive, "." is also required).  
-            This is made in accordance to behavior of package
-            "workflowr" which allows only ".rmd" or ".Rmd" extensions.
+    6.  Delete temporary (helping) .Rmd files from directory `analysis`.
 
 ## How to easily avoid potential problems
 
@@ -180,7 +173,7 @@ Last update: 2020-11-28 10:03 GMT+2
           - '' - Error: callr subprocess failed: \<text\>:1:9:
             unexpected string constant
 
-### Problems when .Rmd contain space in its name
+### Problems when .Rmd file contains space in its name
 
   - It’s necessary to not use spaces in .Rmd file names otherwise
     following errors occur.
@@ -189,23 +182,27 @@ Last update: 2020-11-28 10:03 GMT+2
         addresses, containing spaces so the easiest way how to avoid
         following errors is simply to not use spaces in .Rmd file names.
 
-  - Error when .Rmd file saved in "code-rmd subdirs" contain a space in
-    its name after running
-    e.g. workflowrsubdirs::build\_htmls("code-rmd/subdir", F, "test
-    file.Rmd"):  
-    Error: callr subprocess failed: cannot open the connection
-
-  - Error when .Rmd file saved in "analysis" contain a space in its name
-    after running e.g. workflowr::wflow\_build("analysis/test
-    file.Rmd"):  
-    Error: callr subprocess failed: The specified directory
-    'D:/Projects/GitLab/portfolios/test file.Rmd' does not exist.
+  - Error when .Rmd file saved in `code-rmd subdirs` contain a space in
+    its name after running e.g. following code is: Error: callr
+    subprocess failed: cannot open the connection
     
-      - This error message is strange because directory "analysis" isn’t
-        written there.
+    ``` r
+    workflowrsubdirs::build_htmls("code-rmd/subdir", F, "test file.Rmd")
+    ```
+
+  - Error when .Rmd file saved in directory `analysis` contain a space
+    in its name after running e.g. following code is: Error: callr
+    subprocess failed: The specified directory
+    'D:/Projects/GitLab/portfolios/test file.Rmd' does not exist. (This
+    error message is strange because directory "analysis" isn't written
+    there.)
+    
+    ``` r
+    workflowr::wflow_build("analysis/test file.Rmd")
+    ```
 
   - It seems that both of these errors are caused directly by package
-    "workflowr". J. Blischak (creator of package "workflowr") will add a
+    `workflowr`. J. Blischak (creator of package `workflowr`) will add a
     better error message (or maybe another suitable solution) as we
     discuss [here](https://github.com/jdblischak/workflowr/issues/226).
 
@@ -216,13 +213,26 @@ Last update: 2020-11-28 10:03 GMT+2
     prepared
       - Commit of all removed (see below) temporary (helping) .Rmd files
         and new .html files.
-  - If other than "workflowr" project is originally opened using its
+  - If other than `workflowr` project is originally opened using its
     .Rproj file then function build\_htmls() fails because
-    "base::setwd(here::here())" in this function sets a working
+    `base::setwd(here::here())` in this function sets a working
     directory to an original .Rproj working directory regardless a
     current working directory.
-      - Potentially if a relevant .Rproj working directory has the same
-        structure then it could work but I didn’t test it, yet.
+      - More precisely, if a project's working directory consists of all
+        following directories
+          - analysis - containing: a) properly prepared file `_site.yml`
+            and b) properly prepared file `index.Rmd` and c) directories
+            with .html files included in `_site.yml`
+            (e.g. `footer.html`)
+          - `code-rmd subdirs` - containing .Rmd files for future
+            rendering then R code like
+        <!-- end list -->
+        ``` r
+        workflowrsubdirs::build_htmls(dir_path =  c("code-rmd/eToro1"), subdirs = F, patterns = "testToDelete1.Rmd")
+        ```
+        generates an associated .html file (together with a relevant
+        docs or public directory with directory `site_libs` and file
+        `.nojekyll`).
 
 ## Installation steps (for Windows)
 
@@ -230,11 +240,17 @@ Last update: 2020-11-28 10:03 GMT+2
     repository](https://github.com/LearnUseZone/rpkgs).
 
   - Open
-    rpkgs/code/workflowrsubdirs/workflowrsubdirs/workflowrsubdirs.Rproj
+    `rpkgs/code/workflowrsubdirs/workflowrsubdirs/workflowrsubdirs.Rproj`
     in RStudio.
 
   - Build (from RStudio top menu) -\> Build Source Package -\> wait
     until .tar.gz file is created.
+
+  - Session (from RStudio top menu) -\> Restart R (Ctrl+Shift+F10)
+    
+      - R session needs to be restarted to avoid Warning in
+        install.packages :  
+        package ‘workflowrsubdirs’ is in use and will not be installed
 
   - Install the package using R code:
     install.packages(\<path\_to\_tar.gz\_file\>, repos = NULL, type =
@@ -242,23 +258,25 @@ Last update: 2020-11-28 10:03 GMT+2
 
   - Notes
     
-      - Don’t use Build (from top menu of RStudio) -\> Install and
+      - Don't use Build (from top menu of RStudio) -\> Install and
         Restart (Ctrl+Shift+B) because of problems explained
         [here](https://stackoverflow.com/questions/65004638/stop-in-package-function-doesnt-end-debug-mode).
           - [Here](https://stackoverflow.com/questions/1474081/how-do-i-install-an-r-package-from-source/1474125#1474125)
             can be found additional information e.g. regarding UNIX.
-      - This package still doesn’t have any stable version therefore
+      - This package still doesn't have any stable version therefore
         previous installation steps are suggested.
 
-### Try following steps if the package weren’t installed successfully
+### Try following steps if it seems that the package wasn't installed properly
 
-1.  Uninstall this package from RStudio "Packages" tab if it exists
+1.  Restart R session for each opened RStudio session
+      - Continue with following steps if this doesn't help.
+2.  Uninstall this package from RStudio "Packages" tab if it exists
     there.
-2.  Delete directory "workflowrsubdirs" from directory "library"
+3.  Delete directory `workflowrsubdirs` from directory `library`
     (directory with installed R packages) if it exists there.
-3.  Restart R session
+4.  Restart R session
       - for example using RStudio -\> Session -\> Restart R.
-4.  Install the package again using R code:
+5.  Install the package again using R code:
     install.packages(\<path\_to\_tar.gz\_file\>, repos = NULL, type =
     "source").
 
@@ -266,51 +284,62 @@ Last update: 2020-11-28 10:03 GMT+2
 
   - It’s necessary to install following packages for a proper usage of
     this package (loading them isn’t necessary):  
-      - base
-      - here
-      - knitr
-      - rmarkdown
-      - stringr
-      - workflowr
-      - yaml
+      - `base`
+      - `here`
+      - `knitr`
+      - `rmarkdown`
+      - `stringr`
+      - `workflowr`
+      - `yaml`
 
-## Example of using this package "workflowrsubdirs"
+## Example of using this package `workflowrsubdirs`
 
-  - Let’s consider following files  
-      - "code-rmd/subdir/testfile1.Rmd",
-      - "code-rmd/subdir/testfile2.rmd",
-      - "code-rmd/subdir/testdir/testfile1.Rmd",
-      - "code-rmd/subdir/testdir/my-analyses.Rmd"
+  - Let's consider following files  
+    
+      - `code-rmd/subdir/testfile1.Rmd`
+      - `code-rmd/subdir/testfile2.rmd`,
+      - `code-rmd/subdir/testdir/testfile1.Rmd`,
+      - `code-rmd/subdir/testdir/my-analyses.Rmd`
+
   - Several options can be used to render all those files, for example:
-      - workflowrsubdirs::build\_htmls()
-          - All .Rmd (or .rmd) files in "code-rmd subdirs" will be
-            rendered to .html files.
-      - workflowrsubdirs::build\_htmls(dirs = "code-rmd/subdir")
-          - All .Rmd (or .rmd) files in directories and subdirectories
-            of "code-rmd/subdir" will be rendered to .html files.
-      - workflowrsubdirs::build\_htmls(dirs = "code-rmd\\\\subdir")
-          - All .Rmd (or .rmd) files in directories and subdirectories
-            of "code-rmd/subdir" will be rendered to .html files.
-      - workflowrsubdirs::build\_htmls(dirs = "code-rmd/subdir",
-        orig\_rmd\_patterns = ".\*.(r|R)md$")
-      - workflowrsubdirs::build\_htmls(dirs = "code-rmd/subdir",
-        orig\_rmd\_patterns = c("^test.\*.rmd$", "file1.Rmd", "-.\*.\[ R
-        , r \]md"))
+    
+    ``` r
+    # render all .rmd and .Rmd files in directory "code-rmd" to .html files
+    workflowrsubdirs::build_htmls()
+    
+    # render all .rmd and .Rmd files in directory "code-rmd/subdir" and its subdirectories to .html files
+    workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir")
+    workflowrsubdirs::build_htmls(dir_path = "code-rmd\\subdir")
+    workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir", patterns = ".*.(r|R)md$")
+    
+    # render .rmd and .Rmd files based on regular expressions in parameter "patterns"
+    #   note: if any file is selected by more than 1 regular expression, such file
+    #         is processed only once
+    workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir",
+                                  subdirs = F,
+                                  patterns = c("^test.*.rmd$", "file1.Rmd", "-.*.[ R , r ]md")
+                                 )
+    ```
+
   - Note:
+    
       - A real example with .Rmd files in subdirectories (under
-        directory "codeRmd" in this case) can be found
-        [here](https://github.com/LearnUseZone/workflowrSubfolders).  
+        directory `codeRmd` in this case) can be found at
+        [workflowrSubfolders](https://github.com/LearnUseZone/workflowrSubfolders).  
         This example is only for a better overview of managing
         directories because this package is enhanced against the
-        original version used in "workflowrSubfolders".
+        original version used in `workflowrSubfolders`.
+          - If you are interested in it, I suggest to start with reading
+            of
+            [\_preparationSubfolders.R](https://github.com/LearnUseZone/workflowrSubfolders/blob/master/code/_preparationSubfolders.R).
 
 ### Usage of workflowrsubdirs after it's installed
 
-1.  After "workflowrsubdirs" is installed, open your "workflowr" project
+1.  After `workflowrsubdirs` is installed, open your `workflowr` project
     (run .Rproj file).
-2.  Use: workflowrsubdirs::build\_htmls()
+2.  Use: `workflowrsubdirs::build_htmls()`
 3.  Remember that although commit of temporary .Rmd files were made
-    within function workflowrsubdirs::build\_htmls(), you still have to
+    within function `workflowrsubdirs::build_htmls()`, you still have to
     commit the rest of files. You can use for this purpose e.g.:
 
 <!-- end list -->
@@ -318,18 +347,26 @@ Last update: 2020-11-28 10:03 GMT+2
   - 3a. GitHub Desktop, Sourcetree or other Git desktop client.
   - 3b. Git Bash (also set as Terminal in RStudio) with git commands
     like:  
-    git branch -a \# I prefer to check whitch branch is checked out  
-    git add “.”  
-    git commit -m “tested: package workflowrsubdirs”  
-    git push origin master
-  - 3c. Functions of package workflowr like:  
-    workflowr::wflow\_git\_commit(c(“docs/subPages1–testPrint1.html”,
-    “docs/subPages2–testPrint2.html”), “tested: package
-    workflowrsubdirs with workflowr”, all = TRUE)  
-    workflowr::wflow\_use\_github("LearnUseZone", "workflowrSubfolders")
-    \# usually choose a default option which is 2  
-    workflowr::wflow\_git\_push() \# use your credentials to push your
-    changes to checked out branch.  
+
+<!-- end list -->
+
+``` r
+git branch -a       # I prefer to check which branch is checked out
+git add "."
+git commit -m "tested: package workflowrsubdirs"
+git push origin master
+```
+
+  - 3c. Functions of package `workflowr` like:
+
+<!-- end list -->
+
+``` r
+workflowr::wflow_git_commit(c("docs/subPages1--testPrint1.html", "docs/subPages2--testPrint2.html"),
+                            "tested: package workflowrsubdirs with workflowr", all = TRUE)
+workflowr::wflow_use_github("LearnUseZone", "workflowrSubfolders")  # usually choose a default option which is 2
+workflowr::wflow_git_push()  # use your credentials to push your changes to checked out branch.
+```
 
 ## Additional notes
 
@@ -339,11 +376,11 @@ Last update: 2020-11-28 10:03 GMT+2
     you don't use RStudio.
   - I’m still working on improvements therefore it can still be found
     for example
-      - some placeholders like "tests-generate\_rmd.R" and
+      - some placeholders like `tests\testthat\test-build_htmls.R` and
       - notes for future improvements
       - also I still don’t have a stable version
   - Initial inspiration for this package is from
     [here](https://github.com/jdblischak/workflowr/issues/95).  
   - A related discussion with John Blischak (a creator of package
-    "workflowr") about a base set-up can be found
+    `workflowr`) about a base set-up can be found
     [here](https://github.com/jdblischak/workflowr/issues/220).
