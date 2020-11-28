@@ -22,6 +22,12 @@ If FALSE, file listing will be only directly from directories in parameter dir.}
 A character vector of paths to .Rmd files for rendering.
 If NULL, process all .Rmd files based values in parameters dir and subdirs.
 If not NULL, process files matching a regular expression.
+If this parameter isn't NULL then it has always to end
+with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
+a relevant regular expression that after evaluation point to
+extension ".rmd" or ".Rmd" (case sensitive, "." is also required). This is made
+in accordance to behavior of package "workflowr"
+which allows only ".rmd" or ".Rmd" extensions.
 Examples:
 patterns = "^.\emph{page.}.[  R , r ]md$")
 patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
@@ -37,12 +43,14 @@ Final .html files from their original .Rmd files saved in subdirectories.
 }
 \description{
 Process only those .Rmd files (based on input parameters) that meet required criteria.
+Use parameters "dir_path", "subdirs" and "patterns" to determine which .rmd or .Rmd files
+will be rendered to .html files.
 }
 \examples{
 \dontrun{
-  generate_htmls()
-  generate_htmls(dir_path = c("code-rmd\\\\subdir"), subdirs = F)
-  generate_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
+  build_htmls()
+  build_htmls(dir_path = c("code-rmd\\\\subdir"), subdirs = F)
+  build_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
 }
 }
 \keyword{subdirectory}

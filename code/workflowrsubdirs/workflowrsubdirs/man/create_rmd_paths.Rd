@@ -7,11 +7,11 @@
 create_rmd_paths(dir_path, subdirs, patterns)
 }
 \arguments{
-\item{dir_path}{see \code{generate_htmls}}
+\item{dir_path}{see \code{build_htmls}}
 
-\item{subdirs}{see \code{generate_htmls}}
+\item{subdirs}{see \code{build_htmls}}
 
-\item{patterns}{see \code{generate_htmls}}
+\item{patterns}{see \code{build_htmls}}
 }
 \value{
 A character vector with original .Rmd file paths if at least one .Rmd file meets criteria.
@@ -24,6 +24,6 @@ If input parameters point to a .Rmd file path that
 \item doesn't exist then such file will be not rendered.
 \item exist then such file will be rendered in \code{render-to-htmls} using wflow_build().
 If no .Rmd file for rendering is found, processing ends.
-This function is called only from \code{generate_htmls} so its input variables have no default values.
+This function is called only from \code{build_htmls} so its input variables have no default values.
 }
 }

@@ -10,12 +10,12 @@ render_to_htmls(orig_rmd_paths, commit)
 \item{orig_rmd_paths}{character
 Paths to original .Rmd files.}
 
-\item{commit}{see \code{generate_htmls}}
+\item{commit}{see \code{build_htmls}}
 }
 \value{
 Final .html files from their original .Rmd files saved in subdirectories.
 }
 \description{
 Render .Rmd to .html files.
-This function is called only from \code{generate_htmls} so its input variables have no default values.
+This function is called only from \code{build_htmls} so its input variables have no default values.
 }

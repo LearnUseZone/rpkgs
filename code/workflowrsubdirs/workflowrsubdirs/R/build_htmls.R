@@ -2,6 +2,8 @@
 #' Generate .html files from their original .Rmd files
 #' @description
 #' Process only those .Rmd files (based on input parameters) that meet required criteria.
+#' Use parameters "dir_path", "subdirs" and "patterns" to determine which .rmd or .Rmd files
+#' will be rendered to .html files.
 #' @param dir_path
 #' character of length = 1 (default: "code-rmd").
 #' Path to a subdirectory, under a main workflowr directory, where .Rmd files for rendering are saved.
@@ -18,6 +20,12 @@
 #' A character vector of paths to .Rmd files for rendering.
 #' If NULL, process all .Rmd files based values in parameters dir and subdirs.
 #' If not NULL, process files matching a regular expression.
+#' If this parameter isn't NULL then it has always to end
+#' with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
+#' a relevant regular expression that after evaluation point to
+#' extension ".rmd" or ".Rmd" (case sensitive, "." is also required). This is made
+#' in accordance to behavior of package "workflowr"
+#' which allows only ".rmd" or ".Rmd" extensions.
 #' Examples:
 #' patterns = "^.*page.*.\[  R , r \]md$")
 #' patterns = c("page1.Rmd", ".*page2.*.Rmd")
@@ -32,9 +40,9 @@
 #' @export
 #' @examples
 #' \dontrun{
-#'   generate_htmls()
-#'   generate_htmls(dir_path = c("code-rmd\\subdir"), subdirs = F)
-#'   generate_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
+#'   build_htmls()
+#'   build_htmls(dir_path = c("code-rmd\\subdir"), subdirs = F)
+#'   build_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
 #' }
 
 build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F) {
@@ -58,13 +66,13 @@ build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
 #' @description
 #' Evaluate if rendering of .Rmd into .html files is possible
 #' by checking rules for directories and .Rmd files.
-#' This function is called only from \code{generate_htmls} so its input variables have no default values.
+#' This function is called only from \code{build_htmls} so its input variables have no default values.
 #' @param dir_path
-#' see \code{generate_htmls}
+#' see \code{build_htmls}
 #' @param subdirs
-#' see \code{generate_htmls}
+#' see \code{build_htmls}
 #' @param patterns
-#' see \code{generate_htmls}
+#' see \code{build_htmls}
 #' @return
 #' Nothing if there's no error but "silent" stop() is needed (if there's no stop() it would return NULL).
 #' Nothing if some check doesn't pass but it writes a reason and stop processing.
@@ -149,13 +157,13 @@ initial_checks <- function(dir_path, subdirs, patterns) {
 #'   - doesn't exist then such file will be not rendered.
 #'   - exist then such file will be rendered in \code{render-to-htmls} using wflow_build().
 #' If no .Rmd file for rendering is found, processing ends.
-#' This function is called only from \code{generate_htmls} so its input variables have no default values.
+#' This function is called only from \code{build_htmls} so its input variables have no default values.
 #' @param dir_path
-#' see \code{generate_htmls}
+#' see \code{build_htmls}
 #' @param subdirs
-#' see \code{generate_htmls}
+#' see \code{build_htmls}
 #' @param patterns
-#' see \code{generate_htmls}
+#' see \code{build_htmls}
 #' @return
 #' A character vector with original .Rmd file paths if at least one .Rmd file meets criteria.
 #' Nothing and stop processing if no file meets criteria.
@@ -224,12 +232,12 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
 #' Render .Rmd to .html files
 #' @description
 #' Render .Rmd to .html files.
-#' This function is called only from \code{generate_htmls} so its input variables have no default values.
+#' This function is called only from \code{build_htmls} so its input variables have no default values.
 #' @param orig_rmd_paths
 #' character
 #' Paths to original .Rmd files.
 #' @param commit
-#' see \code{generate_htmls}
+#' see \code{build_htmls}
 #' @return
 #' Final .html files from their original .Rmd files saved in subdirectories.
 

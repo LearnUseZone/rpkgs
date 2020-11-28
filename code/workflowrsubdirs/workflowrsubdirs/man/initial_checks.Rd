@@ -7,11 +7,11 @@
 initial_checks(dir_path, subdirs, patterns)
 }
 \arguments{
-\item{dir_path}{see \code{generate_htmls}}
+\item{dir_path}{see \code{build_htmls}}
 
-\item{subdirs}{see \code{generate_htmls}}
+\item{subdirs}{see \code{build_htmls}}
 
-\item{patterns}{see \code{generate_htmls}}
+\item{patterns}{see \code{build_htmls}}
 }
 \value{
 Nothing if there's no error but "silent" stop() is needed (if there's no stop() it would return NULL).
@@ -22,5 +22,5 @@ if there are files deleted from directory "analysis"
 \description{
 Evaluate if rendering of .Rmd into .html files is possible
 by checking rules for directories and .Rmd files.
-This function is called only from \code{generate_htmls} so its input variables have no default values.
+This function is called only from \code{build_htmls} so its input variables have no default values.
 }
