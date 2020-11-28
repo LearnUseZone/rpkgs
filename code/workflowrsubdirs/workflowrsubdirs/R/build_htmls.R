@@ -100,7 +100,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
         patterns[pattern_num],
         "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$"))
         ##   it can still happen that no file will exist but this is solved in create_rmd_paths()
-        stop("Parameter 'patterns' has to point only to files with extension .Rmd or .rmd.", call. = F)
+        stop("Parameter 'patterns' has to point only to files with extension .Rmd or .rmd (also that '.' is required).", call. = F)
     }
   }
 
@@ -115,18 +115,21 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     )) > 0) {  # if this part doesn't run then initial_checks() returns NULL
 
     base::message(
-      "Following file names contain \"--\" which isn't allowed:", "\n",  # I simply prefer "\n" between commas (if possible)
+      "Following file names contain \"--\" (two hyphens).", "\n",  # I simply prefer "\n" between commas (if possible)
+      "That isn't allowed in directory \"analysis\".", "\n\n",
+      "Relevant files:", "\n",
       base::paste(temp_rmd_paths, collapse = "\n"), "\n\n",
-      "Choose 'y' or 'Y' to automatically delete listed files and continue with processing.", "\n",
-      "Choose anything else to stop process and manage relevant files manually."
+      "Please select one of following options:", "\n",
+      "'y' or 'Y'    : listed files will be automatically deleted and script will continue", "\n",
+      "anything else : script will stop and therefore listed files have to be managed manually", "\n"
     )
 
-    choice <- base::readline(prompt = "My choice: ")
+    choice <- base::readline(prompt = "Selection: ")
 
     if (choice %in% c("y", "Y")) {
       base::file.remove(temp_rmd_paths)  # if this part run then initial_checks() returns a number of TRUE equals to number of deleted files
     } else {  # this is not an error it's simply message about a user's choice
-      base::message("You chose to stop rendering.")
+      base::message("\n", "You chose to stop rendering.")
       #   set "silent" stop()
       #     - no message as a part of stop() isn't written when following 2 code lines are used
       #     - stop() will end the whole process (no Continue or Stop button available if the package is installed from built source package (.tar.gz file))
