@@ -1,12 +1,15 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-28 20:09 GMT+2
+Last update: 2020-11-28 20:39 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
       - [Directory structure](#directory-structure)
       - [Subdirectories for .Rmd files](#subdirectories-for-.rmd-files)
+      - [Open `workflowr` project before using
+        `workflowrsubdirs`](#open-workflowr-project-before-using-workflowrsubdirs)
+      - [Minimum necessary setting](#minimum-necessary-setting)
   - [Package functions](#package-functions)
       - [build\_htmls()](#build_htmls)
   - [How to easily avoid potential
@@ -14,7 +17,6 @@ Last update: 2020-11-28 20:09 GMT+2
       - [YAML headers](#yaml-headers)
       - [Problems when .Rmd file contains space in its
         name](#problems-when-.rmd-file-contains-space-in-its-name)
-  - [Additional information](#additional-information)
   - [Installation steps (for Windows)](#installation-steps-for-windows)
       - [Try following steps if it seems that the package wasn't
         installed
@@ -86,6 +88,34 @@ Last update: 2020-11-28 20:09 GMT+2
         their .html files using package `workflowrsubdirs`.
           - this approach can have the same structure as directory
             "code".
+
+### Open `workflowr` project before using `workflowrsubdirs`
+
+  - If other than `workflowr` project is originally opened (using its
+    .Rproj file) then function `workflowrsubdirs::build_htmls()` fails
+    because `base::setwd(here::here())` in this function sets a working
+    directory to an original .Rproj working directory regardless a
+    (later changed) current working directory.
+
+### Minimum necessary setting
+
+  - This is rather for a better overview then for really using this
+    approach.
+  - If a project's working directory consists of all following
+    directories
+      - analysis - containing: a) properly prepared file `_site.yml` and
+        b) properly prepared file `index.Rmd` and c) directories with
+        .html files included in `_site.yml` (e.g. `footer.html`)
+      - `code-rmd subdirs` - containing .Rmd files for future rendering
+        then R code like
+    <!-- end list -->
+    ``` r
+    workflowrsubdirs::build_htmls(dir_path = c("code-rmd/eToro1"),
+                                  subdirs = F, patterns = "testToDelete1.Rmd")
+    ```
+    generates an associated .html file together with a relevant
+    directory `docs` or `public` with directory `site_libs` and file
+    `.nojekyll`.
 
 ## Package functions
 
@@ -206,34 +236,6 @@ Last update: 2020-11-28 20:09 GMT+2
     better error message (or maybe another suitable solution) as we
     discuss [here](https://github.com/jdblischak/workflowr/issues/226).
 
-## Additional information
-
-  - Even when relevant temporary files were committed separately (see
-    above), it’s necessary to commit all files after .html files are
-    prepared
-      - Commit of all removed (see below) temporary (helping) .Rmd files
-        and new .html files.
-  - If other than `workflowr` project is originally opened using its
-    .Rproj file then function build\_htmls() fails because
-    `base::setwd(here::here())` in this function sets a working
-    directory to an original .Rproj working directory regardless a
-    current working directory.
-      - More precisely, if a project's working directory consists of all
-        following directories
-          - analysis - containing: a) properly prepared file `_site.yml`
-            and b) properly prepared file `index.Rmd` and c) directories
-            with .html files included in `_site.yml`
-            (e.g. `footer.html`)
-          - `code-rmd subdirs` - containing .Rmd files for future
-            rendering then R code like
-        <!-- end list -->
-        ``` r
-        workflowrsubdirs::build_htmls(dir_path =  c("code-rmd/eToro1"), subdirs = F, patterns = "testToDelete1.Rmd")
-        ```
-        generates an associated .html file (together with a relevant
-        docs or public directory with directory `site_libs` and file
-        `.nojekyll`).
-
 ## Installation steps (for Windows)
 
   - Clone this Git [rpkgs
@@ -337,35 +339,30 @@ Last update: 2020-11-28 20:09 GMT+2
 1.  After `workflowrsubdirs` is installed, open your `workflowr` project
     (run .Rproj file).
 2.  Use: `workflowrsubdirs::build_htmls()`
-3.  Remember that although commit of temporary .Rmd files were made
-    within function `workflowrsubdirs::build_htmls()`, you still have to
-    commit the rest of files. You can use for this purpose e.g.:
-
-<!-- end list -->
-
-  - 3a. GitHub Desktop, Sourcetree or other Git desktop client.
-  - 3b. Git Bash (also set as Terminal in RStudio) with git commands
-    like:  
-
-<!-- end list -->
-
-``` r
-git branch -a       # I prefer to check which branch is checked out
-git add "."
-git commit -m "tested: package workflowrsubdirs"
-git push origin master
-```
-
-  - 3c. Functions of package `workflowr` like:
-
-<!-- end list -->
-
-``` r
-workflowr::wflow_git_commit(c("docs/subPages1--testPrint1.html", "docs/subPages2--testPrint2.html"),
-                            "tested: package workflowrsubdirs with workflowr", all = TRUE)
-workflowr::wflow_use_github("LearnUseZone", "workflowrSubfolders")  # usually choose a default option which is 2
-workflowr::wflow_git_push()  # use your credentials to push your changes to checked out branch.
-```
+3.  Remember that although temporary .Rmd files are committed separately
+    within function `workflowrsubdirs::build_htmls()`, it’s still
+    necessary to commit all files after .html files are prepared (commit
+    of all removed temporary (helping) .Rmd files and new .html files).
+       
+    There are more approaches for this purpose e.g.:
+      - 3a. GitHub Desktop, Sourcetree or other Git desktop client.
+      - 3b. Git Bash (also set as Terminal in RStudio) with git commands
+        like:  
+    <!-- end list -->
+    ``` r
+    git branch -a       # I prefer to check which branch is checked out
+    git add "."
+    git commit -m "tested: package workflowrsubdirs"
+    git push origin master
+    ```
+      - 3c. Functions of package `workflowr` like:
+    <!-- end list -->
+    ``` r
+    workflowr::wflow_git_commit(c("docs/subPages1--testPrint1.html", "docs/subPages2--testPrint2.html"),
+                                "tested: package workflowrsubdirs with workflowr", all = TRUE)
+    workflowr::wflow_use_github("LearnUseZone", "workflowrSubfolders")  # usually choose a default option which is 2
+    workflowr::wflow_git_push()  # use your credentials to push your changes to checked out branch.
+    ```
 
 ## Additional notes
 
@@ -377,7 +374,9 @@ workflowr::wflow_git_push()  # use your credentials to push your changes to chec
     for example
       - some placeholders like `tests\testthat\test-build_htmls.R` and
       - notes for future improvements
-      - also I still don’t have a stable version
+  - Also I still don’t have a stable version.
+  - Package `workflowrsubdirs` is available under the [MIT
+    license](https://opensource.org/licenses/mit-license.php).
   - Initial inspiration for this package is from
     [here](https://github.com/jdblischak/workflowr/issues/95).  
   - A related discussion with John Blischak (a creator of package
