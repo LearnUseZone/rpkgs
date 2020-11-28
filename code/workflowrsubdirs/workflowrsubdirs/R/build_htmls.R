@@ -75,10 +75,10 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   # check input parameter "dir_path"
   if (base::is.null(dir_path))
     stop("Parameter 'dir_path' cannot be NULL.", call. = F)
-  if (dir_path == "")
-    stop("Parameter 'dir_path' cannot be empty string.", call. = F)
   if (base::length(dir_path) != 1)
     stop("Parameter 'dir_path' can contain only 1 path to a directory.", call. = F)
+  if (dir_path == "")
+    stop("Parameter 'dir_path' cannot be empty string.", call. = F)
   if (!file.exists(dir_path))
     stop("Parameter 'dir_path' contains a directory that doesn't exist.", call. = F)
   if (base::regexpr("//", dir_path) > 0)  # file.exists() doesn't catch path like dir//subdir, dir///subdir, dir////subdir, etc. (only one "/" has to be used); potential issues with "\" is solved by R error message
