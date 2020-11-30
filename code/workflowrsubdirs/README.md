@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-28 20:39 GMT+2
+Last update: 2020-11-30 22:26 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -109,10 +109,8 @@ Last update: 2020-11-28 20:39 GMT+2
       - `code-rmd subdirs` - containing .Rmd files for future rendering
         then R code like
     <!-- end list -->
-    ``` r
-    workflowrsubdirs::build_htmls(dir_path = c("code-rmd/eToro1"),
-                                  subdirs = F, patterns = "testToDelete1.Rmd")
-    ```
+        workflowrsubdirs::build_htmls(dir_path = c("code-rmd/eToro1"),
+                                      subdirs = F, patterns = "testToDelete1.Rmd")
     generates an associated .html file together with a relevant
     directory `docs` or `public` with directory `site_libs` and file
     `.nojekyll`.
@@ -160,22 +158,28 @@ Last update: 2020-11-28 20:39 GMT+2
     used in YAML header. otherwise there is an error with rendering .Rmd
     to .html file.  
     Example:  
-    date:    "\`r paste("Last update:",
-    format(lubridate::with\_tz(as.POSIXct(Sys.time()) + 7200, tzone =
-    "GMT"), "%Y-%m-%d %H:%M GMT+2"))\`"
+    
+    ``` r
+    date:    "`r paste("Last update:", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
+             tzone = "GMT"), "%Y-%m-%d %H:%M GMT+2"))`"
+    ```
 
   - Single quotation marks (') have to be used in inline R codes in YAML
     header in .Rmd files saved in directory "analysis", for example:  
-    date:    "\`r paste('Last update:',
-    format(lubridate::with\_tz(as.POSIXct(Sys.time()) + 7200, tzone =
-    'GMT'), '%Y-%m-%d %H:%M GMT+2'))\`"
+    
+    ``` r
+    date:    "`r paste('Last update:', format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
+             tzone = 'GMT'), '%Y-%m-%d %H:%M GMT+2'))`"
+    ```
 
   - Escaped double quotation marks (\\") have to be used in inline R
     codes in YAML header in .Rmd files saved in "code-rmd subdirs", for
     example:  
-    date:    "\`r paste(\\"Last update:\\",
-    format(lubridate::with\_tz(as.POSIXct(Sys.time()) + 7200, tzone =
-    \\"GMT\\"), \\"%Y-%m-%d %H:%M GMT+2\\"))\`"
+    
+    ``` r
+    date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
+             tzone = \"GMT\"), \"%Y-%m-%d %H:%M GMT+2\"))`"
+    ```
 
   - Examples of errors if incorrect quotation marks are used:
     
@@ -216,9 +220,7 @@ Last update: 2020-11-28 20:39 GMT+2
     its name after running e.g. following code is: Error: callr
     subprocess failed: cannot open the connection
     
-    ``` r
-    workflowrsubdirs::build_htmls("code-rmd/subdir", F, "test file.Rmd")
-    ```
+        workflowrsubdirs::build_htmls("code-rmd/subdir", F, "test file.Rmd")
 
   - Error when .Rmd file saved in directory `analysis` contain a space
     in its name after running e.g. following code is: Error: callr
@@ -227,9 +229,7 @@ Last update: 2020-11-28 20:39 GMT+2
     error message is strange because directory "analysis" isn't written
     there.)
     
-    ``` r
-    workflowr::wflow_build("analysis/test file.Rmd")
-    ```
+        workflowr::wflow_build("analysis/test file.Rmd")
 
   - It seems that both of these errors are caused directly by package
     `workflowr`. J. Blischak (creator of package `workflowr`) will add a
@@ -304,23 +304,21 @@ Last update: 2020-11-28 20:39 GMT+2
 
   - Several options can be used to render all those files, for example:
     
-    ``` r
-    # render all .rmd and .Rmd files in directory "code-rmd" to .html files
-    workflowrsubdirs::build_htmls()
-    
-    # render all .rmd and .Rmd files in directory "code-rmd/subdir" and its subdirectories to .html files
-    workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir")
-    workflowrsubdirs::build_htmls(dir_path = "code-rmd\\subdir")
-    workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir", patterns = ".*.(r|R)md$")
-    
-    # render .rmd and .Rmd files based on regular expressions in parameter "patterns"
-    #   note: if any file is selected by more than 1 regular expression, such file
-    #         is processed only once
-    workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir",
-                                  subdirs = F,
-                                  patterns = c("^test.*.rmd$", "file1.Rmd", "-.*.[ R , r ]md")
-                                 )
-    ```
+        # render all .rmd and .Rmd files in directory "code-rmd" to .html files
+        workflowrsubdirs::build_htmls()
+        
+        # render all .rmd and .Rmd files in directory "code-rmd/subdir" and its subdirectories to .html files
+        workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir")
+        workflowrsubdirs::build_htmls(dir_path = "code-rmd\\subdir")
+        workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir", patterns = ".*.(r|R)md$")
+        
+        # render .rmd and .Rmd files based on regular expressions in parameter "patterns"
+        #   note: if any file is selected by more than 1 regular expression, such file
+        #         is processed only once
+        workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir",
+                                      subdirs = F,
+                                      patterns = c("^test.*.rmd$", "file1.Rmd", "-.*.[ R , r ]md")
+                                     )
 
   - Note:
     
@@ -349,20 +347,16 @@ Last update: 2020-11-28 20:39 GMT+2
       - 3b. Git Bash (also set as Terminal in RStudio) with git commands
         like:  
     <!-- end list -->
-    ``` r
-    git branch -a       # I prefer to check which branch is checked out
-    git add "."
-    git commit -m "tested: package workflowrsubdirs"
-    git push origin master
-    ```
+        git branch -a       # I prefer to check which branch is checked out
+        git add "."
+        git commit -m "tested: package workflowrsubdirs"
+        git push origin master
       - 3c. Functions of package `workflowr` like:
     <!-- end list -->
-    ``` r
-    workflowr::wflow_git_commit(c("docs/subPages1--testPrint1.html", "docs/subPages2--testPrint2.html"),
-                                "tested: package workflowrsubdirs with workflowr", all = TRUE)
-    workflowr::wflow_use_github("LearnUseZone", "workflowrSubfolders")  # usually choose a default option which is 2
-    workflowr::wflow_git_push()  # use your credentials to push your changes to checked out branch.
-    ```
+        workflowr::wflow_git_commit(c("docs/subPages1--testPrint1.html", "docs/subPages2--testPrint2.html"),
+                                    "tested: package workflowrsubdirs with workflowr", all = TRUE)
+        workflowr::wflow_use_github("LearnUseZone", "workflowrSubfolders")  # usually choose a default option which is 2
+        workflowr::wflow_git_push()  # use your credentials to push your changes to checked out branch.
 
 ## Additional notes
 

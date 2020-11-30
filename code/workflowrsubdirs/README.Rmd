@@ -85,7 +85,7 @@ knitr::opts_chunk$set(
                            c) directories with .html files included in `_site.yml` (e.g. `footer.html`)
   - `code-rmd subdirs` - containing .Rmd files for future rendering
   then R code like
-  ```r
+  ```
   workflowrsubdirs::build_htmls(dir_path = c("code-rmd/eToro1"),
                                 subdirs = F, patterns = "testToDelete1.Rmd")
   ```
@@ -130,18 +130,24 @@ knitr::opts_chunk$set(
 - It's necessary to use correct quotation marks if inline R code is used in YAML header.
   otherwise there is an error with rendering .Rmd to .html file. \
   Example: \
-  date:\ \ \ \ \"&#x060;r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
-  tzone = \"GMT\"), \"%Y-%m-%d %H:%M GMT+2\"))&#x060;\"
+  ```{r, eval = FALSE}
+  date:    "`r paste("Last update:", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
+           tzone = "GMT"), "%Y-%m-%d %H:%M GMT+2"))`"
+  ```
 
 - Single quotation marks (\') have to be used in inline R codes in YAML header
   in .Rmd files saved in directory \"analysis\", for example: \
-  date:\ \ \ \ \"&#x060;r paste(\'Last update:\', format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
-  tzone = \'GMT\'), \'%Y-%m-%d %H:%M GMT+2\'))&#x060;\"
+  ```{r, eval = FALSE}
+  date:    "`r paste('Last update:', format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
+           tzone = 'GMT'), '%Y-%m-%d %H:%M GMT+2'))`"
+  ```
 
 - Escaped double quotation marks (\\\") have to be used in inline R codes in YAML header
   in .Rmd files saved in \"code-rmd subdirs\", for example: \
-  date:\ \ \ \ \"&#x060;r paste(\\\"Last update:\\\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
-  tzone = \\\"GMT\\\"), \\\"%Y-%m-%d %H:%M GMT+2\\\"))&#x060;\"
+  ```{r, eval = FALSE}
+  date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
+           tzone = \"GMT\"), \"%Y-%m-%d %H:%M GMT+2\"))`"
+  ```
 
 - Examples of errors if incorrect quotation marks are used:
   - wflow_build(\"analysis/testfile.Rmd\")
@@ -167,7 +173,7 @@ knitr::opts_chunk$set(
 - Error when .Rmd file saved in `code-rmd subdirs` contain a space in its name after running
   e.g. following code is: Error: callr subprocess failed: cannot open the connection
   
-  ```r
+  ```
   workflowrsubdirs::build_htmls("code-rmd/subdir", F, "test file.Rmd")
   ```
 
@@ -176,7 +182,7 @@ knitr::opts_chunk$set(
   Error: callr subprocess failed: The specified directory \'D:/Projects/GitLab/portfolios/test file.Rmd\' does not exist.
   (This error message is strange because directory \"analysis\" isn\'t written there.)
   
-  ```r
+  ```
   workflowr::wflow_build("analysis/test file.Rmd")
   ```
 
@@ -238,7 +244,7 @@ knitr::opts_chunk$set(
   - `code-rmd/subdir/testdir/my-analyses.Rmd`
 
 - Several options can be used to render all those files, for example:
-  ```r
+  ```
   # render all .rmd and .Rmd files in directory "code-rmd" to .html files
   workflowrsubdirs::build_htmls()
   
@@ -275,14 +281,14 @@ knitr::opts_chunk$set(
    There are more approaches for this purpose e.g.:
    - 3a. GitHub Desktop, Sourcetree or other Git desktop client.
    - 3b. Git Bash (also set as Terminal in RStudio) with git commands like:\
-   ```r
+   ```
    git branch -a       # I prefer to check which branch is checked out
    git add "."
    git commit -m "tested: package workflowrsubdirs"
    git push origin master
    ```
    - 3c. Functions of package `workflowr` like:
-   ```r
+   ```
    workflowr::wflow_git_commit(c("docs/subPages1--testPrint1.html", "docs/subPages2--testPrint2.html"),
                                "tested: package workflowrsubdirs with workflowr", all = TRUE)
    workflowr::wflow_use_github("LearnUseZone", "workflowrSubfolders")  # usually choose a default option which is 2
