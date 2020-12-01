@@ -1,31 +1,17 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-11-30 22:26 GMT+2
+Last update: 2020-12-01 12:45 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
-      - [Directory structure](#directory-structure)
-      - [Subdirectories for .Rmd files](#subdirectories-for-.rmd-files)
-      - [Open `workflowr` project before using
-        `workflowrsubdirs`](#open-workflowr-project-before-using-workflowrsubdirs)
-      - [Minimum necessary setting](#minimum-necessary-setting)
   - [Package functions](#package-functions)
-      - [build\_htmls()](#build_htmls)
   - [How to easily avoid potential
     problems](#how-to-easily-avoid-potential-problems)
-      - [YAML headers](#yaml-headers)
-      - [Problems when .Rmd file contains space in its
-        name](#problems-when-.rmd-file-contains-space-in-its-name)
   - [Installation steps (for Windows)](#installation-steps-for-windows)
-      - [Try following steps if it seems that the package wasn't
-        installed
-        properly](#try-following-steps-if-it-seems-that-the-package-wasnt-installed-properly)
   - [Necessary packages](#necessary-packages)
   - [Example of using this package
     `workflowrsubdirs`](#example-of-using-this-package-workflowrsubdirs)
-      - [Usage of workflowrsubdirs after it's
-        installed](#usage-of-workflowrsubdirs-after-its-installed)
   - [Additional notes](#additional-notes)
 
 ## Purpose
@@ -184,27 +170,27 @@ Last update: 2020-11-30 22:26 GMT+2
   - Examples of errors if incorrect quotation marks are used:
     
       - wflow\_build("analysis/testfile.Rmd")
-          - ' - working
-          - \\' - Scanner error: while parsing a quoted scalar at line
+          - `'` - working
+          - `\'` - Scanner error: while parsing a quoted scalar at line
             3, column 10 found unknown escape character at line 3,
             column 20
-          - " - Parser error: while parsing a block mapping at line 1,
+          - `"` - Parser error: while parsing a block mapping at line 1,
             column 1 did not find expected key at line 3, column 21
-          - \\" - Error: callr subprocess failed: \<text\>:1:7:
+          - `\"` - Error: callr subprocess failed: \<text\>:1:7:
             unexpected input
-          - '' - Error: callr subprocess failed: \<text\>:1:9:
+          - `''` - Error: callr subprocess failed: \<text\>:1:9:
             unexpected symbol
       - workflowrsubdirs::build\_htmls("code-rmd/subdir", F,
         "testfile.Rmd")
-          - ' - Error: callr subprocess failed: \<text\>:1:9: unexpected
-            symbol ('' is created)
-          - \\' - Scanner error: while parsing a quoted scalar at line
+          - `'` - Error: callr subprocess failed: \<text\>:1:9:
+            unexpected symbol ('' is created)
+          - `\'` - Scanner error: while parsing a quoted scalar at line
             3, column 10 found unknown escape character at line 3,
             column 20
-          - " - Parser error: while parsing a block mapping at line 1,
+          - `"` - Parser error: while parsing a block mapping at line 1,
             column 1 did not find expected key at line 3, column 21
-          - \\" - working
-          - '' - Error: callr subprocess failed: \<text\>:1:9:
+          - `\"` - working
+          - `''` - Error: callr subprocess failed: \<text\>:1:9:
             unexpected string constant
 
 ### Problems when .Rmd file contains space in its name

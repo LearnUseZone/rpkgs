@@ -5,16 +5,14 @@ date:   "`r paste('Last update:', format(lubridate::with_tz(as.POSIXct(Sys.time(
 output:
   github_document:
     toc: TRUE
-    toc_depth: 3
+    toc_depth: 1
     html_preview: TRUE
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
   # comment = "#>",
-  # fig.path = "man/figures/README-",
-  out.width = "100%"
+  eval = FALSE
 )
 ```
 
@@ -130,39 +128,39 @@ knitr::opts_chunk$set(
 - It's necessary to use correct quotation marks if inline R code is used in YAML header.
   otherwise there is an error with rendering .Rmd to .html file. \
   Example: \
-  ```{r, eval = FALSE}
+  ```{r}
   date:    "`r paste("Last update:", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
            tzone = "GMT"), "%Y-%m-%d %H:%M GMT+2"))`"
   ```
 
 - Single quotation marks (\') have to be used in inline R codes in YAML header
   in .Rmd files saved in directory \"analysis\", for example: \
-  ```{r, eval = FALSE}
+  ```{r}
   date:    "`r paste('Last update:', format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
            tzone = 'GMT'), '%Y-%m-%d %H:%M GMT+2'))`"
   ```
 
 - Escaped double quotation marks (\\\") have to be used in inline R codes in YAML header
   in .Rmd files saved in \"code-rmd subdirs\", for example: \
-  ```{r, eval = FALSE}
+  ```{r}
   date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
            tzone = \"GMT\"), \"%Y-%m-%d %H:%M GMT+2\"))`"
   ```
 
 - Examples of errors if incorrect quotation marks are used:
   - wflow_build(\"analysis/testfile.Rmd\")
-    - \'    -  working
-    - \\\'  -  Scanner error: while parsing a quoted scalar at line 3, column 10 found unknown escape character at line 3, column 20
-    - \"    -  Parser error: while parsing a block mapping at line 1, column 1 did not find expected key at line 3, column 21
-    - \\\"  -  Error: callr subprocess failed: \<text\>:1:7: unexpected input
-    - \'\'  -  Error: callr subprocess failed: \<text\>:1:9: unexpected symbol
+    - `'`   -  working
+    - `\'`  -  Scanner error: while parsing a quoted scalar at line 3, column 10 found unknown escape character at line 3, column 20
+    - `"`   -  Parser error: while parsing a block mapping at line 1, column 1 did not find expected key at line 3, column 21
+    - `\"`  -  Error: callr subprocess failed: \<text\>:1:7: unexpected input
+    - `''`  -  Error: callr subprocess failed: \<text\>:1:9: unexpected symbol
 
   - workflowrsubdirs::build_htmls(\"code-rmd/subdir\", F, \"testfile.Rmd\")
-    - \'    -  Error: callr subprocess failed: \<text\>:1:9: unexpected symbol (\'\' is created)
-    - \\\'  -  Scanner error: while parsing a quoted scalar at line 3, column 10 found unknown escape character at line 3, column 20
-    - \"    -  Parser error: while parsing a block mapping at line 1, column 1 did not find expected key at line 3, column 21
-    - \\\"  -  working
-    - \'\'  -  Error: callr subprocess failed: \<text\>:1:9: unexpected string constant
+    - `'`   -  Error: callr subprocess failed: \<text\>:1:9: unexpected symbol (\'\' is created)
+    - `\'`  -  Scanner error: while parsing a quoted scalar at line 3, column 10 found unknown escape character at line 3, column 20
+    - `"`   -  Parser error: while parsing a block mapping at line 1, column 1 did not find expected key at line 3, column 21
+    - `\"`  -  working
+    - `''`  -  Error: callr subprocess failed: \<text\>:1:9: unexpected string constant
 
 
 ### Problems when .Rmd file contains space in its name
