@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-01 12:45 GMT+2
+Last update: 2020-12-01 18:15 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -341,24 +341,23 @@ Last update: 2020-12-01 12:45 GMT+2
     <!-- end list -->
         workflowr::wflow_git_commit(c("docs/subPages1--testPrint1.html", "docs/subPages2--testPrint2.html"),
                                     "tested: package workflowrsubdirs with workflowr", all = TRUE)
-        workflowr::wflow_use_github("LearnUseZone", "workflowrSubfolders")  # usually choose a default option which is 2
+        workflowr::wflow_use_github("LearnUseZone", "workflowrSubfolders")  # usually choose a default option => 2
         workflowr::wflow_git_push()  # use your credentials to push your changes to checked out branch.
 
 ## Additional notes
 
-  - I assume that you are using RStudio and therefore some parts of this
-    or other documents may be focused on this assumption but of course
-    the relevant associated steps (you need to know them) work also if
-    you don't use RStudio.
-  - I’m still working on improvements therefore it can still be found
-    for example
-      - some placeholders like `tests\testthat\test-build_htmls.R` and
-      - notes for future improvements
-  - Also I still don’t have a stable version.
-  - Package `workflowrsubdirs` is available under the [MIT
+  - I’m still working on improvements (I don’t have a stable version),
+    some of them follow:
+      - replace some placeholders like
+        `tests\testthat\test-build_htmls.R` with a solution,
+      - replace comments for future improvements with relevant
+        improvements,
+      - check and update comments and roxygen2 descriptions,
+      - check and update some parts of R codes.
+  - This package `workflowrsubdirs` is available under the [MIT
     license](https://opensource.org/licenses/mit-license.php).
-  - Initial inspiration for this package is from
-    [here](https://github.com/jdblischak/workflowr/issues/95).  
+  - Initial inspiration for this package is from [this
+    discussion](https://github.com/jdblischak/workflowr/issues/95).  
   - A related discussion with John Blischak (a creator of package
-    `workflowr`) about a base set-up can be found
+    `workflowr`) about a base concept is
     [here](https://github.com/jdblischak/workflowr/issues/220).
