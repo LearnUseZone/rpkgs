@@ -215,11 +215,12 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
 
   # check file paths created from all input parameters
   if (length(orig_rmd_paths) == 0) {  # it's not worth to make more checks for separated stops
-    stop("No file meets criteria.", "\n\n",
+    stop("No file meets chosen patterns.", "\n\n",
          "Possible issues:", "\n",
-         "A file path with directories is written - e.g. subdir/filename.Rmd.", "\n",
-         "Case sensitivity isn't met - e.g. File.Rmd is written instead of file.Rmd or file.rmd and similarly for a regular expression(s).", "\n",
-         "Chosen file names don't exist or chosen regular expression(s) doesn't match any file.",
+         "A file path instead of a file name is written.", "\n",
+         "A file name case sensitivity isn't met.", "\n",
+         "A file name doesn't exist.", "\n",
+         "A regular expression doesn't match any file.",
          call. = F)
   }
 
