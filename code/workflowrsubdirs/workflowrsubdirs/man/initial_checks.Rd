@@ -14,10 +14,9 @@ initial_checks(dir_path, subdirs, patterns)
 \item{patterns}{see \code{build_htmls}}
 }
 \value{
-Nothing if there's no error but "silent" stop() is needed (if there's no stop() it would return NULL).
-Nothing if some check doesn't pass but it writes a reason and stop processing.
-A logical vector only with TRUE values of length equals to a number of deleted files from directory "analysis"
-if there are files deleted from directory "analysis"
+Original or edited 'dir_path' if all checks pass.
+Nothing if "silent" stop() is applied.
+Nothing if some check doesn't pass but a stop reason is written and then process stops.
 }
 \description{
 Evaluate if rendering of .Rmd into .html files is possible

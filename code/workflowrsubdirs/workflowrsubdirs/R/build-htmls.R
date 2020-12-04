@@ -47,10 +47,8 @@
 
 build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F) {
   # initial settings
-  base::setwd(here::here())  # a project working directory could be changed after opening .Rproj
-  initial_checks(dir_path, subdirs, patterns)
-  dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work (with one type of slash) with "/"
-
+  base::setwd(here::here())  # project working directory could be changed after opening .Rproj
+  dir_path <- initial_checks(dir_path, subdirs, patterns)
   orig_rmd_paths <- create_rmd_paths(dir_path, subdirs, patterns)
   render_to_htmls(orig_rmd_paths, commit)
 }
@@ -74,19 +72,22 @@ build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
 #' @param patterns
 #' see \code{build_htmls}
 #' @return
-#' Nothing if there's no error but "silent" stop() is needed (if there's no stop() it would return NULL).
-#' Nothing if some check doesn't pass but it writes a reason and stop processing.
-#' A logical vector only with TRUE values of length equals to a number of deleted files from directory "analysis"
-#' if there are files deleted from directory "analysis"
+#' Original or edited 'dir_path' if all checks pass.
+#' Nothing if "silent" stop() is applied.
+#' Nothing if some check doesn't pass but a stop reason is written and then process stops.
 
 initial_checks <- function(dir_path, subdirs, patterns) {
+  # edit input parameter "dir_path" if needed
+  if (!base::is.null(dir_path))  # distinguish between null and not null in initial_checks()
+    dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work only with 1 slash type
+  while (stringr::str_detect(dir_path, ".*/$"))
+    dir_path <- base::substr(dir_path, 1, nchar(dir_path) - 1)
+
   # check input parameter "dir_path"
-  if (base::is.null(dir_path))
-    stop("Parameter 'dir_path' cannot be NULL.", call. = F)
-  if (base::length(dir_path) != 1)
+  if (base::is.null(dir_path) || dir_path == "")  # order 1
+    stop("Parameter 'dir_path' cannot be NULL nor empty string.", call. = F)
+  if (base::length(dir_path) != 1)                # order 2
     stop("Parameter 'dir_path' can contain only 1 path to a directory.", call. = F)
-  if (dir_path == "")
-    stop("Parameter 'dir_path' cannot be empty string.", call. = F)
   if (!file.exists(dir_path))
     stop("Parameter 'dir_path' contains a directory that doesn't exist.", call. = F)
   if (base::regexpr("//", dir_path) > 0)  # file.exists() doesn't catch path like dir//subdir, dir///subdir, dir////subdir, etc. (only one "/" has to be used); potential issues with "\" is solved by R error message
@@ -146,6 +147,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
       stop()
     }
   }
+  return(dir_path)
 }
 
 
@@ -302,3 +304,4 @@ build_temp_rmd <- function(orig_rmd_path, temp_rmd_path) {
     append = F
   )
 }
+
