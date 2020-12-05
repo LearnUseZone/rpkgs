@@ -7,11 +7,32 @@
 initial_checks(dir_path, subdirs, patterns)
 }
 \arguments{
-\item{dir_path}{see \code{build_htmls}}
+\item{dir_path}{character of length = 1 (default: "code-rmd").
+Path to a subdirectory, under a main workflowr directory, where .Rmd files for rendering are saved.
+A directory name can be first instead of using "./" etc. (e.g. "code-rmd" instead of "./code-rmd").
+Examples:
+dir_path = "code-rmd"
+dir_path = c("code-rmd/subdir1\\subdir2")
+dir_path = "code-rmd/eToro1/"
+dir_path = "code-rmd/eToro1\\"}
 
-\item{subdirs}{see \code{build_htmls}}
+\item{subdirs}{logical of length = 1 (default: TRUE)
+If TRUE, file listing will recurse into directories in parameter dir.
+If FALSE, file listing will be only directly from directories in parameter dir.}
 
-\item{patterns}{see \code{build_htmls}}
+\item{patterns}{character of length > 0 or NULL (default: NULL)
+A character vector of paths to .Rmd files for rendering.
+If NULL, process all .Rmd files based values in parameters dir and subdirs.
+If not NULL, process files matching a regular expression.
+If this parameter isn't NULL then it has always to end
+with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
+a relevant regular expression that after evaluation point to
+extension ".rmd" or ".Rmd" (case sensitive, "." is also required). This is made
+in accordance to behavior of package "workflowr"
+which allows only ".rmd" or ".Rmd" extensions.
+Examples:
+patterns = "^.\emph{page.}.[  R , r ]md$")
+patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
 }
 \value{
 Original or edited 'dir_path' if all checks pass.

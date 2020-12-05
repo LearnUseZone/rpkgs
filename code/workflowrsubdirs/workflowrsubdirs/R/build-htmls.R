@@ -69,12 +69,7 @@ build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
 #' a user uses "\\"; b) remove redundant number of "/" or equivalent number of "\\"
 #' at the end of "dir_path", e.g. "code-rmd/subdir//" is changed to "code-rmd/subdir"
 #' This function is called only from \code{build_htmls} so its input variables have no default values.
-#' @param dir_path
-#' see \code{build_htmls}
-#' @param subdirs
-#' see \code{build_htmls}
-#' @param patterns
-#' see \code{build_htmls}
+#' @inheritParams build_htmls
 #' @return
 #' Original or edited 'dir_path' if all checks pass.
 #' Nothing if "silent" stop() is applied.
@@ -164,12 +159,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
 #'   - exist then such file will be rendered in \code{render-to-htmls} using wflow_build().
 #' If no .Rmd file for rendering is found, processing ends.
 #' This function is called only from \code{build_htmls} so its input variables have no default values.
-#' @param dir_path
-#' see \code{build_htmls}
-#' @param subdirs
-#' see \code{build_htmls}
-#' @param patterns
-#' see \code{build_htmls}
+#' @inheritParams build_htmls
 #' @return
 #' A character vector with original .Rmd file paths if at least one .Rmd file meets criteria.
 #' Nothing and stop processing if no file meets criteria.
