@@ -12,7 +12,9 @@ Path to a subdirectory, under a main workflowr directory, where .Rmd files for r
 A directory name can be first instead of using "./" etc. (e.g. "code-rmd" instead of "./code-rmd").
 Examples:
 dir_path = "code-rmd"
-dir_path = c("code-rmd/subdir1\\subdir2")}
+dir_path = c("code-rmd/subdir1\\subdir2")
+dir_path = "code-rmd/eToro1/"
+dir_path = "code-rmd/eToro1\\"}
 
 \item{subdirs}{logical of length = 1 (default: TRUE)
 If TRUE, file listing will recurse into directories in parameter dir.
@@ -53,5 +55,3 @@ will be rendered to .html files.
   build_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
 }
 }
-\keyword{subdirectory}
-\keyword{workflowr,}

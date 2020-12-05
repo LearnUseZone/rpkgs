@@ -11,6 +11,8 @@
 #' Examples:
 #' dir_path = "code-rmd"
 #' dir_path = c("code-rmd/subdir1\\subdir2")
+#' dir_path = "code-rmd/eToro1/"
+#' dir_path = "code-rmd/eToro1\\"
 #' @param subdirs
 #' logical of length = 1 (default: TRUE)
 #' If TRUE, file listing will recurse into directories in parameter dir.
@@ -35,7 +37,6 @@
 #' It's suggested to use "commit = TRUE" only after original .Rmd files saved
 #' in subdirectories are tested properly and so are completely ready,
 #' otherwise there could be uselessly many commits.
-#' @keywords workflowr, subdirectory
 #' @return Final .html files from their original .Rmd files saved in subdirectories.
 #' @export
 #' @examples
@@ -64,6 +65,9 @@ build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
 #' @description
 #' Evaluate if rendering of .Rmd into .html files is possible
 #' by checking rules for directories and .Rmd files.
+#' Input parameter "dir_path" is edited a) to use only "/" instead of "\\" even if
+#' a user uses "\\"; b) remove redundant number of "/" or equivalent number of "\\"
+#' at the end of "dir_path", e.g. "code-rmd/subdir//" is changed to "code-rmd/subdir"
 #' This function is called only from \code{build_htmls} so its input variables have no default values.
 #' @param dir_path
 #' see \code{build_htmls}

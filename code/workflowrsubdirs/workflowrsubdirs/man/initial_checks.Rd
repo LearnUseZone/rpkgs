@@ -21,5 +21,8 @@ Nothing if some check doesn't pass but a stop reason is written and then process
 \description{
 Evaluate if rendering of .Rmd into .html files is possible
 by checking rules for directories and .Rmd files.
+Input parameter "dir_path" is edited a) to use only "/" instead of "\\" even if
+a user uses "\\"; b) remove redundant number of "/" or equivalent number of "\\"
+at the end of "dir_path", e.g. "code-rmd/subdir//" is changed to "code-rmd/subdir"
 This function is called only from \code{build_htmls} so its input variables have no default values.
 }
