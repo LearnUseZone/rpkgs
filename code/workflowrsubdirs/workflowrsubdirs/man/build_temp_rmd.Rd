@@ -4,14 +4,14 @@
 \alias{build_temp_rmd}
 \title{Generate a temporary .Rmd file}
 \usage{
-build_temp_rmd(orig_rmd_path, temp_rmd_path)
+build_temp_rmd(temp_rmd_path, analysis_rmd_path)
 }
 \arguments{
-\item{orig_rmd_path}{character of length = 1
-A path to an original .Rmd file.}
-
 \item{temp_rmd_path}{character of length = 1
-A name ("--" is a part of those names) of a temporary .Rmd file.}
+A path to a .Rmd file temporarily copied directly to directory "code-rmd".}
+
+\item{analysis_rmd_path}{character of length = 1
+A name ("--" is a part of those names) of a temporary .Rmd file saved in directory "analysis".}
 }
 \value{
 Temporarily saved .Rmd files in directory "analysis".
