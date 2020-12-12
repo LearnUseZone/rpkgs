@@ -127,8 +127,12 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     )) > 0) {
 
     base::message(
-      "Following file names contain \"--\" (two hyphens).", "\n",  # I simply prefer "\n" between commas (if possible)
+      "Following files contain \"--\" (two hyphens).", "\n",  # I simply prefer "\n" between commas (if possible)
       "That isn't allowed in directories \"analysis\" and \"code-rmd\".", "\n\n",
+      "This problem could happen for example if:", "\n",
+      "  - The relevant original .Rmd files have an error in YAML header", "\n",
+      "    (e.g. typo or not allowed text).", "\n",
+      "  - The files below were created manually.", "\n\n",
       "Relevant files:", "\n",
       base::paste(prohibited_rmd_paths, collapse = "\n"), "\n\n",
       "Please select one of following options:", "\n",
