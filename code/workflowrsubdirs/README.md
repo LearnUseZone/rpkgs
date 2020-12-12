@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-12 10:53 GMT+2
+Last update: 2020-12-12 13:12 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -103,6 +103,15 @@ workflowrsubdirs::build_htmls(dir_path = c("code-rmd/subdir"),
 
 generates an associated .html file together with a relevant directory
 `docs` or `public` with directory `site_libs` and file `.nojekyll`.
+
+### Only files with extension .rmd or .Rmd are allowed
+
+This is a behaviour of package `workflowr` that is inherited by package
+`workflowrsubdirs`.  
+It’s required that original (source) files for rendering to .html files
+will have extension .rmd or .Rmd. If the file extension is e.g. .RMD
+then rendering will fail with error "Error: Invalid input for argument
+files".
 
 ## Package functions
 
@@ -251,8 +260,8 @@ Main steps:
         uncheck a relevant check box  
         4c) `detach("package:workflowrsubdirs", unload = TRUE)`
 5.  Install the package using R code:
-    install.packages(\<path\_to\_tar.gz\_file\>, repos = NULL, type =
-    "source")
+    `install.packages(<path_to_tar.gz_file>, repos = NULL, type =
+    "source")`
 6.  Notes
       - Don't use Build (from top menu of RStudio) -\> Install and
         Restart (Ctrl+Shift+B) because of problems explained
