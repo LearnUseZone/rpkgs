@@ -240,42 +240,95 @@ of this package (loading them isn't necessary):
 
 
 ## Example of using package workflowrsubdirs
-Let\'s consider following files
+I have prepared simple examples of analyses of iris dataset that are saved
+[here](https://github.com/LearnUseZone/rpkgs/tree/master/code/examples/iris). \
+Their associated .Rmd files are saved
+[here](https://github.com/LearnUseZone/rpkgs/tree/master/code-rmd/examples/iris). \
+A structure of directories in `rpkgs/code/examples` and
+associated `rpkgs/code-rmd/examples` is chosen in a way
+to show an example of directory arrangement. \
+The main purpose of these simple examples is to demonstrate correct functionality,
+meaning to demonstrate that `workflowrsubdirs::build_htmls()`
+really works (almost) in the same way as standard knitting (Knit button, `knitr::knit()`)
+with keeping in mind rules for using of package `workflowr`.
 
-- `code-rmd/subdir/testfile1.Rmd`
-- `code-rmd/subdir/testfile2.rmd`
-- `code-rmd/subdir/testdir/testfile1.Rmd`
-- `code-rmd/subdir/testdir/my-analyses.Rmd`
+- Main differences are only:
+    - `workflowrsubdirs::build_htmls()` is of course called instead of `knitr::knit()`
+    - figures (e.g. when running graphics::hist()) are saved to directory \"rpkgs/docs/figure\"
+    - directory structure of packages `workflowr` and `workflowrsubdirs` are used
+      to keep data files organized
 
-Several options can be used to render all those files, for example:
+
+These prepared examples contain usage of, e.g.
+
+- footer
+    - File `footer.html` is saved in `rpkgs/analysis/include` which is
+      in line with package `workflowr` (see e.g. [here](https://zenodo.org/record/3706876#.X9CkkLMo_cs)).
+    - It's working in combination with definition of \"output\"
+      in file `rpkgs/analysis/_site.yml` (commit 96087f9).
+- picture
+    - A picture `3-species-of-iris.png` saved
+      in directory `rpkgs/docs/assets/examples/iris/static-visuals/histograms.Rmd`
+      is used in `rpkgs/code-rmd/examples/iris/static-visuals/histograms.Rmd`.
+    - A picture could be saved also in other part of `rpkgs/docs/assets` which is
+      in line with package `workflowr` (read more
+      [here](https://jdblischak.github.io/workflowr/articles/wflow-05-faq.html)).
+- static visuals (generating figures)
+    - Files `rpkgs/code-rmd/examples/iris/static-visuals/histograms.Rmd` and
+      `rpkgs/code-rmd/examples/iris/static-visuals/plots.Rmd` with their associated .R files
+      `rpkgs/code/examples/iris/static-visuals/histograms.R` and
+      `rpkgs/code/examples/iris/static-visuals/plots.R` generates figures that are
+      automatically (functionality of package `workflowr`) saved in directories
+      `rpkgs/docs/figure/examples--iris--static-visuals--histograms.Rmd` and
+      `rpkgs/docs/figure/examples--iris--static-visuals--plots.Rmd`
+    - More information is
+      [here](https://jdblischak.github.io/workflowr/articles/wflow-04-how-it-works.html#where-are-the-figures)
+- interactive visuals with [code externalization](https://bookdown.org/yihui/rmarkdown-cookbook/read-chunk.html)
+    - It's in file `rpkgs/code-rmd/examples/iris/interactive-visuals/plotly.Rmd` with
+      its associated .R file `rpkgs/code/examples/iris/interactive-visuals/plotly.R`.
+- knitr::opts_chunk$set()
+    - It's used in all .Rmd files
+
+
+There are several options to render all of these .Rmd files to .html files. Some examples follow.
+
+- If you want to try following options by yourself, remember to 1stly run file `rpkgs/rpkgs.Rproj`
+  which also set the correct working directory
+  (read more in subtitle \"Open `workflowr` project before using `workflowrsubdirs`\").
 
 ```{r}
-# render all .rmd and .Rmd files in directory "code-rmd" to .html files
+# render all .rmd and .Rmd files in directory "code-rmd" and its subdirectories to .html files
+#   note: all .rmd and Rmd files anywhere under "code-rmd" will be processed
 workflowrsubdirs::build_htmls()
 
-# render all .rmd and .Rmd files in directory "code-rmd/subdir" and its subdirectories to .html files
-workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir")
-workflowrsubdirs::build_htmls(dir_path = "code-rmd\\subdir")
-workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir", patterns = ".*.(r|R)md$")
+# render all .rmd and .Rmd files in directory "code-rmd/examples" and its subdirectories to .html files
+#   note: all .rmd and Rmd files anywhere under "code-rmd/examples" will be processed
+#         all 3 following codes are equivalent
+workflowrsubdirs::build_htmls(dir_path = "code-rmd/examples")
+workflowrsubdirs::build_htmls(dir_path = "code-rmd\\examples")
+workflowrsubdirs::build_htmls(dir_path = "code-rmd/examples", patterns = ".*.(r|R)md$")
 
-# render .rmd and .Rmd files based on regular expressions in parameter "patterns"
+# render .rmd and .Rmd files based on different regular expressions in parameter "patterns"
 #   note: if any file is selected by more than 1 regular expression, such file
-#         is processed only once
-workflowrsubdirs::build_htmls(dir_path = "code-rmd/subdir",
-                              subdirs = F,
-                              patterns = c("^test.*.rmd$", "file1.Rmd", "-.*.[ R , r ]md")
-                             )
+#         is processed only once, for example pattern = "plot.{1,2}.[ R , r ]md" points to
+#         files "plots.Rmd" and "plotly.Rmd" but "plotly.Rmd" is also specified
+#         in the last pattern (so it's specified twice).
+workflowrsubdirs::build_htmls(dir_path = "code-rmd/examples/iris",
+                              subdirs = T,
+                              patterns = c(
+                                "-.*.[ R , r ]md",
+                                "hist.*.Rmd$",
+                                "plot.{1,2}.[ R , r ]md",
+                                "plotly.Rmd")
+                              )
+# the code I've actually used to generate all .html files follows
+#   note: previous examples generated .html files but didn't create
+#         separate commit of temporary analysis .Rmd files which means that after a created
+#         .html file is opened, workflowr button will show in "Checks" tab error:
+#         R Markdown file: uncommitted changes
+workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
 ```
 
-Note:
-
-- A real example with .Rmd files in subdirectories
-  (under directory `codeRmd` in this case) can be found at
-  [workflowrSubfolders](https://github.com/LearnUseZone/workflowrSubfolders).\
-  This example is only for a better overview of managing directories because
-  this package is enhanced against the original version used in `workflowrSubfolders`.
-      - If you are interested in it, I suggest to start with reading of
-      [_preparationSubfolders.R](https://github.com/LearnUseZone/workflowrSubfolders/blob/master/code/_preparationSubfolders.R).
 
 ### Usage of workflowrsubdirs after it\'s installed
 1. After `workflowrsubdirs` is installed, open your `workflowr` project (run .Rproj file).
