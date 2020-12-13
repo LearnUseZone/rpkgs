@@ -76,23 +76,35 @@ build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
 #' Nothing if some check doesn't pass but a stop reason is written and then process stops.
 
 initial_checks <- function(dir_path, subdirs, patterns) {
-  # edit input parameter "dir_path" if needed
-  if (!base::is.null(dir_path))  # distinguish between null and not null in initial_checks()
-    dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work only with 1 slash type
-  while (stringr::str_detect(dir_path, ".*/$"))
-    dir_path <- base::substr(dir_path, 1, nchar(dir_path) - 1)
-
-  # check input parameter "dir_path"
-  if (base::is.null(dir_path) || dir_path == "")  # order 1
+  # check input parameter "dir_path" (order 1-2)
+  if (base::is.null(dir_path) || dir_path == "")
     stop("Parameter 'dir_path' cannot be NULL nor empty string.", call. = F)
-  if (base::length(dir_path) != 1)                # order 2
+  if (base::length(dir_path) != 1)
     stop("Parameter 'dir_path' can contain only 1 path to a directory.", call. = F)
+
+  # edit input parameter "dir_path" (order 3)
+  if (dir_path != "code-rmd") {
+    dir_path <- base::gsub("\\\\", "/", dir_path)      # clearer to work only with 1 slash type
+    dir_path <- base::sub(here::here(), "", dir_path)  # remove a path to working directory to generate correct temporary analysis .Rmd file
+    while (stringr::str_detect(dir_path, "^/"))    # remove the 1st "/" to start from "code-rmd" to generate correct temporary analysis .Rmd file
+      dir_path <- base::substr(dir_path, 2, nchar(dir_path))
+    while (stringr::str_detect(dir_path, ".*/$"))  # remove the last "/" to avoid non existence of "dir_path" (see if (!file.exists(dir_path))
+      dir_path <- base::substr(dir_path, 1, nchar(dir_path) - 1)
+  }
+
+  # check input parameter "dir_path" (rest of checks)
+  if (base::regexpr("//", dir_path) > 0)  # file.exists() doesn't catch path like dir//subdir, dir///subdir, dir////subdir, etc. (only one "/" has to be used); potential issues with "\" is solved by R error message; order 4
+    stop("Parameter 'dir_path' contains \"//\" instead of \"/\" or \"\\\\\".", call. = F)
+  #   following if statement ensures that processing stops if .rmd or .Rmd file is not within directory 'code-rmd'
+  #     and also if .rmd or .Rmd file is not within a current working directory (it's thanks to a combination with previous 4 conditions)
+
+  if (dir_path != "code-rmd" && !stringr::str_detect(dir_path, "^code-rmd/.*")) { # "code-rmd" or "code-rmd/text..."; this condition works only in combination with previous 4 conditions (that are also in order)
+    stop("Parameter 'dir_path' doesn't point to a directory within a current working directory or .rmd or .Rmd file is not within the main directory 'code-rmd'.", call. = F)
+  }  # if (dir_path %in% c("analysis", "code", "data", "docs", "output", "public")) is not needed anymore
+
   if (!file.exists(dir_path))
     stop("Parameter 'dir_path' contains a directory that doesn't exist.", call. = F)
-  if (base::regexpr("//", dir_path) > 0)  # file.exists() doesn't catch path like dir//subdir, dir///subdir, dir////subdir, etc. (only one "/" has to be used); potential issues with "\" is solved by R error message
-    stop("Parameter 'dir_path' contains \"//\" instead of \"/\" or \"\\\\\".", call. = F)
-  if (dir_path %in% c("analysis", "code", "data", "docs", "output", "public"))
-    stop("Parameter 'dir_path' cannot be a default workflowr directory.", call. = F)
+
 
   # check input parameter "subdirs"
   if (!((subdirs %in% c(F, T)) && base::length(subdirs) == 1))
@@ -247,50 +259,49 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
 #' Final .html files from their original .Rmd files saved in subdirectories.
 
 render_to_htmls <- function(orig_rmd_paths, commit) {
-  # positions of the 1st "/" to cut off the 1st directory in "dir_path"
-  slash_pos <- base::regexpr("/", orig_rmd_paths)  # when "code-rmd" will be forced to be used that slash_pos will be always 9???
+  # note: at this step - there's always code-rmd/... so the position of the 1st "/" is always 9
 
-  # create names of temporary .Rmd files using the whole path except the 1st directory in "dir_path"
-  temp_rmd_names <- base::gsub(
+  # create names of temporary .Rmd files using the whole path except "code-rmd"
+  temp_c_rmd_names <- base::gsub(  # c -> code-rmd
     "/", "--",  # a file name cannot contain "/"
-    base::substr(orig_rmd_paths, slash_pos + 1, base::nchar(orig_rmd_paths)))
+    base::substr(orig_rmd_paths, 10, base::nchar(orig_rmd_paths)))  # 9 + 1 = 10
 
-  # temporary rmd paths of temp_rmd_names in the 1st directory in "dir_path"
+  # temporary rmd paths of temp_c_rmd_names in "code-rmd"
   #   it's needed to work with a new file in the 1st directory in "dir_path" to be able to use figures generated e.g. by function graphics::hist()
   #     (read more at https://jdblischak.github.io/workflowr/articles/wflow-04-how-it-works.html -> title "Where are the figures?")
-  temp_rmd_paths <- base::file.path(base::substr(orig_rmd_paths, 1, slash_pos - 1), temp_rmd_names)
+  temp_c_rmd_paths <- base::file.path("code-rmd", temp_c_rmd_names)
 
-  # create copy of original .Rmd files into the 1st directory in "dir_path"
-  base::file.copy(from = orig_rmd_paths, to = temp_rmd_paths)  # ignore files which have the same source and destination directory (which is in both cases "code-rmd")
+  # create copy of original .Rmd files into "code-rmd"
+  base::file.copy(from = orig_rmd_paths, to = temp_c_rmd_paths)  # ignore files which have the same source and destination directory (which is in both cases "code-rmd")
 
   # prepare list of temporary .Rmd files for a deletion after .hmtl files are prepared
-  delete_rmd_paths <- c()
-  for (rmd_file in temp_rmd_paths) {  # go through all original rmd paths
+  delete_c_rmd_paths <- c()
+  for (rmd_file in temp_c_rmd_paths) {  # go through all original rmd paths
     if (stringr::str_detect(rmd_file, "(?i)^.*\\-\\-.*.rmd")) {  # if a check original rmd path is saved in any subdirectory of "code-rmd" (not saved directly in directory "code-rmd")
-      delete_rmd_paths <- base::append(delete_rmd_paths, rmd_file)  # delete temporary rmd files (that were temporarily copied to "code-rmd")
+      delete_c_rmd_paths <- base::append(delete_c_rmd_paths, rmd_file)  # delete temporary rmd files (that were temporarily copied to "code-rmd")
     }
   }
 
   # create paths to temporary (helping) .Rmd files (with "--") in directory "analysis"
-  analysis_rmd_paths <- base::file.path(
+  temp_a_rmd_paths <- base::file.path(  # a -> analysis
     "analysis",
     base::gsub("/", "--",  # a file name cannot contain "/"
-               base::substr(temp_rmd_paths, slash_pos + 1, base::nchar(temp_rmd_paths)))
+               base::substr(temp_c_rmd_paths, 10, base::nchar(temp_c_rmd_paths)))  # 9 + 1 = 10
   )
 
   # generate temporary (helping) .Rmd file(s) in directory "analysis"
-  base::mapply(build_temp_rmd, temp_rmd_paths, analysis_rmd_paths)
+  base::mapply(build_temp_rmd, temp_c_rmd_paths, temp_a_rmd_paths)
 
   # commit temporary .Rmd file(s) in directory "analysis"
   if (commit == T) {
-    workflowr::wflow_git_commit(analysis_rmd_paths, "separate commit of temporary .Rmd files", all = T)
+    workflowr::wflow_git_commit(temp_a_rmd_paths, "separate commit of temporary .Rmd files", all = T)
   }
 
   # render temporary .Rmd files in directory "analysis" into .html files
-  workflowr::wflow_build(analysis_rmd_paths)
+  workflowr::wflow_build(temp_a_rmd_paths)
 
   # delete temporary (temporarily created) .Rmd files
-  base::file.remove(delete_rmd_paths, analysis_rmd_paths)
+  base::file.remove(delete_c_rmd_paths, temp_a_rmd_paths)
 }
 
 
@@ -302,29 +313,29 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 #' This temporarily saved .Rmd file will be used to generate final .html file and
 #' will be deleted at the end of function \code{render_to_htmls} after final .html file is prepared.
 #' This function is called only from \code{render_to_htmls} so its input variables have no default values.
-#' @param temp_rmd_path
+#' @param temp_c_rmd_path
 #' character of length = 1
 #' A path to a .Rmd file temporarily copied directly to directory "code-rmd".
-#' @param analysis_rmd_path
+#' @param temp_a_rmd_path
 #' character of length = 1
 #' A name ("--" is a part of those names) of a temporary .Rmd file saved in directory "analysis".
 #' @return
 #' Temporarily saved .Rmd files in directory "analysis".
 
-build_temp_rmd <- function(temp_rmd_path, analysis_rmd_path) {
+build_temp_rmd <- function(temp_c_rmd_path, temp_a_rmd_path) {
   base::cat(
     "---\n",
     # YAML header copied (except comments) from an original .Rmd file
-    yaml::as.yaml(rmarkdown::yaml_front_matter(temp_rmd_path)),
+    yaml::as.yaml(rmarkdown::yaml_front_matter(temp_c_rmd_path)),
     "---\n\n",
-    "**Source file:** ", temp_rmd_path,
+    "**Source file:** ", temp_c_rmd_path,
     "\n\n",
 
     # r chunk code (not YAML header)
     #   "output.dir" returns directory "analysis" in this case (also tested) and "../" goes one directory up
-    #   has to contain path to a temporary .Rmd file in the 1st directory in "dir_path" to be able to use figures generated e.g. by function graphics::hist()
-    "```{r child = base::file.path(knitr::opts_knit$get(\"output.dir\"), \"../", temp_rmd_path, "\")}\n```",
-    file = analysis_rmd_path,  # file = a name of file that will be created
+    #   has to contain path to a temporary .Rmd file in "code-rmd" to be able to use figures generated e.g. by function graphics::hist()
+    "```{r child = base::file.path(knitr::opts_knit$get(\"output.dir\"), \"../", temp_c_rmd_path, "\")}\n```",
+    file = temp_a_rmd_path,  # file = a name of file that will be created
     sep = "",
     append = F
   )
