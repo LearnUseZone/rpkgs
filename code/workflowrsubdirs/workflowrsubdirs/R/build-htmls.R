@@ -82,7 +82,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     stop("Parameter 'dir_path' can contain only 1 path to a directory.", call. = F)
 
   # edit input parameter "dir_path" (condition 3)
-  #   - remove the 1st "/" to generate correct temporary .Rmd paths
+  #   - remove the 1st "/" to generate correct temporary .Rmd paths (for: whole path, typo)
   #   - remove the last "/" to avoid stop for "if (!file.exists(dir_path))"
   if (dir_path != "code-rmd") {
     dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work only with 1 slash type
@@ -114,16 +114,14 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     stop("Parameter 'subdirs' can be only FALSE or TRUE.", call. = F)
 
   # check input parameter "patterns"
+  #   workflowr::wflow_build() expects only files with extension Rmd or rmd otherwise error pops up
   if (!is.null(patterns)) {
-    ## if chosen files are set (not NULL) then check if all chosen files ends with .Rmd or .rmd
-    ##   workflowr::wflow_build() expects only files with extension Rmd or rmd otherwise:
-    ##     Error: ...  Expected input: Only files with extension Rmd or rmd,  Observed input: ...
     for (pattern_num in 1:base::length(patterns)) {
       if (!stringr::str_detect(  # package "stringr" solves some problems, e.g. with escaping "]", that functions like "base::grepl()" has
         patterns[pattern_num],
-        "(?i)^.*\\.[\\(, \\[]?\\s*r\\s*[\\,, \\|]?\\s*r?\\s*[\\), \\]]?md\\$?$"))
-        ##   it can still happen that no file will exist but this is solved in create_rmd_paths()
-        stop("Parameter 'patterns' has to point only to files with extension .Rmd or .rmd (also that '.' is required).", call. = F)
+        "^.*\\.[\\(, \\[]?\\s*(r|R)\\s*[\\,, \\|]?\\s*(r|R)?\\s*[\\), \\]]?md\\$?$"))
+        #   it can still happen that no file will exist but this is solved in create_rmd_paths()
+        stop("Parameter 'patterns' has to point only to files with extension .rmd or .Rmd (also that '.' is required).", call. = F)
     }
   }
 
@@ -132,7 +130,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   #   - e.g. wflow_git_commit() in render_to_htmls() returns an error if they remain in "analysis"
   if (base::length(
     prohibited_rmd_paths <- base::append(
-      base::dir(
+      base::dir(  # although workflowr accepts only .(r|R)md, delete all (?i).rmd
         path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd",
         full.names = T,    recursive = T),
       base::dir(
@@ -290,7 +288,7 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
   delete_c_rmd_paths <- c()
   for (rmd_file in temp_c_rmd_paths) {
     # if an original .(r|R)md file is saved in any subdirectory of (not directly in) of "code-rmd"
-    if (stringr::str_detect(rmd_file, "(?i)^.*\\-\\-.*.rmd")) {
+    if (stringr::str_detect(rmd_file, "^.*\\-\\-.*.(r|R)md")) {
       delete_c_rmd_paths <- base::append(delete_c_rmd_paths, rmd_file)
     }
   }
