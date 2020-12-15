@@ -273,21 +273,20 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
 render_to_htmls <- function(orig_rmd_paths, commit) {
   # note: there's always code-rmd/... at this point => the 1st "/" is always at 9th place
 
+  temp_rmd_names <- base::gsub(  # temporary .(r|R)md file names (for: "code-rmd", "analysis")
+    "/", "--", base::substr(orig_rmd_paths, 10, base::nchar(orig_rmd_paths)))  # 9 + 1 = 10
+
   # ACTIONS over: temporary "code-rmd" .(r|R)md files
-  #   CREATE paths
-  #     - to work with new files that will be copied to "code-rmd"
-  #       - it's needed to be able to use figures generated e.g. by graphics::hist()
-  temp_c_rmd_names <- base::gsub("/", "--",                         # c = code-rmd
-                                 base::substr(orig_rmd_paths, 10, base::nchar(orig_rmd_paths)))  # 9 + 1 = 10
-  temp_c_rmd_paths <- base::file.path("code-rmd", temp_c_rmd_names)
+  temp_c_rmd_paths <- base::file.path("code-rmd", temp_rmd_names) # CREATE paths; c = code-rmd
 
   #   CREATE copy to "code-rmd"
+  #     - it's needed to be able to use figures generated e.g. by graphics::hist()
   base::file.copy(from = orig_rmd_paths, to = temp_c_rmd_paths)
 
   #   PREPARE files to delete after .html files are prepared
   delete_c_rmd_paths <- c()
   for (rmd_file in temp_c_rmd_paths) {
-    # if an original .(r|R)md file is saved in any subdirectory of (not directly in) of "code-rmd"
+    # if an original .(r|R)md file is saved in any subdirectory (not directly in) of "code-rmd"
     if (stringr::str_detect(rmd_file, "^.*\\-\\-.*.(r|R)md")) {
       delete_c_rmd_paths <- base::append(delete_c_rmd_paths, rmd_file)
     }
@@ -295,11 +294,7 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 
 
   # ACTIONS over: temporary "analysis" .(r|R)md files
-  temp_a_rmd_paths <- base::file.path(                              # CREATE paths; a -> analysis
-    "analysis",
-    base::gsub("/", "--",
-               base::substr(temp_c_rmd_paths, 10, base::nchar(temp_c_rmd_paths)))  # 9 + 1 = 10
-  )
+  temp_a_rmd_paths <- base::file.path("analysis",temp_rmd_names)    # CREATE paths; a -> analysis
 
   base::mapply(build_temp_rmd, temp_c_rmd_paths, temp_a_rmd_paths)  # GENERATE
 
