@@ -214,11 +214,9 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
   #   - base::unlist(orig_rmd_paths)
   #       - create a character vector of length X for situation above if orig_rmd_paths is a list
   #       - do nothing if orig_rmd_paths is any matrix or a character vector
-  #   - base::unname(...)
-  #     - all columns (even if orig_rmd_paths is any matrix) of a result of base::unlist(...) will have names like V1, V2
   #   - example where only the 1st of "patterns" points to an existing file:
   #     build_htmls("code-rmd\\subdir", F, patterns = c("testfile.Rmd", "test-file-1.Rmd"))
-  orig_rmd_paths <- base::unname(base::unlist(orig_rmd_paths))  # possible returns: matrix, character vector
+  orig_rmd_paths <- base::unlist(orig_rmd_paths)  # possible returns: matrix, character vector
 
 
   # solving: mapply() from above creates a matrix with more columns
@@ -233,13 +231,13 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
         base::class(orig_rmd_paths)[2] == "array") {
       orig_rmd_paths <- base::paste0(orig_rmd_paths, collapse = "\t")  # create character vector of length 1
       orig_rmd_paths <- base::strsplit(orig_rmd_paths, "\t")           # create list of length 1
-      orig_rmd_paths <- base::unname(base::unlist(orig_rmd_paths))     # create character vector of length X
+      orig_rmd_paths <- base::unlist(orig_rmd_paths)  # create character vector of length X
     }
   }
 
 
   # remove duplicated rows (more than 1 pattern points to the same .(r|R)md file)
-  orig_rmd_paths <- base::unique(orig_rmd_paths)
+  orig_rmd_paths <- as.character(base::unique(orig_rmd_paths))
 
 
   # check an existence of original .(r|R)md files
