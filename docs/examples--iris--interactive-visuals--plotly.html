@@ -23,11 +23,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="site_libs/ionrangeslider-2.1.2/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="site_libs/ionrangeslider-2.1.2/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="site_libs/ionrangeslider-2.1.2/js/ion.rangeSlider.min.js"></script>
+<script src="site_libs/strftime-0.9.2/strftime-min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 <script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 <link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -460,6 +464,27 @@ $(document).ready(function () {
 <li>
   <a href="license.html">License</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Iris examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="examples--iris--data-overview.html">Overview</a>
+    </li>
+    <li>
+      <a href="examples--iris--static-visuals--histograms.html">Histograms</a>
+    </li>
+    <li>
+      <a href="examples--iris--static-visuals--plots.html">Scatter &amp; box plots</a>
+    </li>
+    <li>
+      <a href="examples--iris--interactive-visuals--plotly.html">Interactive scatter</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -488,7 +513,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Interactive plot with plotly</h1>
 <h4 class="author">Author: <a href="mailto:learnusezone@gmail.com" class="email">learnusezone@gmail.com</a></h4>
-<h4 class="date">Last update: 2020-12-09 12:03 GMT+2</h4>
+<h4 class="date">Last update: 2020-12-19 13:17 GMT+2</h4>
 
 </div>
 
@@ -513,7 +538,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-12-09
+<strong>Last updated:</strong> 2020-12-19
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -604,16 +629,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLearnUseZonerpkgstree96087f9920a13031dbd9f4d8345e0512025e3664targetblank96087f9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/LearnUseZone/rpkgs/tree/96087f9920a13031dbd9f4d8345e0512025e3664" target="_blank">96087f9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLearnUseZonerpkgstree7b517ddadd6c15fc44479726e89a077fe08b35f9targetblank7b517dda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/LearnUseZone/rpkgs/tree/7b517ddadd6c15fc44479726e89a077fe08b35f9" target="_blank">7b517dd</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomLearnUseZonerpkgstree96087f9920a13031dbd9f4d8345e0512025e3664targetblank96087f9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomLearnUseZonerpkgstree7b517ddadd6c15fc44479726e89a077fe08b35f9targetblank7b517dda" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/LearnUseZone/rpkgs/tree/96087f9920a13031dbd9f4d8345e0512025e3664" target="_blank">96087f9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/LearnUseZone/rpkgs/tree/7b517ddadd6c15fc44479726e89a077fe08b35f9" target="_blank">7b517dd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -629,9 +654,11 @@ Ignored files:
     Ignored:    code/workflowrsubdirs/workflowrsubdirs/.Rproj.user/
 
 Untracked files:
-    Untracked:  analysis/include/
-    Untracked:  code-rmd/
-    Untracked:  code/examples/
+    Untracked:  code-rmd/examples--iris--data-overview.Rmd
+    Untracked:  code-rmd/examples--iris--interactive-visuals--plotly.Rmd
+    Untracked:  code-rmd/examples--iris--static-visuals--histograms.Rmd
+    Untracked:  code-rmd/examples--iris--static-visuals--plots.Rmd
+    Untracked:  code/examples/iris/static-visuals/boxplots.R
 
 </code></pre>
 <p>
@@ -675,6 +702,57 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/LearnUseZone/rpkgs/blob/7b517ddadd6c15fc44479726e89a077fe08b35f9/analysis/examples--iris--interactive-visuals--plotly.Rmd" target="_blank">7b517dd</a>
+</td>
+<td>
+LearnUseZone
+</td>
+<td>
+2020-12-19
+</td>
+<td>
+separate commit of temporary .Rmd files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LearnUseZone/rpkgs/blob/527b83aea9097149d3c713719f88f2fd20a3ac5f/analysis/examples--iris--interactive-visuals--plotly.Rmd" target="_blank">527b83a</a>
+</td>
+<td>
+LearnUseZone
+</td>
+<td>
+2020-12-09
+</td>
+<td>
+feat(workflowrsubdirs): Add examples to demonstrate functionality
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LearnUseZone/rpkgs/527b83aea9097149d3c713719f88f2fd20a3ac5f/docs/examples--iris--interactive-visuals--plotly.html" target="_blank">527b83a</a>
+</td>
+<td>
+LearnUseZone
+</td>
+<td>
+2020-12-09
+</td>
+<td>
+feat(workflowrsubdirs): Add examples to demonstrate functionality
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/LearnUseZone/rpkgs/blob/96087f9920a13031dbd9f4d8345e0512025e3664/analysis/examples--iris--interactive-visuals--plotly.Rmd" target="_blank">96087f9</a>
 </td>
 <td>
@@ -703,20 +781,89 @@ separate commit of temporary .Rmd files
 <h1>Load prepared data</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r fold-show"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>knitr<span class="op">::</span><span class="kw">read_chunk</span>(<span class="st">&quot;code/examples/iris/interactive-visuals/plotly.R&quot;</span>)</span></code></pre></div>
 </div>
-<div id="scatter-plot" class="section level1">
-<h1>Scatter plot</h1>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># qualitative color scales</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>plotly<span class="op">::</span><span class="kw">plot_ly</span>(</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">data =</span> iris,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">x =</span> <span class="op">~</span>Sepal.Length,</span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="dt">y =</span> <span class="op">~</span>Petal.Length,</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">mode =</span> <span class="st">&quot;markers&quot;</span>,</span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">type =</span> <span class="st">&quot;scatter&quot;</span>,</span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">color =</span> <span class="op">~</span>Species,</span>
-<span id="cb2-9"><a href="#cb2-9"></a>  <span class="dt">colors =</span> <span class="st">&quot;Set2&quot;</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>)</span></code></pre></div>
-<div id="htmlwidget-bb611d37702778976763" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bb611d37702778976763">{"x":{"visdat":{"3e408c3512b":["function () ","plotlyVisDat"]},"cur_data":"3e408c3512b","attrs":{"3e408c3512b":{"x":{},"y":{},"mode":"markers","color":{},"colors":"Set2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Sepal.Length"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Petal.Length"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9,5.4,4.8,4.8,4.3,5.8,5.7,5.4,5.1,5.7,5.1,5.4,5.1,4.6,5.1,4.8,5,5,5.2,5.2,4.7,4.8,5.4,5.2,5.5,4.9,5,5.5,4.9,4.4,5.1,5,4.5,4.4,5,5.1,4.8,5.1,4.6,5.3,5],"y":[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5,1.5,1.6,1.4,1.1,1.2,1.5,1.3,1.4,1.7,1.5,1.7,1.5,1,1.7,1.9,1.6,1.6,1.5,1.4,1.6,1.6,1.5,1.5,1.4,1.5,1.2,1.3,1.4,1.3,1.5,1.3,1.3,1.3,1.6,1.9,1.4,1.6,1.4,1.5,1.4],"mode":"markers","type":"scatter","name":"setosa","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[7,6.4,6.9,5.5,6.5,5.7,6.3,4.9,6.6,5.2,5,5.9,6,6.1,5.6,6.7,5.6,5.8,6.2,5.6,5.9,6.1,6.3,6.1,6.4,6.6,6.8,6.7,6,5.7,5.5,5.5,5.8,6,5.4,6,6.7,6.3,5.6,5.5,5.5,6.1,5.8,5,5.6,5.7,5.7,6.2,5.1,5.7],"y":[4.7,4.5,4.9,4,4.6,4.5,4.7,3.3,4.6,3.9,3.5,4.2,4,4.7,3.6,4.4,4.5,4.1,4.5,3.9,4.8,4,4.9,4.7,4.3,4.4,4.8,5,4.5,3.5,3.8,3.7,3.9,5.1,4.5,4.5,4.7,4.4,4.1,4,4.4,4.6,4,3.3,4.2,4.2,4.2,4.3,3,4.1],"mode":"markers","type":"scatter","name":"versicolor","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6.3,5.8,7.1,6.3,6.5,7.6,4.9,7.3,6.7,7.2,6.5,6.4,6.8,5.7,5.8,6.4,6.5,7.7,7.7,6,6.9,5.6,7.7,6.3,6.7,7.2,6.2,6.1,6.4,7.2,7.4,7.9,6.4,6.3,6.1,7.7,6.3,6.4,6,6.9,6.7,6.9,5.8,6.8,6.7,6.7,6.3,6.5,6.2,5.9],"y":[6,5.1,5.9,5.6,5.8,6.6,4.5,6.3,5.8,6.1,5.1,5.3,5.5,5,5.1,5.3,5.5,6.7,6.9,5,5.7,4.9,6.7,4.9,5.7,6,4.8,4.9,5.6,5.8,6.1,6.4,5.6,5.1,5.6,6.1,5.6,5.5,4.8,5.4,5.6,5.1,5.1,5.9,5.7,5.2,5,5.2,5.4,5.1],"mode":"markers","type":"scatter","name":"virginica","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="interactive-scatter-plot-with-filters" class="section level1">
+<h1>Interactive scatter plot with filters</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># load packages</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># shared data</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>iris_shared &lt;-<span class="st"> </span>crosstalk<span class="op">::</span>SharedData<span class="op">$</span><span class="kw">new</span>(iris)</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># species by color</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>color_scatter &lt;-<span class="st"> </span>iris_shared <span class="op">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="st">  </span>plotly<span class="op">::</span><span class="kw">plot_ly</span>(</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="dt">x =</span> <span class="op">~</span>Sepal.Length,</span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="dt">y =</span> <span class="op">~</span>Petal.Length,</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    <span class="dt">mode =</span> <span class="st">&quot;markers&quot;</span>,</span>
+<span id="cb2-13"><a href="#cb2-13"></a>    <span class="dt">type =</span> <span class="st">&quot;scatter&quot;</span>,</span>
+<span id="cb2-14"><a href="#cb2-14"></a>    <span class="dt">color =</span> <span class="op">~</span>Species,</span>
+<span id="cb2-15"><a href="#cb2-15"></a>    <span class="dt">colors =</span> <span class="st">&quot;Set2&quot;</span>,</span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a>    <span class="co"># hover text</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>    <span class="dt">hoverinfo=</span><span class="st">&quot;text&quot;</span>,     <span class="co"># suppress default text in tooltip</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>    <span class="dt">text =</span> <span class="op">~</span>base<span class="op">::</span><span class="kw">paste</span>(  <span class="co"># &quot;\n&quot; can be a part of text, e.g. &quot;\ndate&quot;</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>      base<span class="op">::</span><span class="kw">paste</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot;Iris species:  &quot;</span>, base<span class="op">::</span><span class="kw">paste</span>(<span class="st">&quot;&lt;b&gt;&quot;</span>, Species, <span class="st">&quot;&lt;/b&gt;&quot;</span>)),</span>
+<span id="cb2-21"><a href="#cb2-21"></a>      base<span class="op">::</span><span class="kw">paste</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot;Sepal length:&quot;</span>, base<span class="op">::</span><span class="kw">paste</span>(<span class="st">&quot;&lt;b&gt;&quot;</span>, <span class="st">`</span><span class="dt">Sepal.Length</span><span class="st">`</span>, <span class="st">&quot;cm&quot;</span>, <span class="st">&quot;&lt;/b&gt;&quot;</span>)),</span>
+<span id="cb2-22"><a href="#cb2-22"></a>      base<span class="op">::</span><span class="kw">paste</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot;Petal length: &quot;</span>, base<span class="op">::</span><span class="kw">paste</span>(<span class="st">&quot;&lt;b&gt;&quot;</span>, <span class="st">`</span><span class="dt">Petal.Length</span><span class="st">`</span>, <span class="st">&quot;cm&quot;</span>, <span class="st">&quot;&lt;/b&gt;&quot;</span>))</span>
+<span id="cb2-23"><a href="#cb2-23"></a>    ),</span>
+<span id="cb2-24"><a href="#cb2-24"></a>    <span class="dt">hoverlabel =</span> <span class="kw">list</span>(  <span class="co"># set properties of hover label text</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a>      <span class="dt">font =</span> <span class="kw">list</span>(</span>
+<span id="cb2-26"><a href="#cb2-26"></a>        <span class="dt">size =</span> <span class="dv">16</span>,</span>
+<span id="cb2-27"><a href="#cb2-27"></a>        <span class="dt">family =</span> <span class="st">&quot;Arial&quot;</span>,</span>
+<span id="cb2-28"><a href="#cb2-28"></a>        <span class="dt">color =</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a>      ),</span>
+<span id="cb2-30"><a href="#cb2-30"></a>      <span class="dt">align =</span> <span class="st">&quot;left&quot;</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a>    )</span>
+<span id="cb2-32"><a href="#cb2-32"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span>plotly<span class="op">::</span><span class="kw">layout</span>(</span>
+<span id="cb2-33"><a href="#cb2-33"></a>    <span class="dt">title =</span> <span class="st">&quot;Iris species by lengths&quot;</span>,</span>
+<span id="cb2-34"><a href="#cb2-34"></a>    <span class="dt">xaxis =</span> <span class="kw">list</span>(<span class="dt">title =</span> <span class="st">&quot;Sepal length (cm)&quot;</span>),</span>
+<span id="cb2-35"><a href="#cb2-35"></a>    <span class="dt">yaxis =</span> <span class="kw">list</span>(<span class="dt">title =</span> <span class="st">&quot;Petal length (cm)&quot;</span>),</span>
+<span id="cb2-36"><a href="#cb2-36"></a>    <span class="dt">legend =</span> <span class="kw">list</span>(</span>
+<span id="cb2-37"><a href="#cb2-37"></a>      <span class="dt">orientation =</span> <span class="st">&quot;v&quot;</span>,</span>
+<span id="cb2-38"><a href="#cb2-38"></a>      <span class="dt">x =</span> <span class="fl">0.82</span>, <span class="dt">y =</span> <span class="fl">0.08</span>,</span>
+<span id="cb2-39"><a href="#cb2-39"></a>      <span class="dt">bgcolor =</span> <span class="st">&quot;rgb(245, 245, 245)&quot;</span>,</span>
+<span id="cb2-40"><a href="#cb2-40"></a>      <span class="dt">title=</span><span class="kw">list</span>(<span class="dt">text =</span> <span class="st">&quot;Iris species&quot;</span>))</span>
+<span id="cb2-41"><a href="#cb2-41"></a>  )</span>
+<span id="cb2-42"><a href="#cb2-42"></a></span>
+<span id="cb2-43"><a href="#cb2-43"></a><span class="co"># add a filter to an interactive qualitative color scales scatter plot</span></span>
+<span id="cb2-44"><a href="#cb2-44"></a>crosstalk<span class="op">::</span><span class="kw">bscols</span>(</span>
+<span id="cb2-45"><a href="#cb2-45"></a>  <span class="dt">widths =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="ot">NA</span>),  <span class="co"># maximum sum of widths (without warning) = 12</span></span>
+<span id="cb2-46"><a href="#cb2-46"></a>  <span class="kw">list</span>(</span>
+<span id="cb2-47"><a href="#cb2-47"></a>    crosstalk<span class="op">::</span><span class="kw">filter_slider</span>(<span class="st">&quot;Sepal.Length&quot;</span>, <span class="st">&quot;Sepal length (cm)&quot;</span>, iris_shared, <span class="op">~</span>Sepal.Length),</span>
+<span id="cb2-48"><a href="#cb2-48"></a>    crosstalk<span class="op">::</span><span class="kw">filter_slider</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Petal length (cm)&quot;</span>, iris_shared, <span class="op">~</span>Petal.Length)</span>
+<span id="cb2-49"><a href="#cb2-49"></a>    <span class="co"># crosstalk::filter_slider(&quot;Sepal.Width&quot;, &quot;Sepal width (cm)&quot;, iris_shared, ~Sepal.Width),</span></span>
+<span id="cb2-50"><a href="#cb2-50"></a>    <span class="co"># crosstalk::filter_slider(&quot;Petal.Width&quot;, &quot;Petal width (cm)&quot;, iris_shared, ~Petal.Width)</span></span>
+<span id="cb2-51"><a href="#cb2-51"></a>  ),</span>
+<span id="cb2-52"><a href="#cb2-52"></a>  color_scatter</span>
+<span id="cb2-53"><a href="#cb2-53"></a>)</span></code></pre></div>
+<div class="container-fluid crosstalk-bscols">
+<div class="fluid-row">
+<div class="col-xs-2">
+<div class="form-group crosstalk-input crosstalk-input-slider js-range-slider" id="Sepal.Length">
+<label class="control-label" for="Sepal.Length">Sepal length (cm)</label>
+<input data-type="double" data-min="4.3" data-max="7.9" data-from="4.3" data-to="7.9" data-step="0.05" data-grid="true" data-grid-num="9" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1.38888888888889" data-drag-interval="true" data-data-type="number"/>
+<script type="application/json" data-for="Sepal.Length">{
+  "values": [4.3, 4.4, 4.4, 4.4, 4.5, 4.6, 4.6, 4.6, 4.6, 4.7, 4.7, 4.8, 4.8, 4.8, 4.8, 4.8, 4.9, 4.9, 4.9, 4.9, 4.9, 4.9, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5.1, 5.1, 5.1, 5.1, 5.1, 5.1, 5.1, 5.1, 5.1, 5.2, 5.2, 5.2, 5.2, 5.3, 5.4, 5.4, 5.4, 5.4, 5.4, 5.4, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.5, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.7, 5.7, 5.7, 5.7, 5.7, 5.7, 5.7, 5.7, 5.8, 5.8, 5.8, 5.8, 5.8, 5.8, 5.8, 5.9, 5.9, 5.9, 6, 6, 6, 6, 6, 6, 6.1, 6.1, 6.1, 6.1, 6.1, 6.1, 6.2, 6.2, 6.2, 6.2, 6.3, 6.3, 6.3, 6.3, 6.3, 6.3, 6.3, 6.3, 6.3, 6.4, 6.4, 6.4, 6.4, 6.4, 6.4, 6.4, 6.5, 6.5, 6.5, 6.5, 6.5, 6.6, 6.6, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.8, 6.8, 6.8, 6.9, 6.9, 6.9, 6.9, 7, 7.1, 7.2, 7.2, 7.2, 7.3, 7.4, 7.6, 7.7, 7.7, 7.7, 7.7, 7.9],
+  "keys": ["14", "9", "39", "43", "42", "4", "7", "23", "48", "3", "30", "12", "13", "25", "31", "46", "2", "10", "35", "38", "58", "107", "5", "8", "26", "27", "36", "41", "44", "50", "61", "94", "1", "18", "20", "22", "24", "40", "45", "47", "99", "28", "29", "33", "60", "49", "6", "11", "17", "21", "32", "85", "34", "37", "54", "81", "82", "90", "91", "65", "67", "70", "89", "95", "122", "16", "19", "56", "80", "96", "97", "100", "114", "15", "68", "83", "93", "102", "115", "143", "62", "71", "150", "63", "79", "84", "86", "120", "139", "64", "72", "74", "92", "128", "135", "69", "98", "127", "149", "57", "73", "88", "101", "104", "124", "134", "137", "147", "52", "75", "112", "116", "129", "133", "138", "55", "105", "111", "117", "148", "59", "76", "66", "78", "87", "109", "125", "141", "145", "146", "77", "113", "144", "53", "121", "140", "142", "51", "103", "110", "126", "130", "108", "131", "106", "118", "119", "123", "136", "132"],
+  "group": ["SharedDatabb611d37"]
+}</script>
+</div>
+<div class="form-group crosstalk-input crosstalk-input-slider js-range-slider" id="Petal.Length">
+<label class="control-label" for="Petal.Length">Petal length (cm)</label>
+<input data-type="double" data-min="1" data-max="6.9" data-from="1" data-to="6.9" data-step="0.05" data-grid="true" data-grid-num="9.83333333333333" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.847457627118644" data-drag-interval="true" data-data-type="number"/>
+<script type="application/json" data-for="Petal.Length">{
+  "values": [1, 1.1, 1.2, 1.2, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.7, 1.7, 1.7, 1.7, 1.9, 1.9, 3, 3.3, 3.3, 3.5, 3.5, 3.6, 3.7, 3.8, 3.9, 3.9, 3.9, 4, 4, 4, 4, 4, 4.1, 4.1, 4.1, 4.2, 4.2, 4.2, 4.2, 4.3, 4.3, 4.4, 4.4, 4.4, 4.4, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.6, 4.6, 4.6, 4.7, 4.7, 4.7, 4.7, 4.7, 4.8, 4.8, 4.8, 4.8, 4.9, 4.9, 4.9, 4.9, 4.9, 5, 5, 5, 5, 5.1, 5.1, 5.1, 5.1, 5.1, 5.1, 5.1, 5.1, 5.2, 5.2, 5.3, 5.3, 5.4, 5.4, 5.5, 5.5, 5.5, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.7, 5.7, 5.7, 5.8, 5.8, 5.8, 5.9, 5.9, 6, 6, 6.1, 6.1, 6.1, 6.3, 6.4, 6.6, 6.7, 6.7, 6.9],
+  "keys": ["23", "14", "15", "36", "3", "17", "37", "39", "41", "42", "43", "1", "2", "5", "7", "9", "13", "18", "29", "34", "38", "46", "48", "50", "4", "8", "10", "11", "16", "20", "22", "28", "32", "33", "35", "40", "49", "12", "26", "27", "30", "31", "44", "47", "6", "19", "21", "24", "25", "45", "99", "58", "94", "61", "80", "65", "82", "81", "60", "70", "83", "54", "63", "72", "90", "93", "68", "89", "100", "62", "95", "96", "97", "75", "98", "66", "76", "88", "91", "52", "56", "67", "69", "79", "85", "86", "107", "55", "59", "92", "51", "57", "64", "74", "87", "71", "77", "127", "139", "53", "73", "122", "124", "128", "78", "114", "120", "147", "84", "102", "111", "115", "134", "142", "143", "150", "146", "148", "112", "116", "140", "149", "113", "117", "138", "104", "129", "133", "135", "137", "141", "121", "125", "145", "105", "109", "130", "103", "144", "101", "126", "110", "131", "136", "108", "132", "106", "118", "123", "119"],
+  "group": ["SharedDatabb611d37"]
+}</script>
+</div>
+</div>
+<div class="col-xs-10">
+<div id="htmlwidget-7027789767638d04cd2b" style="width:100%;height:400px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7027789767638d04cd2b">{"x":{"visdat":{"50303a6b320d":["function () ","plotlyVisDat"]},"cur_data":"50303a6b320d","attrs":{"50303a6b320d":{"x":{},"y":{},"mode":"markers","hoverinfo":"text","text":{},"hoverlabel":{"font":{"size":16,"family":"Arial","color":"black"},"align":"left"},"color":{},"colors":"Set2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Iris species by lengths","xaxis":{"domain":[0,1],"automargin":true,"title":"Sepal length (cm)"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Petal length (cm)"},"legend":{"orientation":"v","x":0.82,"y":0.08,"bgcolor":"rgb(245, 245, 245)","title":{"text":"Iris species"}},"dragmode":"zoom","hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9,5.4,4.8,4.8,4.3,5.8,5.7,5.4,5.1,5.7,5.1,5.4,5.1,4.6,5.1,4.8,5,5,5.2,5.2,4.7,4.8,5.4,5.2,5.5,4.9,5,5.5,4.9,4.4,5.1,5,4.5,4.4,5,5.1,4.8,5.1,4.6,5.3,5],"y":[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5,1.5,1.6,1.4,1.1,1.2,1.5,1.3,1.4,1.7,1.5,1.7,1.5,1,1.7,1.9,1.6,1.6,1.5,1.4,1.6,1.6,1.5,1.5,1.4,1.5,1.2,1.3,1.4,1.3,1.5,1.3,1.3,1.3,1.6,1.9,1.4,1.6,1.4,1.5,1.4],"mode":"markers","hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.9 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.7 cm <\/b> <br /> Petal length:  <b> 1.3 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.6 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.4 cm <\/b> <br /> Petal length:  <b> 1.7 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.6 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.4 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.9 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.4 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.8 cm <\/b> <br /> Petal length:  <b> 1.6 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.8 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.3 cm <\/b> <br /> Petal length:  <b> 1.1 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.8 cm <\/b> <br /> Petal length:  <b> 1.2 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.7 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.4 cm <\/b> <br /> Petal length:  <b> 1.3 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.7 cm <\/b> <br /> Petal length:  <b> 1.7 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.4 cm <\/b> <br /> Petal length:  <b> 1.7 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.6 cm <\/b> <br /> Petal length:  <b> 1 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 1.7 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.8 cm <\/b> <br /> Petal length:  <b> 1.9 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 1.6 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 1.6 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.2 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.2 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.7 cm <\/b> <br /> Petal length:  <b> 1.6 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.8 cm <\/b> <br /> Petal length:  <b> 1.6 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.4 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.2 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.5 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.9 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 1.2 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.5 cm <\/b> <br /> Petal length:  <b> 1.3 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.9 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.4 cm <\/b> <br /> Petal length:  <b> 1.3 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 1.3 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.5 cm <\/b> <br /> Petal length:  <b> 1.3 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.4 cm <\/b> <br /> Petal length:  <b> 1.3 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 1.6 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 1.9 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.8 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 1.6 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 4.6 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5.3 cm <\/b> <br /> Petal length:  <b> 1.5 cm <\/b>","<br /> Iris species:   <b> setosa <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 1.4 cm <\/b>"],"hoverlabel":{"font":{"size":16,"family":"Arial","color":"black"},"align":"left"},"type":"scatter","key":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],"set":"SharedDatabb611d37","name":"setosa","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","_isNestedKey":false,"frame":null},{"x":[7,6.4,6.9,5.5,6.5,5.7,6.3,4.9,6.6,5.2,5,5.9,6,6.1,5.6,6.7,5.6,5.8,6.2,5.6,5.9,6.1,6.3,6.1,6.4,6.6,6.8,6.7,6,5.7,5.5,5.5,5.8,6,5.4,6,6.7,6.3,5.6,5.5,5.5,6.1,5.8,5,5.6,5.7,5.7,6.2,5.1,5.7],"y":[4.7,4.5,4.9,4,4.6,4.5,4.7,3.3,4.6,3.9,3.5,4.2,4,4.7,3.6,4.4,4.5,4.1,4.5,3.9,4.8,4,4.9,4.7,4.3,4.4,4.8,5,4.5,3.5,3.8,3.7,3.9,5.1,4.5,4.5,4.7,4.4,4.1,4,4.4,4.6,4,3.3,4.2,4.2,4.2,4.3,3,4.1],"mode":"markers","hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 7 cm <\/b> <br /> Petal length:  <b> 4.7 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.4 cm <\/b> <br /> Petal length:  <b> 4.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.9 cm <\/b> <br /> Petal length:  <b> 4.9 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.5 cm <\/b> <br /> Petal length:  <b> 4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.5 cm <\/b> <br /> Petal length:  <b> 4.6 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.7 cm <\/b> <br /> Petal length:  <b> 4.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 4.7 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 4.9 cm <\/b> <br /> Petal length:  <b> 3.3 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.6 cm <\/b> <br /> Petal length:  <b> 4.6 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.2 cm <\/b> <br /> Petal length:  <b> 3.9 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 3.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.9 cm <\/b> <br /> Petal length:  <b> 4.2 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6 cm <\/b> <br /> Petal length:  <b> 4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.1 cm <\/b> <br /> Petal length:  <b> 4.7 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.6 cm <\/b> <br /> Petal length:  <b> 3.6 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.7 cm <\/b> <br /> Petal length:  <b> 4.4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.6 cm <\/b> <br /> Petal length:  <b> 4.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.8 cm <\/b> <br /> Petal length:  <b> 4.1 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.2 cm <\/b> <br /> Petal length:  <b> 4.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.6 cm <\/b> <br /> Petal length:  <b> 3.9 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.9 cm <\/b> <br /> Petal length:  <b> 4.8 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.1 cm <\/b> <br /> Petal length:  <b> 4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 4.9 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.1 cm <\/b> <br /> Petal length:  <b> 4.7 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.4 cm <\/b> <br /> Petal length:  <b> 4.3 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.6 cm <\/b> <br /> Petal length:  <b> 4.4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.8 cm <\/b> <br /> Petal length:  <b> 4.8 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.7 cm <\/b> <br /> Petal length:  <b> 5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6 cm <\/b> <br /> Petal length:  <b> 4.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.7 cm <\/b> <br /> Petal length:  <b> 3.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.5 cm <\/b> <br /> Petal length:  <b> 3.8 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.5 cm <\/b> <br /> Petal length:  <b> 3.7 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.8 cm <\/b> <br /> Petal length:  <b> 3.9 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6 cm <\/b> <br /> Petal length:  <b> 5.1 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.4 cm <\/b> <br /> Petal length:  <b> 4.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6 cm <\/b> <br /> Petal length:  <b> 4.5 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.7 cm <\/b> <br /> Petal length:  <b> 4.7 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 4.4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.6 cm <\/b> <br /> Petal length:  <b> 4.1 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.5 cm <\/b> <br /> Petal length:  <b> 4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.5 cm <\/b> <br /> Petal length:  <b> 4.4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.1 cm <\/b> <br /> Petal length:  <b> 4.6 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.8 cm <\/b> <br /> Petal length:  <b> 4 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5 cm <\/b> <br /> Petal length:  <b> 3.3 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.6 cm <\/b> <br /> Petal length:  <b> 4.2 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.7 cm <\/b> <br /> Petal length:  <b> 4.2 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.7 cm <\/b> <br /> Petal length:  <b> 4.2 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 6.2 cm <\/b> <br /> Petal length:  <b> 4.3 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.1 cm <\/b> <br /> Petal length:  <b> 3 cm <\/b>","<br /> Iris species:   <b> versicolor <\/b> <br /> Sepal length: <b> 5.7 cm <\/b> <br /> Petal length:  <b> 4.1 cm <\/b>"],"hoverlabel":{"font":{"size":16,"family":"Arial","color":"black"},"align":"left"},"type":"scatter","key":["51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100"],"set":"SharedDatabb611d37","name":"versicolor","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","_isNestedKey":false,"frame":null},{"x":[6.3,5.8,7.1,6.3,6.5,7.6,4.9,7.3,6.7,7.2,6.5,6.4,6.8,5.7,5.8,6.4,6.5,7.7,7.7,6,6.9,5.6,7.7,6.3,6.7,7.2,6.2,6.1,6.4,7.2,7.4,7.9,6.4,6.3,6.1,7.7,6.3,6.4,6,6.9,6.7,6.9,5.8,6.8,6.7,6.7,6.3,6.5,6.2,5.9],"y":[6,5.1,5.9,5.6,5.8,6.6,4.5,6.3,5.8,6.1,5.1,5.3,5.5,5,5.1,5.3,5.5,6.7,6.9,5,5.7,4.9,6.7,4.9,5.7,6,4.8,4.9,5.6,5.8,6.1,6.4,5.6,5.1,5.6,6.1,5.6,5.5,4.8,5.4,5.6,5.1,5.1,5.9,5.7,5.2,5,5.2,5.4,5.1],"mode":"markers","hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 5.8 cm <\/b> <br /> Petal length:  <b> 5.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.1 cm <\/b> <br /> Petal length:  <b> 5.9 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 5.6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.5 cm <\/b> <br /> Petal length:  <b> 5.8 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.6 cm <\/b> <br /> Petal length:  <b> 6.6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 4.9 cm <\/b> <br /> Petal length:  <b> 4.5 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.3 cm <\/b> <br /> Petal length:  <b> 6.3 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.7 cm <\/b> <br /> Petal length:  <b> 5.8 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.2 cm <\/b> <br /> Petal length:  <b> 6.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.5 cm <\/b> <br /> Petal length:  <b> 5.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.4 cm <\/b> <br /> Petal length:  <b> 5.3 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.8 cm <\/b> <br /> Petal length:  <b> 5.5 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 5.7 cm <\/b> <br /> Petal length:  <b> 5 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 5.8 cm <\/b> <br /> Petal length:  <b> 5.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.4 cm <\/b> <br /> Petal length:  <b> 5.3 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.5 cm <\/b> <br /> Petal length:  <b> 5.5 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.7 cm <\/b> <br /> Petal length:  <b> 6.7 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.7 cm <\/b> <br /> Petal length:  <b> 6.9 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6 cm <\/b> <br /> Petal length:  <b> 5 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.9 cm <\/b> <br /> Petal length:  <b> 5.7 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 5.6 cm <\/b> <br /> Petal length:  <b> 4.9 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.7 cm <\/b> <br /> Petal length:  <b> 6.7 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 4.9 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.7 cm <\/b> <br /> Petal length:  <b> 5.7 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.2 cm <\/b> <br /> Petal length:  <b> 6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.2 cm <\/b> <br /> Petal length:  <b> 4.8 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.1 cm <\/b> <br /> Petal length:  <b> 4.9 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.4 cm <\/b> <br /> Petal length:  <b> 5.6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.2 cm <\/b> <br /> Petal length:  <b> 5.8 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.4 cm <\/b> <br /> Petal length:  <b> 6.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.9 cm <\/b> <br /> Petal length:  <b> 6.4 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.4 cm <\/b> <br /> Petal length:  <b> 5.6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 5.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.1 cm <\/b> <br /> Petal length:  <b> 5.6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 7.7 cm <\/b> <br /> Petal length:  <b> 6.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 5.6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.4 cm <\/b> <br /> Petal length:  <b> 5.5 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6 cm <\/b> <br /> Petal length:  <b> 4.8 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.9 cm <\/b> <br /> Petal length:  <b> 5.4 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.7 cm <\/b> <br /> Petal length:  <b> 5.6 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.9 cm <\/b> <br /> Petal length:  <b> 5.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 5.8 cm <\/b> <br /> Petal length:  <b> 5.1 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.8 cm <\/b> <br /> Petal length:  <b> 5.9 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.7 cm <\/b> <br /> Petal length:  <b> 5.7 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.7 cm <\/b> <br /> Petal length:  <b> 5.2 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.3 cm <\/b> <br /> Petal length:  <b> 5 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.5 cm <\/b> <br /> Petal length:  <b> 5.2 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 6.2 cm <\/b> <br /> Petal length:  <b> 5.4 cm <\/b>","<br /> Iris species:   <b> virginica <\/b> <br /> Sepal length: <b> 5.9 cm <\/b> <br /> Petal length:  <b> 5.1 cm <\/b>"],"hoverlabel":{"font":{"size":16,"family":"Arial","color":"black"},"align":"left"},"type":"scatter","key":["101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150"],"set":"SharedDatabb611d37","name":"virginica","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","_isNestedKey":false,"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0,"ctGroups":["SharedDatabb611d37"]},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -741,27 +888,28 @@ separate commit of temporary .Rmd files
 #&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
 #&gt; 
 #&gt; other attached packages:
-#&gt; [1] workflowr_1.6.2
+#&gt; [1] dplyr_1.0.2     workflowr_1.6.2
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
 #&gt;  [1] Rcpp_1.0.5             RColorBrewer_1.1-2     pillar_1.4.6          
 #&gt;  [4] compiler_4.0.2         later_1.1.0.1          git2r_0.27.1          
 #&gt;  [7] tools_4.0.2            digest_0.6.25          viridisLite_0.3.0     
-#&gt; [10] jsonlite_1.7.1         lubridate_1.7.9        evaluate_0.14         
-#&gt; [13] lifecycle_0.2.0        tibble_3.0.3           gtable_0.3.0          
-#&gt; [16] pkgconfig_2.0.3        rlang_0.4.7            rstudioapi_0.11.0-9000
-#&gt; [19] crosstalk_1.1.0.1      yaml_2.2.1             xfun_0.18             
-#&gt; [22] httr_1.4.2             dplyr_1.0.2            stringr_1.4.0         
-#&gt; [25] knitr_1.30             htmlwidgets_1.5.1      generics_0.0.2        
-#&gt; [28] fs_1.5.0               vctrs_0.3.2            tidyselect_1.1.0      
-#&gt; [31] rprojroot_1.3-2        grid_4.0.2             data.table_1.13.0     
-#&gt; [34] glue_1.4.2             R6_2.4.1               plotly_4.9.2.1        
-#&gt; [37] rmarkdown_2.4          farver_2.0.3           tidyr_1.1.1           
-#&gt; [40] purrr_0.3.4            ggplot2_3.3.2          magrittr_1.5          
-#&gt; [43] whisker_0.4            backports_1.1.9        scales_1.1.1          
-#&gt; [46] promises_1.1.1         ellipsis_0.3.1         htmltools_0.5.0       
-#&gt; [49] colorspace_1.4-1       httpuv_1.5.4           stringi_1.5.3         
-#&gt; [52] lazyeval_0.2.2         munsell_0.5.0          crayon_1.3.4</code></pre>
+#&gt; [10] jsonlite_1.7.1         gtable_0.3.0           lubridate_1.7.9       
+#&gt; [13] evaluate_0.14          lifecycle_0.2.0        tibble_3.0.3          
+#&gt; [16] pkgconfig_2.0.3        rlang_0.4.7            shiny_1.5.0           
+#&gt; [19] rstudioapi_0.11.0-9000 crosstalk_1.1.0.1      yaml_2.2.1            
+#&gt; [22] xfun_0.18              fastmap_1.0.1          httr_1.4.2            
+#&gt; [25] stringr_1.4.0          knitr_1.30             htmlwidgets_1.5.1     
+#&gt; [28] generics_0.0.2         fs_1.5.0               vctrs_0.3.2           
+#&gt; [31] grid_4.0.2             rprojroot_1.3-2        tidyselect_1.1.0      
+#&gt; [34] data.table_1.13.0      glue_1.4.2             R6_2.4.1              
+#&gt; [37] plotly_4.9.2.1         rmarkdown_2.4          farver_2.0.3          
+#&gt; [40] tidyr_1.1.1            ggplot2_3.3.2          purrr_0.3.4           
+#&gt; [43] magrittr_1.5           whisker_0.4            scales_1.1.1          
+#&gt; [46] backports_1.1.9        promises_1.1.1         ellipsis_0.3.1        
+#&gt; [49] htmltools_0.5.0        colorspace_1.4-1       xtable_1.8-4          
+#&gt; [52] mime_0.9               httpuv_1.5.4           stringi_1.5.3         
+#&gt; [55] lazyeval_0.2.2         munsell_0.5.0          crayon_1.3.4</code></pre>
 </div>
 </div>
 
