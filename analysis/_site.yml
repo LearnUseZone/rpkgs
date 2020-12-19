@@ -9,6 +9,16 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  - text: Iris examples
+    menu:
+    - text: Overview
+      href: examples--iris--data-overview.html
+    - text: Histograms
+      href: examples--iris--static-visuals--histograms.html
+    - text: Scatter & box plots
+      href: examples--iris--static-visuals--plots.html
+    - text: Interactive scatter
+      href: examples--iris--interactive-visuals--plotly.html
   right:
   - icon: fa-github
     text: Source code
@@ -19,4 +29,4 @@ output:
     toc_float: yes
     theme: cosmo
     highlight: textmate
-    pandoc_args: ["--include-after-body=include/footer.html"]
+    pandoc_args: --include-after-body=include/footer.html
