@@ -1,7 +1,7 @@
 # ####
 # title:   Histograms of iris dataset
 # author:  learnusezone@gmail.com
-# from-to: 2020-12-09-
+# from-to: 2020-12-19-
 # purpose: static histograms of iris dataset
 # note:    -
 # ####
@@ -15,26 +15,44 @@ graphics::par(lwd = 3)  # line width (histogram border)
 graphics::hist(
   iris$Petal.Length,
   col = grDevices::rgb(0.9, 0.6, 0.3, 0.6),
-  main = "Histogram of Petal.Length",
+  main = "Histogram of petal length",
   xlim = c(
     base::floor(base::min(iris$Petal.Length)),
     base::ceiling(base::max(iris$Petal.Length))
   ),
   ylim = c(0, 40),
-  xlab = "Petal.Length (cm)",
-  ylab = "Frequency of Petal.Length",
+  xlab = "Petal length (cm)",
+  ylab = "Frequency",
   lwd = 2  # line width (axes)
 )
 
 
 # hist 2
-graphics::hist(iris$Petal.Width, col = colors()[4])
+graphics::hist(
+  iris$Petal.Width,
+  col = colors()[4],
+  main = "Histogram of petal width",
+  xlab = "Petal width (cm)",
+  ylab = "Frequency",
+)
 
 
 # hist 3
-graphics::hist(iris$Sepal.Length, col = 4)
+graphics::hist(
+  iris$Sepal.Length,
+  col = 4,
+  main = "Histogram of sepal length",
+  xlab = "Sepal length (cm)",
+  ylab = "Frequency",
+)
 
 
 # hist 4
-graphics::hist(iris$Sepal.Width, col = "#ADD8E6")
+graphics::hist(
+  iris$Sepal.Width,
+  col = "#ADD8E6",
+  main = "Histogram of sepal width",
+  xlab = "Sepal width (cm)",
+  ylab = "Frequency",
+)
 

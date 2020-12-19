@@ -1,28 +1,23 @@
 # ####
-# title:   Plots of iris dataset
+# title:   Scatter plot matrix of iris dataset
 # author:  learnusezone@gmail.com
-# from-to: 2020-12-09-
-# purpose: static scatter plots of iris dataset
+# from-to: 2020-12-19-
+# purpose: static scatter plot matrix of iris dataset
 # note:    -
 # ####
 
 
 # plots
-graphics::par(lwd = 1)  # line width (pairs, plot and legend; not axes)
+graphics::par(lwd = 1)  # line width (pairs / plot, legend; not axes)
 
 
-# scatterplot matrix (plot, pairs)
-graphics::pairs(iris[, -5], col = iris$Species,
-                main = "Scatterplot matrix", oma = c(3, 3, 6, 12))
-graphics::legend(0.82, 0.7,
+# scatter plot matrix
+graphics::pairs(iris[, -5], col = c("blue", "red2", "green3")[iris$Species],
+                main = "Scatter plot matrix",
+                oma = c(3, 3, 5.5, 12.5))
+graphics::legend(0.82, 0.7,      # "bottomright", ...
                  legend = base::as.vector(base::unique(iris$Species)),
-                 col = 1:3, pch = 19, bty = "n")
-
-
-# scatter plot
-graphics::plot(iris$Sepal.Length, iris$Petal.Length,
-               col = iris$Species, main = "Sepal and Petal Length")
-graphics::legend("topleft",
-                 legend = base::as.vector(base::unique(iris$Species)),
-                 col = 1:3, pch = 19, bty = "n")
+                 col = c("blue", "red2", "green3"),
+                 pch = 19,
+                 bty = "n")
 
