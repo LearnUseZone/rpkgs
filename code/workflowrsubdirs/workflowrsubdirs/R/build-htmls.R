@@ -81,6 +81,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   #   - remove the last "/" to avoid stop for "if (!file.exists(dir_path))"
   if (dir_path != "code-rmd") {
     dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work only with 1 slash type
+    dir_path <- base::sub("^./", "", dir_path)     # input dir_path can also be "./code-rmd"
     dir_path <- base::sub(here::here(), "", dir_path)
     while (stringr::str_detect(dir_path, "^/"))
       dir_path <- base::substr(dir_path, 2, nchar(dir_path))
