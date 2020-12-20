@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-20 13:27 GMT+2
+Last update: 2020-12-20 19:10 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -41,19 +41,6 @@ This package is used (only) to build .html pages from their associated
 
 ### Subdirectories for .Rmd files
 
-  - For the purpose of saving .Rmd files in subdirectories, it’s
-    necessary to create a new directory directly in `main workflowr
-    dir`.
-      - Don’t create subdirectories (for this purpose) in directory
-        `analysis`.
-      - Suggested name of this new directory is `code-rmd` because
-          - this is also the default directory used in this package
-            `workflowrsubdirs`.
-          - .Rmd files saved in it will be usually associated to
-            solutions in directory `code`.
-  - .Rmd files can be saved
-      - directly in this new directory or in any of its subdirectories
-        (hereinafter `code-rmd subdirs`).
   - 1stly, `workflowr` project needs to be prepared.
       - Relevant steps (together with more information) can be found
         [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
@@ -62,6 +49,22 @@ This package is used (only) to build .html pages from their associated
           - `docs` that contain all .html files for your website. These
             .html files are built from .Rmd files in directories
             `analysis` and `code-rmd subdirs`.
+  - 2ndly, ensure that `docs/index.html` is created, e.g by running
+    `workflowr::wflow_build()`.
+      - Ideal is to properly prepare files `_site.yml` and `index.Rmd`
+        in directory `analysis` and also directories with .html files
+        included in `_site.yml` (e.g. `footer.html`)
+  - For the purpose of saving .Rmd files in subdirectories, it’s
+    necessary to create a new directory directly in `main workflowr
+    dir`.
+      - Don’t create subdirectories (for this purpose) in directory
+        `analysis`.
+      - Required name of this new directory is `code-rmd`
+          - .Rmd files saved in it will be usually associated to
+            solutions in directory `code`.
+  - .Rmd files can be saved
+      - directly in this new directory or in any of its subdirectories
+        (hereinafter `code-rmd subdirs`).
   - Following 2 approaches can be used to show results of solutions from
     directory `code` and keep them organized:
     1.  Create associated .Rmd files to directory `analysis` and build
@@ -80,29 +83,6 @@ This package is used (only) to build .html pages from their associated
     because `base::setwd(here::here())` in this function sets a working
     directory to an original .Rproj working directory regardless a
     (later changed) current working directory.
-
-### Minimum necessary setting
-
-This is rather for a better overview then for really using this
-approach. If a project's working directory consists of all following
-directories
-
-  - directory `analysis` - containing:
-      - properly prepared file `_site.yml` and
-      - properly prepared file `index.Rmd` and
-      - directories with .html files included in `_site.yml`
-        (e.g. `footer.html`)
-  - `code-rmd subdirs` - containing .Rmd files for future rendering
-
-then R code like
-
-``` r
-workflowrsubdirs::build_htmls(dir_path = c("code-rmd/subdir"),
-                              subdirs = F, patterns = "testfile.Rmd")
-```
-
-generates an associated .html file together with a relevant directory
-`docs` or `public` with directory `site_libs` and file `.nojekyll`.
 
 ### Only files with extension .rmd or .Rmd are allowed
 
