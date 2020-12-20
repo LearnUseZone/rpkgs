@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-12 13:12 GMT+2
+Last update: 2020-12-20 13:27 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -57,11 +57,11 @@ This package is used (only) to build .html pages from their associated
   - 1stly, `workflowr` project needs to be prepared.
       - Relevant steps (together with more information) can be found
         [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
-  - Directory `code`
-      - can be used for codes that might not be appropriate to include
-        in R Markdown format (e.g. for pre-processing the data, or for
-        long-running code).
-      - can contain also subdirectories here.
+        Read e.g. about directories:
+          - `code` that can contain also subdirectories.
+          - `docs` that contain all .html files for your website. These
+            .html files are built from .Rmd files in directories
+            `analysis` and `code-rmd subdirs`.
   - Following 2 approaches can be used to show results of solutions from
     directory `code` and keep them organized:
     1.  Create associated .Rmd files to directory `analysis` and build
@@ -299,37 +299,31 @@ package (loading them isn’t necessary):
 
 ## Example of using package workflowrsubdirs
 
-I have prepared simple examples of analyses of iris dataset that are
-saved
+Simple examples of iris dataset analyses are saved
 [here](https://github.com/LearnUseZone/rpkgs/tree/master/code/examples/iris).  
 Their associated .Rmd files are saved
 [here](https://github.com/LearnUseZone/rpkgs/tree/master/code-rmd/examples/iris).  
-A structure of directories in `rpkgs/code/examples` and associated
-`rpkgs/code-rmd/examples` is chosen in a way to show an example of
-directory arrangement.  
-The main purpose of these simple examples is to demonstrate correct
-functionality, meaning to demonstrate that
-`workflowrsubdirs::build_htmls()` really works (almost) in the same way
-as standard knitting (Knit button, `knitr::knit()`) with keeping in mind
-rules for using of package `workflowr`.
 
-  - Main differences are only:
-      - `workflowrsubdirs::build_htmls()` is of course called instead of
-        `knitr::knit()`
-      - figures (e.g. when running graphics::hist()) are saved to
-        directory "rpkgs/docs/figure"
-      - directory structure of packages `workflowr` and
-        `workflowrsubdirs` are used to keep data files organized
+These prepared .html examples demonstrate (for example):
 
-These prepared examples contain usage of, e.g.
-
-  - footer
+  - an example of possible directories structure
+  - correct functionality of `workflowrsubdirs::build_htmls()`
+      - differences between `workflowrsubdirs::build_htmls()` and
+        standard knitting (Knit button, `knitr::knit()`) are only:
+          - `workflowrsubdirs::build_htmls()` is of course called
+            instead of `knitr::knit()`
+          - figures (e.g. when running graphics::hist()) are saved to
+            directory `rpkgs/docs/figure`
+          - directory structure of packages `workflowr` and
+            `workflowrsubdirs` are used to keep data files organized
+          - rules for using of package `workflowr` have to be met
+  - usage of "footer"
       - File `footer.html` is saved in `rpkgs/analysis/include` which is
         in line with package `workflowr` (see
         e.g. [here](https://zenodo.org/record/3706876#.X9CkkLMo_cs)).
       - It’s working in combination with definition of "output" in file
         `rpkgs/analysis/_site.yml` (commit 96087f9).
-  - picture
+  - usage of "picture"
       - A picture `3-species-of-iris.png` saved in directory
         `rpkgs/docs/assets/examples/iris/static-visuals/histograms.Rmd`
         is used in
@@ -338,27 +332,31 @@ These prepared examples contain usage of, e.g.
         `rpkgs/docs/assets` which is in line with package `workflowr`
         (read more
         [here](https://jdblischak.github.io/workflowr/articles/wflow-05-faq.html)).
-  - static visuals (generating figures)
-      - Files
-        `rpkgs/code-rmd/examples/iris/static-visuals/histograms.Rmd` and
-        `rpkgs/code-rmd/examples/iris/static-visuals/plots.Rmd` with
-        their associated .R files
-        `rpkgs/code/examples/iris/static-visuals/histograms.R` and
-        `rpkgs/code/examples/iris/static-visuals/plots.R` generates
-        figures that are automatically (functionality of package
-        `workflowr`) saved in directories
+  - static visualizations with figures
+      - File
+        `rpkgs/code-rmd/examples/iris/static-visuals/histograms.Rmd`
+        uses one .R file.
+      - File `rpkgs/code-rmd/examples/iris/static-visuals/plots.Rmd`
+        uses two .R files.
+      - Both .Rmd files generates figures that are automatically
+        (functionality of package `workflowr`) saved in directories
         `rpkgs/docs/figure/examples--iris--static-visuals--histograms.Rmd`
         and
-        `rpkgs/docs/figure/examples--iris--static-visuals--plots.Rmd`
+        `rpkgs/docs/figure/examples--iris--static-visuals--plots.Rmd`.
+      - Based on functionality of package `workflowr` if a .png file
+        already exist, it’s overwritten with a new file but remains
+        saved even if it’s deleted from the source .Rmd or .R file.
       - More information is
         [here](https://jdblischak.github.io/workflowr/articles/wflow-04-how-it-works.html#where-are-the-figures)
-  - interactive visuals with [code
-    externalization](https://bookdown.org/yihui/rmarkdown-cookbook/read-chunk.html)
-      - It’s in file
-        `rpkgs/code-rmd/examples/iris/interactive-visuals/plotly.Rmd`
-        with its associated .R file
-        `rpkgs/code/examples/iris/interactive-visuals/plotly.R`.
-  - knitr::opts\_chunk$set()
+      - Also for example package ggplot2 is used (in "boxplots.R").
+  - interactive visualization
+      - It’s used in
+        `rpkgs/code-rmd/examples/iris/interactive-visuals/plotly.Rmd`.
+      - It’s also used:
+          - [code
+            externalization](https://bookdown.org/yihui/rmarkdown-cookbook/read-chunk.html)
+          - packages: plotly and crosstalk
+  - usage of `knitr::opts_chunk$set()`
       - It’s used in all .Rmd files
 
 There are several options to render all of these .Rmd files to .html
@@ -403,6 +401,18 @@ workflowrsubdirs::build_htmls(dir_path = "code-rmd/examples/iris",
 #         R Markdown file: uncommitted changes
 workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
 ```
+
+  - Notes
+      - If also files in directory `analysis` need to be updated using
+        package `workflowr`, a code like the following one (which I’ve
+        actually used) can be used:
+    <!-- end list -->
+    ``` r
+    workflowr::wflow_publish(
+        files = c("analysis/_site.yml", "analysis/about.Rmd",
+                  "analysis/index.Rmd", "analysis/license.Rmd"),
+        message = "feat(workflowrsubdirs): Update .html examples using workflowr")
+    ```
 
 ### Usage of workflowrsubdirs after it's installed
 
