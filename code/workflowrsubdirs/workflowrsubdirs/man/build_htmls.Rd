@@ -8,40 +8,35 @@ build_htmls(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F)
 }
 \arguments{
 \item{dir_path}{character of length = 1 (default: "code-rmd").
-Path to a subdirectory, under a main workflowr directory, where .Rmd files for rendering are saved.
-A directory name can be first instead of using "./" etc. (e.g. "code-rmd" instead of "./code-rmd").
-Examples:
-dir_path = "code-rmd"
-dir_path = c("code-rmd/subdir1\\subdir2")
-dir_path = "code-rmd/eToro1/"
-dir_path = "code-rmd/eToro1\\"}
+Path to directory "code-rmd" or its subdirectories where .Rmd files
+for rendering to .html files are saved. This path is within
+a current working workflowr directory. Following examples also show that
+slashes can be used but they are not necessary at the beginning and end of path.
+Examples: "code-rmd", c("code-rmd/subdir1\\subdir2"),
+"./code-rmd/subdir/", "code-rmd/eToro1\\", "D:/project/code-rmd/subdir"}
 
 \item{subdirs}{logical of length = 1 (default: TRUE)
-If TRUE, file listing will recurse into directories in parameter dir.
-If FALSE, file listing will be only directly from directories in parameter dir.}
+If TRUE, file listing will also recurse into directories in parameter dir_path.
+If FALSE, file listing will be only directly from a directory in parameter dir_path.}
 
 \item{patterns}{character of length > 0 or NULL (default: NULL)
 A character vector of paths to .Rmd files for rendering.
-If NULL, process all .Rmd files based values in parameters dir and subdirs.
-If not NULL, process files matching a regular expression.
-If this parameter isn't NULL then it has always to end
-with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
+If NULL, process all .Rmd files based values in parameters dir_path and subdirs.
+If not NULL, process files matching used regular expressions which
+always have to end with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
 a relevant regular expression that after evaluation point to
-extension ".rmd" or ".Rmd" (case sensitive, "." is also required). This is made
+extension ".rmd" or ".Rmd" ("." is also required). This is made
 in accordance to behavior of package "workflowr"
 which allows only ".rmd" or ".Rmd" extensions.
-Examples:
-patterns = "^.\emph{page.}.[  R , r ]md$")
-patterns = c("page1.Rmd", ".\emph{page2.}.Rmd")}
+Examples: "^.\emph{page.}.[  R , r ]md$"), c("page1.Rmd", ".\emph{page2.}.Rmd")}
 
 \item{commit}{character (default: FALSE)
 If TRUE, a separate commit of temporary .Rmd files (temporary saved in "analysis") is created.
-It's suggested to use "commit = TRUE" only after original .Rmd files saved
-in subdirectories are tested properly and so are completely ready,
-otherwise there could be uselessly many commits.}
+Consider to use "commit = TRUE" only after original .Rmd files
+are properly completed otherwise there could be uselessly many commits.}
 }
 \value{
-Final .html files from their original .Rmd files saved in subdirectories.
+Final .html files from their original .Rmd files.
 }
 \description{
 Process only those .Rmd files (based on input parameters) that meet required criteria.
@@ -52,6 +47,6 @@ will be rendered to .html files.
 \dontrun{
   build_htmls()
   build_htmls(dir_path = c("code-rmd\\\\subdir"), subdirs = F)
-  build_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"))
+  build_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"), T)
 }
 }
