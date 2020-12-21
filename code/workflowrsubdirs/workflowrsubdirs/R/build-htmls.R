@@ -181,7 +181,18 @@ initial_checks <- function(dir_path, subdirs, patterns) {
 #' Nothing and stop processing if no file meets criteria.
 
 create_rmd_paths <- function(dir_path, subdirs, patterns) {
-  # try to create a matrix / list / character vector of specified .(r|R)md visible files
+  # try to return .(r|R)md visible file paths specified by input parameters
+  #   possible returns of mapply() below to variable orig_rmd_paths:
+  #   - list where column Value
+  #     a) is empty (if no .Rmd file exists)
+  #     b) isn't filled in all cells and a filled cell can contain more values
+  #     c) is filled in all cells and a filled cell can contain more values
+  #   - matrix
+  #     a) with 1 column with each cell filled with only 1 value
+  #     b) with more than 1 column with each cell filled with only 1 value
+  #        where values in the same row are same (rarely happened;
+  #        e.g.: build_htmls("code-rmd\\subdir", T, c("file1.Rmd", "file1.Rmd")))
+  #   - character vector
   if (base::is.null(patterns)) patterns = "(?i)^.*\\.rmd$"  # initial settings for mapply() below
   orig_rmd_paths <- try({
     base::mapply(          # don't assign mapply() (but "try") because of a potential fail
@@ -195,46 +206,21 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
       #   include.dirs = T # include a subdirectory that matches a regular expression in "patterns"
     )
   })
-  # possible returns of orig_rmd_paths (from mapply() above)
-  # - matrix with 1 column (variable) and all filled rows (observations) with only 1 value per 1 row
-  # - matrix with more columns and all filled rows with only 1 value per one cell when values in the same row are same
-  # - list where column Value is empty
-  # - list where column Value is filled in all cells and can contain more values
-  # - list where column Value isn't filled in all cells and if it's filled then it can contain more values
-  #   - empty list element: orig_rmd_paths[[index]] returns character(0)
-  # - character vector with filled 1 column and 1 row => with 1 value
-  # note: when more than one pattern points to the same file path, previous mapply() creates (then it's saved to orig_rmd_paths) a) list or b) matrix with more than 1 columns
 
-  # solving situation: some (not all) of "patterns" point to non-existent files
-  #   - remove empty (unwanted) list elements
-  #   - base::unlist(orig_rmd_paths)
-  #       - create a character vector of length X for situation above if orig_rmd_paths is a list
-  #       - do nothing if orig_rmd_paths is any matrix or a character vector
-  #   - example where only the 1st of "patterns" points to an existing file:
-  #     build_htmls("code-rmd\\subdir", F, patterns = c("testfile.Rmd", "test-file-1.Rmd"))
-  orig_rmd_paths <- base::unlist(orig_rmd_paths)  # possible returns: matrix, character vector
+  # keep a matrix or create a character vector (from list) with removed empty list elements
+  if (base::class(orig_rmd_paths[1]) == "list")  # [1] => class(matrix) returns 2 items (not 1)
+    orig_rmd_paths <- base::unlist(orig_rmd_paths)
 
-
-  # solving: mapply() from above creates a matrix with more columns
-  #   - create a character vector of all file paths defined by input parameters
-  #     if orig_rmd_paths is a matrix with more than 1 column
-  #   - unique processes values by columns therefore duplicates needs to be in only 1 column (or vector - in this case)
-  #   - examples: build_htmls(dir_path = "code-rmd", subdirs = T, patterns = c("test-file-1.Rmd", "test-file-1.Rmd"))
-  #               build_htmls(dir_path = "code-rmd\\subdir", subdirs = F, patterns = "^.*test.*.[  R , r ]md$")
-  if (base::class(orig_rmd_paths)[1] == "matrix") {
-    if (base::length(class(orig_rmd_paths)) == 2 &&   # class(orig_rmd_paths) should return "matrix" "array" if it's a matrix
-        base::dim(orig_rmd_paths)[2] > 1 &&           # process only matrix with more than 1 column
-        base::class(orig_rmd_paths)[2] == "array") {
-      orig_rmd_paths <- base::paste0(orig_rmd_paths, collapse = "\t")  # create character vector of length 1
-      orig_rmd_paths <- base::strsplit(orig_rmd_paths, "\t")           # create list of length 1
-      orig_rmd_paths <- base::unlist(orig_rmd_paths)  # create character vector of length X
-    }
+  # create a character vector if orig_rmd_paths is still a matrix with more than 1 column
+  #   - unique() processes values by columns => a vector or only 1 column is needed
+  #   - example: build_htmls("code-rmd", T, c("test-file-1.Rmd", "test-file-1.Rmd"))
+  if (base::class(orig_rmd_paths)[1] == "matrix") { # class(matrix) returns "matrix" "array"
+    if (base::dim(orig_rmd_paths)[2] > 1)
+      orig_rmd_paths <- base::as.vector(orig_rmd_paths)
   }
 
-
-  # remove duplicated rows (more than 1 pattern points to the same .(r|R)md file)
-  orig_rmd_paths <- as.character(base::unique(orig_rmd_paths))
-
+  # remove duplicated rows (more than 1 pattern refers to the same .(r|R)md file)
+  orig_rmd_paths <- as.character(base::unique(orig_rmd_paths))  # also unname Named chr
 
   # check an existence of original .(r|R)md files
   if (length(orig_rmd_paths) == 0) {
@@ -247,7 +233,7 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
          call. = F)
   }
 
-  return(orig_rmd_paths)  # return matrix or character vector of .(r|R)md paths
+  return(orig_rmd_paths)  # return a character vector of .(r|R)md paths
 }
 
 
