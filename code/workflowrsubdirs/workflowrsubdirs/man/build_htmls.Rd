@@ -2,51 +2,55 @@
 % Please edit documentation in R/build-htmls.R
 \name{build_htmls}
 \alias{build_htmls}
-\title{Generate .html files from their original .Rmd files}
+\title{Build HTML files}
 \usage{
 build_htmls(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F)
 }
 \arguments{
-\item{dir_path}{character of length = 1 (default: "code-rmd").
-Path to directory "code-rmd" or its subdirectories where .Rmd files
-for rendering to .html files are saved. This path is within
-a current working workflowr directory. Following examples also show that
-slashes can be used but they are not necessary at the beginning and end of path.
-Examples: "code-rmd", c("code-rmd/subdir1\\subdir2"),
-"./code-rmd/subdir/", "code-rmd/eToro1\\", "D:/project/code-rmd/subdir"}
+\item{dir_path}{character (length = 1; default: "code-rmd").
+A path directly to directory "code-rmd" or one of its subdirectories with
+R Markdown files specified in input parameter \code{patterns}.
+Only a path within a current working workflowr directory is allowed.}
 
-\item{subdirs}{logical of length = 1 (default: TRUE)
-If TRUE, file listing will also recurse into directories in parameter dir_path.
-If FALSE, file listing will be only directly from a directory in parameter dir_path.}
+\item{subdirs}{logical (length = 1; default: TRUE).
+If \code{FALSE}, file listing will only be directly from a directory in parameter \code{dir_path}.
+If \code{TRUE}, file listing will also recurse into subdirectories in parameter \code{dir_path}.}
 
-\item{patterns}{character of length > 0 or NULL (default: NULL)
-A character vector of paths to .Rmd files for rendering.
-If NULL, process all .Rmd files based values in parameters dir_path and subdirs.
-If not NULL, process files matching used regular expressions which
-always have to end with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
-a relevant regular expression that after evaluation point to
-extension ".rmd" or ".Rmd" ("." is also required). This is made
-in accordance to behavior of package "workflowr"
-which allows only ".rmd" or ".Rmd" extensions.
-Examples: "^.\emph{page.}.[  R , r ]md$"), c("page1.Rmd", ".\emph{page2.}.Rmd")}
+\item{patterns}{character (length > 0; default: NULL).
+If \code{not NULL}, one or more regular expressions that only allow files
+with the extension .rmd or .Rmd ("." is also required) is expected.
+If \code{NULL}, regular expression "^.*\\.(r|R)md$" is used.}
 
-\item{commit}{character (default: FALSE)
-If TRUE, a separate commit of temporary .Rmd files (temporary saved in "analysis") is created.
-Consider to use "commit = TRUE" only after original .Rmd files
-are properly completed otherwise there could be uselessly many commits.}
+\item{commit}{character (default: FALSE).
+If \code{FALSE}, nothing from actions for \code{TRUE} happens.
+If \code{TRUE}, a separate commit of temporary (automatically saved and later deleted)
+R Markdown files saved in directory "analysis" is made and built HTML files contain
+checked line "R Markdown file" in WORKFLOWR button in tab Checks.
+Consider to use \code{commit = TRUE} only after original R Markdown files
+are completely finished, otherwise uselessly many commits are made.}
 }
 \value{
-Final .html files from their original .Rmd files.
+HTML files from their associated original R Markdown files.
 }
 \description{
-Process only those .Rmd files (based on input parameters) that meet required criteria.
-Use parameters "dir_path", "subdirs" and "patterns" to determine which .rmd or .Rmd files
-will be rendered to .html files.
+Multiple R Markdown files saved in directory "code-rmd" and its subdirectories
+can be specified for rendering to HTML files.
+The HTML files are always built in the order their associated R Markdown files are listed.
 }
 \examples{
 \dontrun{
-  build_htmls()
-  build_htmls(dir_path = c("code-rmd\\\\subdir"), subdirs = F)
-  build_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"), T)
+
+# Build HTML files from all .(r|R)md files
+  in "code-rmd" and its subdirectories
+build_htmls()
+# Build a single file
+build_htmls("code-rmd/subdir/sub1", F, "file.Rmd")
+# Build multiple files (not equivalent examples)
+build_htmls("code-rmd/subdir", ".*.(r|R)md$")
+build_htmls("code-rmd/subdir", F)
+build_htmls("code-rmd\\\\subdir", T, c("-.*.[ R , r ]md",
+                                     "file.{1,2}.rmd$",
+                                     "eFile.Rmd"
+                                    ), T)
 }
 }

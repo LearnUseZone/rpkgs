@@ -2,24 +2,24 @@
 % Please edit documentation in R/build-htmls.R
 \name{build_temp_rmd}
 \alias{build_temp_rmd}
-\title{Generate a temporary .Rmd file}
+\title{Generate a temporary R Markdown file}
 \usage{
 build_temp_rmd(temp_c_rmd_path, temp_a_rmd_path)
 }
 \arguments{
-\item{temp_c_rmd_path}{character of length = 1
-A path to a .Rmd file temporarily copied directly to directory "code-rmd".}
+\item{temp_c_rmd_path}{character (length = 1).
+A path to an R Markdown file temporarily copied from its original R Markdown file
+directly to directory "code-rmd".
+This file will be deleted at the end of function \code{render_to_htmls}.}
 
-\item{temp_a_rmd_path}{character of length = 1
-A name ("--" is a part of those names) of a temporary .Rmd file saved in directory "analysis".}
+\item{temp_a_rmd_path}{character (length = 1).
+A path to an R Markdown file that will be temporarily saved in directory "analysis".
+This file will be deleted at the end of function \code{render_to_htmls}.}
 }
 \value{
-Temporarily saved .Rmd files in directory "analysis".
+An R Markdown file temporarily saved in directory "analysis".
 }
 \description{
-Generate a temporary (helping) .Rmd file from its original .Rmd file
-and temporarily save it into directory "analysis".
-This temporarily saved .Rmd file will be used to generate final .html file and
-will be deleted at the end of function \code{render_to_htmls} after final .html file is prepared.
-This function is called only from \code{render_to_htmls} so its input variables have no default values.
+Generate a temporary (helping) R Markdown file, that will be used to generate final HTML file,
+from its original R Markdown file and temporarily save it into directory "analysis".
 }

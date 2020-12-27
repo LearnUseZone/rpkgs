@@ -2,45 +2,36 @@
 % Please edit documentation in R/build-htmls.R
 \name{create_rmd_paths}
 \alias{create_rmd_paths}
-\title{Create paths to original .Rmd files}
+\title{Create paths}
 \usage{
 create_rmd_paths(dir_path, subdirs, patterns)
 }
 \arguments{
-\item{dir_path}{character of length = 1 (default: "code-rmd").
-Path to directory "code-rmd" or its subdirectories where .Rmd files
-for rendering to .html files are saved. This path is within
-a current working workflowr directory. Following examples also show that
-slashes can be used but they are not necessary at the beginning and end of path.
-Examples: "code-rmd", c("code-rmd/subdir1\\subdir2"),
-"./code-rmd/subdir/", "code-rmd/eToro1\\", "D:/project/code-rmd/subdir"}
+\item{dir_path}{character (length = 1; default: "code-rmd").
+A path directly to directory "code-rmd" or one of its subdirectories with
+R Markdown files specified in input parameter \code{patterns}.
+Only a path within a current working workflowr directory is allowed.}
 
-\item{subdirs}{logical of length = 1 (default: TRUE)
-If TRUE, file listing will also recurse into directories in parameter dir_path.
-If FALSE, file listing will be only directly from a directory in parameter dir_path.}
+\item{subdirs}{logical (length = 1; default: TRUE).
+If \code{FALSE}, file listing will only be directly from a directory in parameter \code{dir_path}.
+If \code{TRUE}, file listing will also recurse into subdirectories in parameter \code{dir_path}.}
 
-\item{patterns}{character of length > 0 or NULL (default: NULL)
-A character vector of paths to .Rmd files for rendering.
-If NULL, process all .Rmd files based values in parameters dir_path and subdirs.
-If not NULL, process files matching used regular expressions which
-always have to end with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
-a relevant regular expression that after evaluation point to
-extension ".rmd" or ".Rmd" ("." is also required). This is made
-in accordance to behavior of package "workflowr"
-which allows only ".rmd" or ".Rmd" extensions.
-Examples: "^.\emph{page.}.[  R , r ]md$"), c("page1.Rmd", ".\emph{page2.}.Rmd")}
+\item{patterns}{character (length > 0; default: NULL).
+If \code{not NULL}, one or more regular expressions that only allow files
+with the extension .rmd or .Rmd ("." is also required) is expected.
+If \code{NULL}, regular expression "^.*\\.(r|R)md$" is used.}
 }
 \value{
-A character vector with original .Rmd file paths if at least one .Rmd file meets criteria.
-Nothing and stop processing if no file meets criteria.
+Nothing if no file meets criteria.
+A character vector with original R Markdown file paths,
+if at least one R Markdown file meets criteria.
 }
 \description{
-Create paths to original .Rmd files intended for future rendering into .html files.
-If input parameters point to a .Rmd file path that
+Create paths to original R Markdown files intended for future rendering to HTML files.
+If no .Rmd file for rendering is found, processing ends.
+If input parameters refer to an R Markdown file path that
 \itemize{
 \item doesn't exist then such file will be not rendered.
 \item exist then such file will be rendered in \code{render-to-htmls} using wflow_build().
-If no .Rmd file for rendering is found, processing ends.
-This function is called only from \code{build_htmls} so its input variables have no default values.
 }
 }

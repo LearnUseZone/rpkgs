@@ -1,44 +1,48 @@
 #' @title
-#' Generate .html files from their original .Rmd files
+#' Build HTML files
 #' @description
-#' Process only those .Rmd files (based on input parameters) that meet required criteria.
-#' Use parameters "dir_path", "subdirs" and "patterns" to determine which .rmd or .Rmd files
-#' will be rendered to .html files.
+#' Multiple R Markdown files saved in directory "code-rmd" and its subdirectories
+#' can be specified for rendering to HTML files.
+#' The HTML files are always built in the order their associated R Markdown files are listed.
 #' @param dir_path
-#' character of length = 1 (default: "code-rmd").
-#' Path to directory "code-rmd" or its subdirectories where .Rmd files
-#' for rendering to .html files are saved. This path is within
-#' a current working workflowr directory. Following examples also show that
-#' slashes can be used but they are not necessary at the beginning and end of path.
-#' Examples: "code-rmd", c("code-rmd/subdir1\\subdir2"),
-#' "./code-rmd/subdir/", "code-rmd/eToro1\\", "D:/project/code-rmd/subdir"
+#' character (length = 1; default: "code-rmd").
+#' A path directly to directory "code-rmd" or one of its subdirectories with
+#' R Markdown files specified in input parameter \code{patterns}.
+#' Only a path within a current working workflowr directory is allowed.
 #' @param subdirs
-#' logical of length = 1 (default: TRUE)
-#' If TRUE, file listing will also recurse into directories in parameter dir_path.
-#' If FALSE, file listing will be only directly from a directory in parameter dir_path.
+#' logical (length = 1; default: TRUE).
+#' If \code{FALSE}, file listing will only be directly from a directory in parameter \code{dir_path}.
+#' If \code{TRUE}, file listing will also recurse into subdirectories in parameter \code{dir_path}.
 #' @param patterns
-#' character of length > 0 or NULL (default: NULL)
-#' A character vector of paths to .Rmd files for rendering.
-#' If NULL, process all .Rmd files based values in parameters dir_path and subdirs.
-#' If not NULL, process files matching used regular expressions which
-#' always have to end with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
-#' a relevant regular expression that after evaluation point to
-#' extension ".rmd" or ".Rmd" ("." is also required). This is made
-#' in accordance to behavior of package "workflowr"
-#' which allows only ".rmd" or ".Rmd" extensions.
-#' Examples: "^.*page.*.\[  R , r \]md$"), c("page1.Rmd", ".*page2.*.Rmd")
+#' character (length > 0; default: NULL).
+#' If \code{not NULL}, one or more regular expressions that only allow files
+#' with the extension .rmd or .Rmd ("." is also required) is expected.
+#' If \code{NULL}, regular expression "^.*\\.(r|R)md$" is used.
 #' @param commit
-#' character (default: FALSE)
-#' If TRUE, a separate commit of temporary .Rmd files (temporary saved in "analysis") is created.
-#' Consider to use "commit = TRUE" only after original .Rmd files
-#' are properly completed otherwise there could be uselessly many commits.
-#' @return Final .html files from their original .Rmd files.
+#' character (default: FALSE).
+#' If \code{FALSE}, nothing from actions for \code{TRUE} happens.
+#' If \code{TRUE}, a separate commit of temporary (automatically saved and later deleted)
+#' R Markdown files saved in directory "analysis" is made and built HTML files contain
+#' checked line "R Markdown file" in WORKFLOWR button in tab Checks.
+#' Consider to use \code{commit = TRUE} only after original R Markdown files
+#' are completely finished, otherwise uselessly many commits are made.
+#' @return HTML files from their associated original R Markdown files.
 #' @export
 #' @examples
 #' \dontrun{
-#'   build_htmls()
-#'   build_htmls(dir_path = c("code-rmd\\subdir"), subdirs = F)
-#'   build_htmls("code-rmd/subdir", T, c("file1.Rmd", "-.*.[ R , r ]md"), T)
+#'
+#' # Build HTML files from all .(r|R)md files
+#'   in "code-rmd" and its subdirectories
+#' build_htmls()
+#' # Build a single file
+#' build_htmls("code-rmd/subdir/sub1", F, "file.Rmd")
+#' # Build multiple files (not equivalent examples)
+#' build_htmls("code-rmd/subdir", ".*.(r|R)md$")
+#' build_htmls("code-rmd/subdir", F)
+#' build_htmls("code-rmd\\subdir", T, c("-.*.[ R , r ]md",
+#'                                      "file.{1,2}.rmd$",
+#'                                      "eFile.Rmd"
+#'                                     ), T)
 #' }
 
 build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F) {
@@ -55,19 +59,15 @@ build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
 
 
 #' @title
-#' Stop processing if rendering of .Rmd to .html files is not possible
+#' Make initial checks and preparations
 #' @description
-#' Evaluate if rendering of .Rmd into .html files is possible
-#' by checking rules for directories and .Rmd files.
-#' Input parameter "dir_path" is edited a) to use only "/" instead of "\\" even if
-#' a user uses "\\"; b) remove redundant number of "/" or equivalent number of "\\"
-#' at the end of "dir_path", e.g. "code-rmd/subdir//" is changed to "code-rmd/subdir"
-#' This function is called only from \code{build_htmls} so its input variables have no default values.
+#' Stop processing if rendering of R Markdown files to HTML files isn't possible.
+#' Make small preparations for further processing if needed, like edit \code{dir_path}.
 #' @inheritParams build_htmls
 #' @return
-#' Original or edited 'dir_path' if all checks pass.
-#' Nothing if "silent" stop() is applied.
+#' Nothing if stop rendering is chosen.
 #' Nothing if some check doesn't pass but a stop reason is written and then process stops.
+#' Original or edited 'dir_path' if all checks pass.
 
 initial_checks <- function(dir_path, subdirs, patterns) {
   # check input parameter "dir_path" (condition 1-2)
@@ -167,18 +167,18 @@ initial_checks <- function(dir_path, subdirs, patterns) {
 
 
 #' @title
-#' Create paths to original .Rmd files
+#' Create paths
 #' @description
-#' Create paths to original .Rmd files intended for future rendering into .html files.
-#' If input parameters point to a .Rmd file path that
+#' Create paths to original R Markdown files intended for future rendering to HTML files.
+#' If no .Rmd file for rendering is found, processing ends.
+#' If input parameters refer to an R Markdown file path that
 #'   - doesn't exist then such file will be not rendered.
 #'   - exist then such file will be rendered in \code{render-to-htmls} using wflow_build().
-#' If no .Rmd file for rendering is found, processing ends.
-#' This function is called only from \code{build_htmls} so its input variables have no default values.
 #' @inheritParams build_htmls
 #' @return
-#' A character vector with original .Rmd file paths if at least one .Rmd file meets criteria.
-#' Nothing and stop processing if no file meets criteria.
+#' Nothing if no file meets criteria.
+#' A character vector with original R Markdown file paths,
+#' if at least one R Markdown file meets criteria.
 
 create_rmd_paths <- function(dir_path, subdirs, patterns) {
   # try to return .(r|R)md visible file paths specified by input parameters
@@ -238,17 +238,16 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
 
 
 #' @title
-#' Render .Rmd to .html files
+#' Rendering
 #' @description
-#' Render .Rmd to .html files.
-#' This function is called only from \code{build_htmls} so its input variables have no default values.
+#' Render R Markdown to HTML files.
 #' @param orig_rmd_paths
-#' character
-#' Paths to original .Rmd files.
+#' character (length > 0).
+#' Paths to original R Markdown files.
 #' @param commit
 #' see \code{build_htmls}
 #' @return
-#' Final .html files from their original .Rmd files saved in subdirectories.
+#' Final HTML files from their original R Markdown files.
 
 render_to_htmls <- function(orig_rmd_paths, commit) {
   # note: there's always code-rmd/... at this point => the 1st "/" is always at 9th place
@@ -291,21 +290,21 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 
 
 #' @title
-#' Generate a temporary .Rmd file
+#' Generate a temporary R Markdown file
 #' @description
-#' Generate a temporary (helping) .Rmd file from its original .Rmd file
-#' and temporarily save it into directory "analysis".
-#' This temporarily saved .Rmd file will be used to generate final .html file and
-#' will be deleted at the end of function \code{render_to_htmls} after final .html file is prepared.
-#' This function is called only from \code{render_to_htmls} so its input variables have no default values.
+#' Generate a temporary (helping) R Markdown file, that will be used to generate final HTML file,
+#' from its original R Markdown file and temporarily save it into directory "analysis".
 #' @param temp_c_rmd_path
-#' character of length = 1
-#' A path to a .Rmd file temporarily copied directly to directory "code-rmd".
+#' character (length = 1).
+#' A path to an R Markdown file temporarily copied from its original R Markdown file
+#' directly to directory "code-rmd".
+#' This file will be deleted at the end of function \code{render_to_htmls}.
 #' @param temp_a_rmd_path
-#' character of length = 1
-#' A name ("--" is a part of those names) of a temporary .Rmd file saved in directory "analysis".
+#' character (length = 1).
+#' A path to an R Markdown file that will be temporarily saved in directory "analysis".
+#' This file will be deleted at the end of function \code{render_to_htmls}.
 #' @return
-#' Temporarily saved .Rmd files in directory "analysis".
+#' An R Markdown file temporarily saved in directory "analysis".
 
 build_temp_rmd <- function(temp_c_rmd_path, temp_a_rmd_path) {
   base::cat(

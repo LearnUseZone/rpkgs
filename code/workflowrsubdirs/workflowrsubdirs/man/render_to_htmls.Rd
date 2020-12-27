@@ -2,20 +2,19 @@
 % Please edit documentation in R/build-htmls.R
 \name{render_to_htmls}
 \alias{render_to_htmls}
-\title{Render .Rmd to .html files}
+\title{Rendering}
 \usage{
 render_to_htmls(orig_rmd_paths, commit)
 }
 \arguments{
-\item{orig_rmd_paths}{character
-Paths to original .Rmd files.}
+\item{orig_rmd_paths}{character (length > 0).
+Paths to original R Markdown files.}
 
 \item{commit}{see \code{build_htmls}}
 }
 \value{
-Final .html files from their original .Rmd files saved in subdirectories.
+Final HTML files from their original R Markdown files.
 }
 \description{
-Render .Rmd to .html files.
-This function is called only from \code{build_htmls} so its input variables have no default values.
+Render R Markdown to HTML files.
 }

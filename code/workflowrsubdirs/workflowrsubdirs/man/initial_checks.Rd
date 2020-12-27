@@ -2,44 +2,31 @@
 % Please edit documentation in R/build-htmls.R
 \name{initial_checks}
 \alias{initial_checks}
-\title{Stop processing if rendering of .Rmd to .html files is not possible}
+\title{Make initial checks and preparations}
 \usage{
 initial_checks(dir_path, subdirs, patterns)
 }
 \arguments{
-\item{dir_path}{character of length = 1 (default: "code-rmd").
-Path to directory "code-rmd" or its subdirectories where .Rmd files
-for rendering to .html files are saved. This path is within
-a current working workflowr directory. Following examples also show that
-slashes can be used but they are not necessary at the beginning and end of path.
-Examples: "code-rmd", c("code-rmd/subdir1\\subdir2"),
-"./code-rmd/subdir/", "code-rmd/eToro1\\", "D:/project/code-rmd/subdir"}
+\item{dir_path}{character (length = 1; default: "code-rmd").
+A path directly to directory "code-rmd" or one of its subdirectories with
+R Markdown files specified in input parameter \code{patterns}.
+Only a path within a current working workflowr directory is allowed.}
 
-\item{subdirs}{logical of length = 1 (default: TRUE)
-If TRUE, file listing will also recurse into directories in parameter dir_path.
-If FALSE, file listing will be only directly from a directory in parameter dir_path.}
+\item{subdirs}{logical (length = 1; default: TRUE).
+If \code{FALSE}, file listing will only be directly from a directory in parameter \code{dir_path}.
+If \code{TRUE}, file listing will also recurse into subdirectories in parameter \code{dir_path}.}
 
-\item{patterns}{character of length > 0 or NULL (default: NULL)
-A character vector of paths to .Rmd files for rendering.
-If NULL, process all .Rmd files based values in parameters dir_path and subdirs.
-If not NULL, process files matching used regular expressions which
-always have to end with ".rmd", ".Rmd", ".rmd$", ".Rmd$" or
-a relevant regular expression that after evaluation point to
-extension ".rmd" or ".Rmd" ("." is also required). This is made
-in accordance to behavior of package "workflowr"
-which allows only ".rmd" or ".Rmd" extensions.
-Examples: "^.\emph{page.}.[  R , r ]md$"), c("page1.Rmd", ".\emph{page2.}.Rmd")}
+\item{patterns}{character (length > 0; default: NULL).
+If \code{not NULL}, one or more regular expressions that only allow files
+with the extension .rmd or .Rmd ("." is also required) is expected.
+If \code{NULL}, regular expression "^.*\\.(r|R)md$" is used.}
 }
 \value{
-Original or edited 'dir_path' if all checks pass.
-Nothing if "silent" stop() is applied.
+Nothing if stop rendering is chosen.
 Nothing if some check doesn't pass but a stop reason is written and then process stops.
+Original or edited 'dir_path' if all checks pass.
 }
 \description{
-Evaluate if rendering of .Rmd into .html files is possible
-by checking rules for directories and .Rmd files.
-Input parameter "dir_path" is edited a) to use only "/" instead of "\\" even if
-a user uses "\\"; b) remove redundant number of "/" or equivalent number of "\\"
-at the end of "dir_path", e.g. "code-rmd/subdir//" is changed to "code-rmd/subdir"
-This function is called only from \code{build_htmls} so its input variables have no default values.
+Stop processing if rendering of R Markdown files to HTML files isn't possible.
+Make small preparations for further processing if needed, like edit \code{dir_path}.
 }
