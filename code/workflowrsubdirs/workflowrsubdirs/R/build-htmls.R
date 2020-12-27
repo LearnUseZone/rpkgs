@@ -48,7 +48,7 @@
 build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F) {
   base::setwd(here::here())  # project working directory could be changed after opening .Rproj
   dir_path <- initial_checks(dir_path, subdirs, patterns)
-  orig_rmd_paths <- create_rmd_paths(dir_path, subdirs, patterns)  # original .(r|R)md paths
+  orig_rmd_paths <- create_rmd_paths(dir_path, subdirs, patterns)
   render_to_htmls(orig_rmd_paths, commit)
 }
 
@@ -76,18 +76,18 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   if (base::length(dir_path) != 1)
     stop("Parameter 'dir_path' can contain only 1 path to a directory.", call. = F)
 
+
   # edit input parameter "dir_path" (condition 3)
-  #   - remove the 1st "/" to generate correct temporary .Rmd paths (for: whole path, typo)
-  #   - remove the last "/" to avoid stop for "if (!file.exists(dir_path))"
   if (dir_path != "code-rmd") {
     dir_path <- base::gsub("\\\\", "/", dir_path)  # clearer to work only with 1 slash type
-    dir_path <- base::sub("^./", "", dir_path)     # input dir_path can also be "./code-rmd"
-    dir_path <- base::sub(here::here(), "", dir_path)
-    while (stringr::str_detect(dir_path, "^/"))
+    dir_path <- base::sub("^./", "", dir_path)     # for: dir_path = "./code-rmd"
+    dir_path <- base::sub(here::here(), "", dir_path)  # for: whole path
+    while (stringr::str_detect(dir_path, "^/"))    # for: whole path, typo
       dir_path <- base::substr(dir_path, 2, nchar(dir_path))
-    while (stringr::str_detect(dir_path, ".*/$"))
+    while (stringr::str_detect(dir_path, ".*/$"))  # to avoid stop for "if (!file.exists(dir_path))"
       dir_path <- base::substr(dir_path, 1, nchar(dir_path) - 1)
   }
+
 
   # check input parameter "dir_path" (rest of checks)
   #   - file.exists() doesn't catch path containing more than 1 consecutive "/"
@@ -95,8 +95,9 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   if (base::regexpr("//", dir_path) > 0)  # (condition 4)
     stop("Parameter 'dir_path' contains \"//\" instead of \"/\" or \"\\\\\".", call. = F)
 
-  #   stop processing (works only in a combination with previous 4 conditions) if (r|R)md files are
-  #     not within directory 'code-rmd' and also not within a current working directory
+  #   stop process if .(r|R)md files are not within directory "code-rmd" and
+  #     also not within a current working directory
+  #     - works in a combination with previous 4 conditions
   if (dir_path != "code-rmd" && !stringr::str_detect(dir_path, "^code-rmd/.*")) {
     stop("Parameter 'dir_path' doesn't point to a directory within a current working directory or .rmd or .Rmd file is not within the main directory 'code-rmd'.", call. = F)
   }
@@ -109,24 +110,25 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   if (!((subdirs %in% c(F, T)) && base::length(subdirs) == 1))
     stop("Parameter 'subdirs' can be only FALSE or TRUE.", call. = F)
 
+
   # check input parameter "patterns"
-  #   workflowr::wflow_build() expects only files with extension Rmd or rmd otherwise error pops up
+  #   - workflowr::wflow_build() expects only extension Rmd or rmd otherwise error pops up
   if (!is.null(patterns)) {
     for (pattern_num in 1:base::length(patterns)) {
-      if (!stringr::str_detect(  # package "stringr" solves some problems, e.g. with escaping "]", that functions like "base::grepl()" has
+      if (!stringr::str_detect(  # "base::grepl()" has some problems (e.g.) with escaping "]"
         patterns[pattern_num],
         "^.*\\.[\\(, \\[]?\\s*(r|R)\\s*[\\,, \\|]?\\s*(r|R)?\\s*[\\), \\]]?md\\$?$"))
-        #   it can still happen that no file will exist but this is solved in create_rmd_paths()
+        # it can still happen that no file will exist but this is solved in create_rmd_paths()
         stop("Parameter 'patterns' has to point only to files with extension .rmd or .Rmd (also that '.' is required).", call. = F)
     }
   }
 
-  # delete unwanted temporary .*--.*.(r|R)md files
-  #   - they may occur if weren't deleted in render_to_htmls() - see message for possible fails
-  #   - e.g. wflow_git_commit() in render_to_htmls() returns an error if they remain in "analysis"
+
+  # delete unwanted temporary .*--.*.(r|R)md files to avoid some errors
+  #   - if they weren't deleted in render_to_htmls() or they were created manually
   if (base::length(
     prohibited_rmd_paths <- base::append(
-      base::dir(  # although workflowr accepts only .(r|R)md, delete all (?i).rmd
+      base::dir(  # although workflowr accepts only .(r|R)md, delete all (?i).rmd files
         path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd",
         full.names = T,    recursive = T),
       base::dir(
@@ -135,7 +137,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     )) > 0) {
 
     base::message(
-      "Following files contain \"--\" (two hyphens).", "\n",  # I prefer "\n" between commas
+      "Following files contain \"--\" (two hyphens).", "\n",
       "That isn't allowed in directories \"analysis\" and \"code-rmd\".", "\n\n",
       "This problem could happen for example if:", "\n",
       "  - The relevant original .Rmd files have an error in YAML header", "\n",
@@ -154,9 +156,9 @@ initial_checks <- function(dir_path, subdirs, patterns) {
       base::file.remove(prohibited_rmd_paths)
     } else {
       base::message("\n", "You chose to stop rendering.")
-      #   set "silent" stop()
-      #     - no message as a part of stop() isn't written when following 2 code lines are used
-      #     - following 2 code lines has to be separated from each other
+      # set "silent" stop()
+      #   - no message as a part of stop() isn't written when following
+      #     2 code lines (they have to be separated from each other) are used
       opt <- base::options(show.error.messages = F)
       on.exit(base::options(opt))
       stop()
@@ -193,7 +195,7 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
   #        where values in the same row are same (rarely happened;
   #        e.g.: build_htmls("code-rmd\\subdir", T, c("file1.Rmd", "file1.Rmd")))
   #   - character vector
-  if (base::is.null(patterns)) patterns = "(?i)^.*\\.rmd$"  # initial settings for mapply() below
+  if (base::is.null(patterns)) patterns = "(?i)^.*\\.rmd$"
   orig_rmd_paths <- try({
     base::mapply(          # don't assign mapply() (but "try") because of a potential fail
       base::list.files,
@@ -208,13 +210,13 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
   })
 
   # keep a matrix or create a character vector (from list) with removed empty list elements
-  if (base::class(orig_rmd_paths[1]) == "list")  # [1] => class(matrix) returns 2 items (not 1)
+  if (base::class(orig_rmd_paths[1]) == "list")  # [1]: class(matrix) returns "matrix" "array"
     orig_rmd_paths <- base::unlist(orig_rmd_paths)
 
   # create a character vector if orig_rmd_paths is still a matrix with more than 1 column
   #   - unique() processes values by columns => a vector or only 1 column is needed
-  #   - example: build_htmls("code-rmd", T, c("test-file-1.Rmd", "test-file-1.Rmd"))
-  if (base::class(orig_rmd_paths)[1] == "matrix") { # class(matrix) returns "matrix" "array"
+  #   - example: build_htmls("code-rmd", T, c("file-1.Rmd", "file-1.Rmd"))
+  if (base::class(orig_rmd_paths)[1] == "matrix") {
     if (base::dim(orig_rmd_paths)[2] > 1)
       orig_rmd_paths <- base::as.vector(orig_rmd_paths)
   }
@@ -233,7 +235,7 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
          call. = F)
   }
 
-  return(orig_rmd_paths)  # return a character vector of .(r|R)md paths
+  return(orig_rmd_paths)
 }
 
 
@@ -252,13 +254,13 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
 render_to_htmls <- function(orig_rmd_paths, commit) {
   # note: there's always code-rmd/... at this point => the 1st "/" is always at 9th place
 
-  temp_rmd_names <- base::gsub(  # temporary .(r|R)md file names (for: "code-rmd", "analysis")
+  temp_rmd_names <- base::gsub(  # temporary .(r|R)md file names for: "code-rmd", "analysis"
     "/", "--", base::substr(orig_rmd_paths, 10, base::nchar(orig_rmd_paths)))  # 9 + 1 = 10
 
   # ACTIONS over: temporary "code-rmd" .(r|R)md files
-  temp_c_rmd_paths <- base::file.path("code-rmd", temp_rmd_names) # CREATE paths; c = code-rmd
+  temp_c_rmd_paths <- base::file.path("code-rmd", temp_rmd_names) # CREATE paths; c -> code-rmd
 
-  #   CREATE copy to "code-rmd"
+  #   CREATE copy to directory "code-rmd"
   #     - it's needed to be able to use figures generated e.g. by graphics::hist()
   base::file.copy(from = orig_rmd_paths, to = temp_c_rmd_paths)
 
@@ -284,7 +286,7 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
   workflowr::wflow_build(temp_a_rmd_paths)                          # RENDER
 
 
-  # DELETE temporary .(r|R)md files in "code-rmd" and "analysis"
+  # DELETE temporary .(r|R)md files in directories "code-rmd" and "analysis"
   base::file.remove(delete_c_rmd_paths, temp_a_rmd_paths)
 }
 
@@ -309,15 +311,17 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 build_temp_rmd <- function(temp_c_rmd_path, temp_a_rmd_path) {
   base::cat(
     "---\n",
-    # YAML header copied (except comments) from an original .Rmd file
+    # YAML header copied (except comments) from an original .(r|R)md file
     yaml::as.yaml(rmarkdown::yaml_front_matter(temp_c_rmd_path)),
     "---\n\n",
     "**Source file:** ", temp_c_rmd_path,
     "\n\n",
 
     # r chunk code (not YAML header)
-    #   "output.dir" returns directory "analysis" in this case (also tested) and "../" goes one directory up
-    #   has to contain path to a temporary .Rmd file in "code-rmd" to be able to use figures generated e.g. by function graphics::hist()
+    #   - "output.dir" returns directory "analysis" in this case
+    #     (also tested) and "../" goes 1 directory up
+    #   - has to contain path to a temporary .(r|R)md file in directory "code-rmd"
+    #     to be able to use figures generated e.g. by function graphics::hist()
     "```{r child = base::file.path(knitr::opts_knit$get(\"output.dir\"), \"../", temp_c_rmd_path, "\")}\n```",
     file = temp_a_rmd_path,  # file = a name of file that will be created
     sep = "",
