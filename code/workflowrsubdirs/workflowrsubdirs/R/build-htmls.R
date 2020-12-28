@@ -84,7 +84,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     dir_path <- base::sub(here::here(), "", dir_path)  # for: whole path
     while (stringr::str_detect(dir_path, "^/"))    # for: whole path, typo
       dir_path <- base::substr(dir_path, 2, nchar(dir_path))
-    while (stringr::str_detect(dir_path, ".*/$"))  # to avoid stop for "if (!file.exists(dir_path))"
+    while (stringr::str_detect(dir_path, "/$"))    # to avoid stop for "if (!file.exists(dir_path))"
       dir_path <- base::substr(dir_path, 1, nchar(dir_path) - 1)
   }
 
@@ -98,11 +98,10 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   #   stop process if .(r|R)md files are not within directory "code-rmd" and
   #     also not within a current working directory
   #     - works in a combination with previous 4 conditions
-  if (dir_path != "code-rmd" && !stringr::str_detect(dir_path, "^code-rmd/.*")) {
+  if (dir_path != "code-rmd" && !stringr::str_detect(dir_path, "^code-rmd/.*"))
     stop("Parameter 'dir_path' does not", "\n",
          "refer to a current working directory or", "\n",
          ".rmd or .Rmd files are not in directory 'code-rmd'.", call. = F)
-  }
 
   if (!file.exists(dir_path))
     stop("Parameter 'dir_path' contains non-existent directory.", call. = F)
