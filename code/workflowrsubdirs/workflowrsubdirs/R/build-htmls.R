@@ -74,7 +74,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   if (base::is.null(dir_path) || dir_path == "")
     stop("Parameter 'dir_path' cannot be NULL nor empty string.", call. = F)
   if (base::length(dir_path) != 1)
-    stop("Parameter 'dir_path' can contain only 1 path to a directory.", call. = F)
+    stop("Parameter 'dir_path' can contain only 1 directory path.", call. = F)
 
 
   # edit input parameter "dir_path" (condition 3)
@@ -90,7 +90,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
 
 
   # check input parameter "dir_path" (rest of checks)
-  #   - file.exists() doesn't catch path containing more than 1 consecutive "/"
+  #   - file.exists() doesn't catch a path containing more than 1 consecutive "/"
   #   - potential issues with "\" is solved by R error message
   if (base::regexpr("//", dir_path) > 0)  # (condition 4)
     stop("Parameter 'dir_path' contains \"//\" instead of \"/\" or \"\\\\\".", call. = F)
@@ -99,16 +99,18 @@ initial_checks <- function(dir_path, subdirs, patterns) {
   #     also not within a current working directory
   #     - works in a combination with previous 4 conditions
   if (dir_path != "code-rmd" && !stringr::str_detect(dir_path, "^code-rmd/.*")) {
-    stop("Parameter 'dir_path' doesn't point to a directory within a current working directory or .rmd or .Rmd file is not within the main directory 'code-rmd'.", call. = F)
+    stop("Parameter 'dir_path' does not", "\n",
+         "refer to a current working directory or", "\n",
+         ".rmd or .Rmd files are not in directory 'code-rmd'.", call. = F)
   }
 
   if (!file.exists(dir_path))
-    stop("Parameter 'dir_path' contains a directory that doesn't exist.", call. = F)
+    stop("Parameter 'dir_path' contains non-existent directory.", call. = F)
 
 
   # check input parameter "subdirs"
   if (!((subdirs %in% c(F, T)) && base::length(subdirs) == 1))
-    stop("Parameter 'subdirs' can be only FALSE or TRUE.", call. = F)
+    stop("Parameter 'subdirs' can only be FALSE or TRUE.", call. = F)
 
 
   # check input parameter "patterns"
@@ -119,7 +121,8 @@ initial_checks <- function(dir_path, subdirs, patterns) {
         patterns[pattern_num],
         "^.*\\.[\\(, \\[]?\\s*(r|R)\\s*[\\,, \\|]?\\s*(r|R)?\\s*[\\), \\]]?md\\$?$"))
         # it can still happen that no file will exist but this is solved in create_rmd_paths()
-        stop("Parameter 'patterns' has to point only to files with extension .rmd or .Rmd (also that '.' is required).", call. = F)
+        stop("Parameter 'patterns' only has to refer to files", "\n",
+             "with extension .rmd or .Rmd ('.' is also required).", call. = F)
     }
   }
 
@@ -137,17 +140,19 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     )) > 0) {
 
     base::message(
-      "Following files contain \"--\" (two hyphens).", "\n",
-      "That isn't allowed in directories \"analysis\" and \"code-rmd\".", "\n\n",
+      "Following files contain '--' (two hyphens).", "\n",
+      "That is not allowed in directories 'analysis' and 'code-rmd'.", "\n\n",
       "This problem could happen for example if:", "\n",
-      "  - The relevant original .Rmd files have an error in YAML header", "\n",
-      "    (e.g. typo or not allowed text).", "\n",
-      "  - The files below were created manually.", "\n\n",
+      "  - Relevant original R Markdown files have an error", "\n",
+      "    in YAML header (e.g. typo or not allowed text).", "\n",
+      "  - Files below were created manually.", "\n\n",
       "Relevant files:", "\n",
       base::paste(prohibited_rmd_paths, collapse = "\n"), "\n\n",
       "Please select one of following options:", "\n",
-      "'y' or 'Y'    : listed files will be automatically deleted and script will continue", "\n",
-      "anything else : script will stop and therefore listed files have to be managed manually", "\n"
+      "'y' or 'Y'    : listed files will be automatically deleted", "\n",
+      "                and process will continue", "\n",
+      "anything else : process will stop and therefore listed files", "\n",
+      "                have to be managed manually", "\n"
     )
 
     choice <- base::readline(prompt = "Selection: ")
@@ -155,7 +160,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     if (choice %in% c("y", "Y")) {
       base::file.remove(prohibited_rmd_paths)
     } else {
-      base::message("\n", "You chose to stop rendering.")
+      base::message("\n", "You chose to stop process.")
       # set "silent" stop()
       #   - no message as a part of stop() isn't written when following
       #     2 code lines (they have to be separated from each other) are used
@@ -229,9 +234,9 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
     stop("No file meets chosen patterns.", "\n\n",
          "Possible issues:", "\n",
          "A file path instead of a file name is written.", "\n",
-         "A file name case sensitivity isn't met.", "\n",
-         "A file name doesn't exist.", "\n",
-         "A regular expression doesn't match any file.",
+         "A file name case sensitivity is not met.", "\n",
+         "A file name does not exist.", "\n",
+         "A regular expression does not match any file.",
          call. = F)
   }
 
@@ -281,7 +286,9 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 
   if (commit == T)                                                  # COMMIT
     workflowr::wflow_git_commit(
-      temp_a_rmd_paths, "separate commit of temporary .Rmd files", all = T)
+      temp_a_rmd_paths,
+      "feat: separate commit of temporary analysis .(r|R)md files",
+      all = T)
 
   workflowr::wflow_build(temp_a_rmd_paths)                          # RENDER
 
