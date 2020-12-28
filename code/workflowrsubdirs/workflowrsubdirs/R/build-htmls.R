@@ -285,7 +285,7 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 
   if (commit == T)                                                  # COMMIT
     workflowr::wflow_git_commit(
-      temp_a_rmd_paths,
+      temp_a_rmd_paths,  # nothing more than temporary analysis .(r|R)md files is committed
       "feat: separate commit of temporary analysis .(r|R)md files",
       all = T)
 
