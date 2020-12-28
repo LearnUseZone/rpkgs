@@ -17,7 +17,7 @@
 #' character (length > 0; default: NULL).
 #' If \code{not NULL}, one or more regular expressions that only allow files
 #' with the extension .rmd or .Rmd ("." is also required) is expected.
-#' If \code{NULL}, regular expression "^.*\\.(r|R)md$" is used.
+#' If \code{NULL}, regular expression "\\.(r|R)md$" is used.
 #' @param commit
 #' character (default: FALSE).
 #' If \code{FALSE}, nothing from actions for \code{TRUE} happens.
@@ -199,7 +199,7 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
   #        where values in the same row are same (rarely happened;
   #        e.g.: build_htmls("code-rmd\\subdir", T, c("file1.Rmd", "file1.Rmd")))
   #   - character vector
-  if (base::is.null(patterns)) patterns = "(?i)^.*\\.rmd$"
+  if (base::is.null(patterns)) patterns = "\\.(r|R)md$"
   orig_rmd_paths <- try({
     base::mapply(          # don't assign mapply() (but "try") because of a potential fail
       base::list.files,

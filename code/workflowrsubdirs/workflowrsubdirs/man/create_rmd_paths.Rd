@@ -19,7 +19,7 @@ If \code{TRUE}, file listing will also recurse into subdirectories in parameter 
 \item{patterns}{character (length > 0; default: NULL).
 If \code{not NULL}, one or more regular expressions that only allow files
 with the extension .rmd or .Rmd ("." is also required) is expected.
-If \code{NULL}, regular expression "^.*\\.(r|R)md$" is used.}
+If \code{NULL}, regular expression "\\.(r|R)md$" is used.}
 }
 \value{
 Nothing if no file meets criteria.
