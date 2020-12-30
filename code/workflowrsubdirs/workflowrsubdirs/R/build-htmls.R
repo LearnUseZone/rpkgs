@@ -67,6 +67,12 @@ build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, com
 #' Original or edited 'dir_path' if all checks pass.
 
 initial_checks <- function(dir_path, subdirs, patterns) {
+  # check if "index.html" exists (otherwise package workflowr returns warning)
+  if (!base::file.exists("docs/index.html") && !base::file.exists("public/index.html"))
+    stop("Firstly use package 'workflowr' to create file 'index.html'", "\n",
+         "in directory 'docs' (for GitHub) or 'public' (for GitLab).", "\n", call. = F)
+
+
   # check input parameter "dir_path" (condition 1-2)
   if (base::is.null(dir_path) || dir_path == "")
     stop("Parameter 'dir_path' cannot be NULL nor empty string.", call. = F)
@@ -100,7 +106,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
          "refer to a current working directory or", "\n",
          ".rmd or .Rmd files are not in directory 'code-rmd'.", call. = F)
 
-  if (!file.exists(dir_path))
+  if (!base::file.exists(dir_path))
     stop("Parameter 'dir_path' contains non-existent directory.", call. = F)
 
 
