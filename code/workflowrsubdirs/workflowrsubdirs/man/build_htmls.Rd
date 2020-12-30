@@ -17,9 +17,8 @@ If \code{FALSE}, file listing will only be directly from a directory in paramete
 If \code{TRUE}, file listing will also recurse into subdirectories in parameter \code{dir_path}.}
 
 \item{patterns}{character (length > 0; default: NULL).
-If \code{not NULL}, one or more regular expressions that only allow files
-with the extension .rmd or .Rmd ("." is also required) is expected.
-If \code{NULL}, regular expression "\\.(r|R)md$" is used.}
+If \code{not NULL}, one or more regular expressions is expected.
+If \code{NULL}, regular expression "\\.(r|R)md$" is automatically used.}
 
 \item{commit}{character (default: FALSE).
 If \code{FALSE}, nothing from actions for \code{TRUE} happens.
@@ -46,11 +45,9 @@ build_htmls()
 # Build a single file
 build_htmls("code-rmd/subdir/sub1", F, "file.Rmd")
 # Build multiple files (not equivalent examples)
-build_htmls("code-rmd/subdir", ".*.(r|R)md$")
+build_htmls(patterns = "(?i)RMD")
 build_htmls("code-rmd/subdir", F)
-build_htmls("code-rmd\\\\subdir", T, c("-.*.[ R , r ]md",
-                                     "file.{1,2}.rmd$",
-                                     "eFile.Rmd"
-                                    ), T)
+build_htmls("code-rmd/subdir", patterns = "\\\\.(r|R)md$")
+build_htmls("code-rmd\\\\subdir", T, c("-.*.[rR]md", "file"), T)
 }
 }

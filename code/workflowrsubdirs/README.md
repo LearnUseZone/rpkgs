@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-29 18:04 GMT+2
+Last update: 2020-12-30 10:48 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -86,11 +86,11 @@ Markdown files saved in a new directory and its subdirectories of a
 
 ### Only files with extension .rmd or .Rmd are allowed
 
-It's required that original (source) R Markdown file names will have an
-extension .rmd or .Rmd ("." is also required).  
+It's required that original (source) R Markdown files have an extension
+.rmd or .Rmd.  
 This behavior is in accordance with package `workflowr` where if the
-file extension is e.g. .RMD then rendering will fail with error "Error:
-Invalid input for argument files".
+file extension is not .rmd or .Rmd then rendering will fail with error
+"Error: Invalid input for argument files".
 
 ## Package functions
 
@@ -373,9 +373,9 @@ workflowrsubdirs::build_htmls(dir_path = "code-rmd/examples", patterns = ".*.(r|
 workflowrsubdirs::build_htmls(dir_path = "code-rmd/examples/iris",
                               subdirs = T,
                               patterns = c(
-                                "-.*.[ R , r ]md",
+                                "-.*.[r,R]md",
                                 "hist.*.Rmd$",
-                                "plot.{1,2}.[ R , r ]md",
+                                "plot.{1,2}\\.(?i)rmd",
                                 "plotly.Rmd")
                               )
 # the code I've actually used to generate all .html files follows

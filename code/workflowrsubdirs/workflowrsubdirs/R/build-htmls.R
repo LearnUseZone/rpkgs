@@ -15,9 +15,8 @@
 #' If \code{TRUE}, file listing will also recurse into subdirectories in parameter \code{dir_path}.
 #' @param patterns
 #' character (length > 0; default: NULL).
-#' If \code{not NULL}, one or more regular expressions that only allow files
-#' with the extension .rmd or .Rmd ("." is also required) is expected.
-#' If \code{NULL}, regular expression "\\.(r|R)md$" is used.
+#' If \code{not NULL}, one or more regular expressions is expected.
+#' If \code{NULL}, regular expression "\\.(r|R)md$" is automatically used.
 #' @param commit
 #' character (default: FALSE).
 #' If \code{FALSE}, nothing from actions for \code{TRUE} happens.
@@ -37,12 +36,10 @@
 #' # Build a single file
 #' build_htmls("code-rmd/subdir/sub1", F, "file.Rmd")
 #' # Build multiple files (not equivalent examples)
-#' build_htmls("code-rmd/subdir", ".*.(r|R)md$")
+#' build_htmls(patterns = "(?i)RMD")
 #' build_htmls("code-rmd/subdir", F)
-#' build_htmls("code-rmd\\subdir", T, c("-.*.[ R , r ]md",
-#'                                      "file.{1,2}.rmd$",
-#'                                      "eFile.Rmd"
-#'                                     ), T)
+#' build_htmls("code-rmd/subdir", patterns = "\\.(r|R)md$")
+#' build_htmls("code-rmd\\subdir", T, c("-.*.[rR]md", "file"), T)
 #' }
 
 build_htmls <- function(dir_path = "code-rmd", subdirs = T, patterns = NULL, commit = F) {
@@ -112,34 +109,20 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     stop("Parameter 'subdirs' can only be FALSE or TRUE.", call. = F)
 
 
-  # check input parameter "patterns"
-  #   - workflowr::wflow_build() expects only extension Rmd or rmd otherwise error pops up
-  if (!is.null(patterns)) {
-    for (pattern_num in 1:base::length(patterns)) {
-      if (!stringr::str_detect(  # "base::grepl()" has some problems (e.g.) with escaping "]"
-        patterns[pattern_num],
-        "^.*\\.[\\(, \\[]?\\s*(r|R)\\s*[\\,, \\|]?\\s*(r|R)?\\s*[\\), \\]]?md\\$?$"))
-        # it can still happen that no file will exist but this is solved in create_rmd_paths()
-        stop("Parameter 'patterns' only has to refer to files", "\n",
-             "with extension .rmd or .Rmd ('.' is also required).", call. = F)
-    }
-  }
-
-
   # delete unwanted temporary .*--.*.(r|R)md files to avoid some errors
   #   - if they weren't deleted in render_to_htmls() or they were created manually
   if (base::length(
     prohibited_rmd_paths <- base::append(
       base::dir(  # although workflowr accepts only .(r|R)md, delete all (?i).rmd files
-        path = "analysis", pattern = "(?i)^.*\\-\\-.*.rmd",
+        path = "analysis", pattern = "(?i)^.*\\-\\-.*\\.rmd$",
         full.names = T,    recursive = T),
       base::dir(
-        path = "code-rmd", pattern = "(?i)^.*\\-\\-.*.rmd",
+        path = "code-rmd", pattern = "(?i)^.*\\-\\-.*\\.rmd$",
         full.names = T,    recursive = F)
     )) > 0) {
 
     base::message(
-      "Following files contain '--' (two hyphens).", "\n",
+      "Following R Markdown files contain '--' (two hyphens).", "\n",
       "That is not allowed in directories 'analysis' and 'code-rmd'.", "\n\n",
       "This problem could happen for example if:", "\n",
       "  - Relevant original R Markdown files have an error", "\n",
@@ -228,13 +211,26 @@ create_rmd_paths <- function(dir_path, subdirs, patterns) {
   # remove duplicated rows (more than 1 pattern refers to the same .(r|R)md file)
   orig_rmd_paths <- as.character(base::unique(orig_rmd_paths))  # also unname Named chr
 
+
+  # remove file names without extension .rmd or .Rmd
+  orig_rmd_paths_rm <- orig_rmd_paths[!base::grepl("\\.rmd$|\\.Rmd$", orig_rmd_paths)]
+  if (base::length(orig_rmd_paths_rm) > 0) {
+    orig_rmd_paths <- orig_rmd_paths[!base::grepl(
+      base::paste0(orig_rmd_paths_rm, collapse = "|"), orig_rmd_paths)]
+    base::message("Only files with extension .rmd or .Rmd can be processed.", "\n",
+                  "Therefore following files will be ignored:", "\n\n",
+                  base::paste(orig_rmd_paths_rm, collapse = "\n"), "\n\n")
+  }
+
+
   # check an existence of original .(r|R)md files
   if (length(orig_rmd_paths) == 0) {
     stop("No file meets chosen patterns.", "\n\n",
          "Possible issues:", "\n",
-         "A file path instead of a file name is written.", "\n",
-         "A file name case sensitivity is not met.", "\n",
-         "A file name does not exist.", "\n",
+         "File paths instead of file names are written.", "\n",
+         "File names case sensitivity is not met.", "\n",
+         "Files (as such) don't have extensions .rmd or .Rmd.", "\n",
+         "Files do not exist.", "\n",
          "A regular expression does not match any file.",
          call. = F)
   }
@@ -272,7 +268,7 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
   delete_c_rmd_paths <- c()
   for (rmd_file in temp_c_rmd_paths) {
     # if an original .(r|R)md file is saved in any subdirectory (not directly in) of "code-rmd"
-    if (stringr::str_detect(rmd_file, "^.*\\-\\-.*.(r|R)md")) {
+    if (stringr::str_detect(rmd_file, "\\-\\-.*\\.(r|R)md$")) {
       delete_c_rmd_paths <- base::append(delete_c_rmd_paths, rmd_file)
     }
   }
