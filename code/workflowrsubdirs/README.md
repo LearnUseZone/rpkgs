@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-30 10:48 GMT+2
+Last update: 2020-12-30 11:10 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -59,7 +59,7 @@ Markdown files saved in a new directory and its subdirectories of a
     dir`.
       - Don’t create subdirectories (for this purpose) in directory
         `analysis`.
-      - Required name of this new directory is `code-rmd`
+      - A required name of this new directory is `code-rmd`.
           - R Markdown files saved in it will be usually associated to
             solutions in directory `code`.
   - R Markdown files can be saved
@@ -388,7 +388,12 @@ workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
 ```
 
   - Notes
-      - If also files in directory `analysis` need to be updated using
+    1.  Input parameter `dir_path` can also
+          - contain the whole path to a directory,
+          - starts with `./`, \`.\\’ and
+          - contain some kind of typos like used a redundant `/` and
+            `\\` at the beginning or/and end of a path.  
+    2.  If also files in directory `analysis` need to be updated using
         package `workflowr`, a code like the following one (which I’ve
         actually used) can be used:
     <!-- end list -->
@@ -415,7 +420,7 @@ workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
         like:
     <!-- end list -->
     ``` bash
-    git branch -a       # I prefer to check which branch is checked out
+    git branch -a
     git add "."
     git commit -m "feat: Add new HTML files"
     ```

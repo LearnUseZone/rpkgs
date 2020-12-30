@@ -53,7 +53,7 @@ useful features but doesn\'t offer this feature of `workflowrsubdirs` package.
 - For the purpose of saving R Markdown files in subdirectories, it's necessary
   to create a new directory directly in `main workflowr dir`.
     - Don't create subdirectories (for this purpose) in directory `analysis`.
-    - Required name of this new directory is `code-rmd`
+    - A required name of this new directory is `code-rmd`.
       - R Markdown files saved in it will be usually associated to solutions in directory `code`.
 - R Markdown files can be saved
     - directly in this new directory or in any of its subdirectories (hereinafter `code-rmd subdirs`).
@@ -322,8 +322,14 @@ workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
 ```
 
 - Notes
-    - If also files in directory `analysis` need to be updated using package `workflowr`,
-      a code like the following one (which I've actually used) can be used:
+    1. Input parameter `dir_path` can also
+       - contain the whole path to a directory,
+       - starts with `./`, `.\\' and
+       - contain some kind of typos like used a redundant `/` and `\\`
+         at the beginning or/and end of a path.
+\
+    2. If also files in directory `analysis` need to be updated using package `workflowr`,
+       a code like the following one (which I've actually used) can be used:
     
     ```{r}
     workflowr::wflow_publish(
@@ -344,7 +350,7 @@ workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
     - 3a) GitHub Desktop, Sourcetree or other Git desktop client.
     - 3b) Git Bash (also set as Terminal in RStudio) with git commands like:
     ```{r git_commands, engine = 'bash'}
-    git branch -a       # I prefer to check which branch is checked out
+    git branch -a
     git add "."
     git commit -m "feat: Add new HTML files"
     ```
