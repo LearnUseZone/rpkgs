@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-30 11:10 GMT+2
+Last update: 2020-12-30 11:55 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -114,8 +114,8 @@ Main steps:
     and save them to directory `analysis`.
       - Used package function: render\_to\_htmls()
 4.  If input parameter `commit == TRUE`, create a commit of these
-    temporary analysis R Markdown files with text "feat: separate commit
-    of temporary analysis .(r|R)md files".
+    temporary analysis R Markdown files with text "feat: Commit
+    temporary analysis .(r|R)md files".
       - Used function: workflowr::wflow\_git\_commit()
       - If these temporary analysis R Markdown files are not committed
         before workflowr::wflow\_build(), the following error message is

@@ -260,7 +260,7 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
   # ACTIONS over: temporary "code-rmd" .(r|R)md files
   temp_c_rmd_paths <- base::file.path("code-rmd", temp_rmd_names) # CREATE paths; c -> code-rmd
 
-  #   CREATE copy to directory "code-rmd"
+  #   CREATE a temporary copy of original .(r|R)md files to directory "code-rmd"
   #     - it's needed to be able to use figures generated e.g. by graphics::hist()
   base::file.copy(from = orig_rmd_paths, to = temp_c_rmd_paths)
 
@@ -281,8 +281,8 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 
   if (commit == T)                                                  # COMMIT
     workflowr::wflow_git_commit(
-      temp_a_rmd_paths,  # nothing more than temporary analysis .(r|R)md files is committed
-      "feat: separate commit of temporary analysis .(r|R)md files",
+      temp_a_rmd_paths,
+      "feat: Commit temporary analysis .(r|R)md files",
       all = T)
 
   workflowr::wflow_build(temp_a_rmd_paths)                          # RENDER

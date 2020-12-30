@@ -100,7 +100,7 @@ Main steps:
      - Used package function: render_to_htmls()
   4. If input parameter `commit == TRUE`, create a commit of these
      temporary analysis R Markdown files with text
-     \"feat: separate commit of temporary analysis .(r|R)md files\".
+     \"feat: Commit temporary analysis .(r|R)md files\".
      - Used function: workflowr::wflow_git_commit()
      - If these temporary analysis R Markdown files are not committed before
        workflowr::wflow_build(), the following error message is written after
