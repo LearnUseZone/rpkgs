@@ -288,8 +288,7 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
   if (commit == T)                                                  # COMMIT
     workflowr::wflow_git_commit(
       temp_a_rmd_paths,
-      "feat: Commit temporary analysis .(r|R)md files",
-      all = T)
+      "feat: Commit temporary analysis .(r|R)md files")
 
   workflowr::wflow_build(temp_a_rmd_paths)                          # RENDER
 
