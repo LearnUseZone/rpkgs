@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-30 11:55 GMT+2
+Last update: 2020-12-31 11:37 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -439,7 +439,7 @@ workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
       - check and update comments and roxygen2 descriptions,
       - check and update some parts of R codes.
   - This package `workflowrsubdirs` is available under the [MIT
-    license](https://opensource.org/licenses/mit-license.php).
+    license](https://choosealicense.com/licenses/mit/).
   - Initial inspiration for this package is from [this
     discussion](https://github.com/jdblischak/workflowr/issues/95).  
   - A related discussion with John Blischak (a creator of package

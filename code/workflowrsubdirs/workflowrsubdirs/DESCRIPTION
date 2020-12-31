@@ -1,9 +1,9 @@
 Package: workflowrsubdirs
 Type: Package
 Title: Extension of Package workflowr to Generate Web Pages from Subdirectories
-Version: 0.0.0.9037
+Version: 0.0.0.9038
 Authors@R: c(person("Peter", "Pisár", role = c("aut", "cre"), email = "learnusezone@gmail.com"))
-Description: Create web pages from .Rmd files saved in workflowr subdirectories.
+Description: Build HTML files from R Markdown files saved under directory 'code-rmd'.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
