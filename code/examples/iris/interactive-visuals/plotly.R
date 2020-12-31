@@ -22,7 +22,7 @@ color_scatter <- iris_shared %>%
     mode = "markers",
     type = "scatter",
     color = ~Species,
-    colors = "Set2",
+    colors = c("blue", "red2", "green3"),  # other options, e.g.: "Set2"
 
     # hover text
     hoverinfo="text",     # suppress default text in tooltip
@@ -35,7 +35,7 @@ color_scatter <- iris_shared %>%
       font = list(
         size = 16,
         family = "Arial",
-        color = "black"
+        color = "rgb(245, 245, 245)"
       ),
       align = "left"
     )
