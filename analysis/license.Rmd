@@ -19,4 +19,4 @@ editor_options:
 # License
 
 Package `workflowrsubdirs` is available under the
-[MIT license](https://opensource.org/licenses/mit-license.php).
+[MIT license](https://choosealicense.com/licenses/mit/).
