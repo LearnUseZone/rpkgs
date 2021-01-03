@@ -133,6 +133,7 @@ initial_checks <- function(dir_path, subdirs, patterns) {
       "This problem could happen for example if:", "\n",
       "  - Relevant original R Markdown files have an error", "\n",
       "    in YAML header (e.g. typo or not allowed text).", "\n",
+      "  - There's a warning in a source .R file.", "\n",
       "  - Files below were created manually.", "\n\n",
       "Relevant files:", "\n",
       base::paste(prohibited_rmd_paths, collapse = "\n"), "\n\n",
