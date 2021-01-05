@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2020-12-31 11:37 GMT+2
+Last update: 2021-01-05 10:27 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -287,11 +287,10 @@ package (loading them isn’t necessary):
 ## Example of using package workflowrsubdirs
 
 Simple examples of iris dataset analyses are saved
-[here](https://github.com/LearnUseZone/rpkgs/tree/master/code/examples/iris).  
+[here](https://github.com/LearnUseZone/rpkgs/tree/master/code/examples/iris).
 Their associated R Markdown files are saved
 [here](https://github.com/LearnUseZone/rpkgs/tree/master/code-rmd/examples/iris).  
-
-These prepared HTML examples demonstrate (for example):
+These HTML examples are prepared to demonstrate for example:
 
   - an example of possible directories structure
   - correct functionality of `workflowrsubdirs::build_htmls()`
@@ -304,13 +303,13 @@ These prepared HTML examples demonstrate (for example):
           - directory structure of packages `workflowr` and
             `workflowrsubdirs` are used to keep data files organized
           - rules for using of package `workflowr` have to be met
-  - usage of "footer"
+  - usage of a footer
       - File `footer.html` is saved in `rpkgs/analysis/include` which is
         in line with package `workflowr` (see
         e.g. [here](https://zenodo.org/record/3706876#.X9CkkLMo_cs)).
       - It’s working in combination with definition of "output" in file
         `rpkgs/analysis/_site.yml` (commit 96087f9).
-  - usage of "picture"
+  - usage of pictures
       - A picture `3-species-of-iris.png` saved in directory
         `rpkgs/docs/assets/examples/iris/static-visuals/histograms.Rmd`
         is used in
