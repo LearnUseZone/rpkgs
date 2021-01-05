@@ -4,9 +4,12 @@
 \alias{build_temp_rmd}
 \title{Generate a temporary R Markdown file}
 \usage{
-build_temp_rmd(temp_c_rmd_path, temp_a_rmd_path)
+build_temp_rmd(orig_rmd_path, temp_c_rmd_path, temp_a_rmd_path)
 }
 \arguments{
+\item{orig_rmd_path}{character (length = 1).
+Paths to original R Markdown files.}
+
 \item{temp_c_rmd_path}{character (length = 1).
 A path to an R Markdown file temporarily copied from its original R Markdown file
 directly to directory "code-rmd".

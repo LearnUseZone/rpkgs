@@ -284,7 +284,7 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
   # ACTIONS over: temporary "analysis" .(r|R)md files
   temp_a_rmd_paths <- base::file.path("analysis",temp_rmd_names)    # CREATE paths; a -> analysis
 
-  base::mapply(build_temp_rmd, temp_c_rmd_paths, temp_a_rmd_paths)  # GENERATE
+  base::mapply(build_temp_rmd, orig_rmd_paths, temp_c_rmd_paths, temp_a_rmd_paths)  # GENERATE
 
   if (commit == T)                                                  # COMMIT
     workflowr::wflow_git_commit(
@@ -304,6 +304,9 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 #' @description
 #' Generate a temporary (helping) R Markdown file, that will be used to generate final HTML file,
 #' from its original R Markdown file and temporarily save it into directory "analysis".
+#' @param orig_rmd_path
+#' character (length = 1).
+#' Paths to original R Markdown files.
 #' @param temp_c_rmd_path
 #' character (length = 1).
 #' A path to an R Markdown file temporarily copied from its original R Markdown file
@@ -316,13 +319,14 @@ render_to_htmls <- function(orig_rmd_paths, commit) {
 #' @return
 #' An R Markdown file temporarily saved in directory "analysis".
 
-build_temp_rmd <- function(temp_c_rmd_path, temp_a_rmd_path) {
+build_temp_rmd <- function(orig_rmd_path, temp_c_rmd_path, temp_a_rmd_path) {
   base::cat(
     "---\n",
     # YAML header copied (except comments) from an original .(r|R)md file
     yaml::as.yaml(rmarkdown::yaml_front_matter(temp_c_rmd_path)),
     "---\n\n",
-    "**Source file:** ", temp_c_rmd_path,
+    # write hyphens (not a dash) also for file paths with two or more consecutive hyphens ('--')
+    "**Source file:** ", base::gsub("-", "\\\\-", orig_rmd_path),  # \\\\ => \ in temp_a_rmd_path
     "\n\n",
 
     # r chunk code (not YAML header)
