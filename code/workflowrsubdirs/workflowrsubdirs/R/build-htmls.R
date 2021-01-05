@@ -128,20 +128,24 @@ initial_checks <- function(dir_path, subdirs, patterns) {
     )) > 0) {
 
     base::message(
-      "Following R Markdown files contain '--' (two hyphens).", "\n",
-      "That is not allowed in directories 'analysis' and 'code-rmd'.", "\n\n",
+      "Following R Markdown files contain", "\n",
+      "two or more consecutive hyphens ('--').", "\n",
+      "That is not allowed in directories", "\n",
+      "'analysis' and 'code-rmd'.", "\n\n",
       "This problem could happen for example if:", "\n",
-      "  - Relevant original R Markdown files have an error", "\n",
-      "    in YAML header (e.g. typo or not allowed text).", "\n",
+      "  - Relevant original R Markdown files contain", "\n",
+      "    an issue for example in:", "\n",
+      "    - YAML header (e.g. typo or not allowed text),", "\n",
+      "    - knitr::opts_chunk$set().", "\n",
       "  - There's a warning in a source .R file.", "\n",
       "  - Files below were created manually.", "\n\n",
       "Relevant files:", "\n",
       base::paste(prohibited_rmd_paths, collapse = "\n"), "\n\n",
-      "Please select one of following options:", "\n",
-      "'y' or 'Y'    : listed files will be automatically deleted", "\n",
-      "                and process will continue", "\n",
-      "anything else : process will stop and therefore listed files", "\n",
-      "                have to be managed manually", "\n"
+      "Please select one of the following options:", "\n",
+      "'y' or 'Y'    : listed files will be automatically", "\n",
+      "                deleted and process will continue", "\n",
+      "anything else : process will stop and therefore listed", "\n",
+      "                files have to be managed manually", "\n"
     )
 
     choice <- base::readline(prompt = "Selection: ")
