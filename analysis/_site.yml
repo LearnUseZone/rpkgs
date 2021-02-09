@@ -15,10 +15,12 @@ navbar:
       href: examples--iris--data-overview.html
     - text: Histograms
       href: examples--iris--static-visuals--histograms.html
-    - text: Scatter & box plots
+    - text: Scatter & boxplots
       href: examples--iris--static-visuals--plots.html
-    - text: Interactive scatter
+    - text: Plotly plot
       href: examples--iris--interactive-visuals--plotly.html
+    - text: Trelliscopejs plots
+      href: examples--iris--interactive-visuals--trelliscopejs.html
   right:
   - icon: fa-github
     text: Source code
@@ -27,6 +29,6 @@ output:
   workflowr::wflow_html:
     toc: yes
     toc_float: yes
-    theme: cosmo
-    highlight: textmate
+    theme: paper
+    highlight: pygments
     pandoc_args: --include-after-body=include/footer.html

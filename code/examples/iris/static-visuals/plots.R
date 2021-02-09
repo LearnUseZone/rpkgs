@@ -1,14 +1,13 @@
 # ####
 # title:   Scatter plot matrix of iris dataset
 # author:  learnusezone@gmail.com
-# from-to: 2020-12-19-
 # purpose: static scatter plot matrix of iris dataset
 # note:    -
 # ####
 
 
 # plots
-graphics::par(lwd = 1)  # line width (pairs / plot, legend; not axes)
+graphics::par(lwd = 1)  # chart lines widths
 
 
 # scatter plot matrix

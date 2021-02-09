@@ -1,15 +1,12 @@
 ---
 title:   "Plots of iris dataset"
 site:    workflowr::wflow_site
-author:  "Author: learnusezone@gmail.com"
+author:  "Author: Peter Pis&aacute;r"
 date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200, tzone = \"GMT\"), \"%Y-%m-%d %H:%M GMT+2\"))`"
-# from-to: 2020-12-19-
 purpose: static scatter plots of iris dataset
 output:
   workflowr::wflow_html:
     toc: false
-    highlight: pygments
-    theme: paper
     code_folding: hide
 editor_options:
   chunk_output_type: console
@@ -25,13 +22,13 @@ knitr::opts_chunk$set(
 
 
 # Static scatter plot matrix
-```{r plots, class.source = 'fold-show'}
+```{r plots}
 source("code/examples/iris/static-visuals/plots.R")
 ```
 
 
 # Static boxplots
-```{r boxplots, class.source = 'fold-show'}
+```{r boxplots}
 source("code/examples/iris/static-visuals/boxplots.R")
 ```
 

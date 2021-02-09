@@ -1,15 +1,12 @@
 ---
 title:   "Histograms of iris dataset"
 site:    workflowr::wflow_site
-author:  "Author: learnusezone@gmail.com"
+author:  "Author: Peter Pis&aacute;r"
 date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200, tzone = \"GMT\"), \"%Y-%m-%d %H:%M GMT+2\"))`"
-# from-to: 2020-12-19-
 purpose: static histograms of iris dataset
 output:
   workflowr::wflow_html:
     toc: false
-    highlight: pygments
-    theme: paper
     code_folding: hide
 editor_options:
   chunk_output_type: console
@@ -25,14 +22,14 @@ knitr::opts_chunk$set(
 
 
 # 3 species of iris
->In this picture You can see what are we dealing with and how exactly looks the variables (sepal length and width and petal length and width) we are measuring and the object itself:
+>In this picture, you can see what are we dealing with and how exactly looks the variables (sepal length and width and petal length and width) we are measuring and the object itself:
 ![](assets/examples/iris/static-visuals/histograms.Rmd/3-species-of-iris.png)
 >
 >`r tufte::quote_footer('--- source: https://rpubs.com/AjinkyaUC/Iris_DataSet')`
 
 
-# Histograms with different way of defining colors
-```{r histograms, class.source = 'fold-show'}
+# Histograms
+```{r histograms}
 source("code/examples/iris/static-visuals/histograms.R")
 ```
 

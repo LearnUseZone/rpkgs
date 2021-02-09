@@ -1,14 +1,13 @@
 # ####
 # title:   Histograms of iris dataset
 # author:  learnusezone@gmail.com
-# from-to: 2020-12-19-
 # purpose: static histograms of iris dataset
 # note:    -
 # ####
 
 
 # histograms with different way of defining colors
-graphics::par(lwd = 3)  # line width (histogram border)
+graphics::par(lwd = 3)  # line width
 
 
 # hist 1
@@ -17,8 +16,8 @@ graphics::hist(
   col = grDevices::rgb(0.9, 0.6, 0.3, 0.6),
   main = "Histogram of petal length",
   xlim = c(
-    base::floor(base::min(iris$Petal.Length)),
-    base::ceiling(base::max(iris$Petal.Length))
+    base::floor(min(iris$Petal.Length)),
+    base::ceiling(max(iris$Petal.Length))
   ),
   ylim = c(0, 40),
   xlab = "Petal length (cm)",

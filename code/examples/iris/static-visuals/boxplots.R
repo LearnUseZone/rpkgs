@@ -1,7 +1,6 @@
 # ####
 # title:   Boxplots of iris dataset
 # author:  learnusezone@gmail.com
-# from-to: 2020-12-19-
 # purpose: static boxplots of iris dataset
 # note:    -
 # ####
@@ -26,7 +25,7 @@ box_sl <- ggplot2::ggplot(iris) +
   ggtitle("Sepal lengths \nof 3 Iris Species") +
   labs(y = "Sepal length (cm)") +
   theme_minimal() +
-  theme(legend.position="none")
+  theme(legend.position = "none")
 
 box_sw <- ggplot2::ggplot(iris) +
   geom_boxplot(aes(x = Species, y = Sepal.Width, color = Species),

@@ -1,15 +1,12 @@
 ---
 title:   "Data overview of iris dataset"
 site:    workflowr::wflow_site
-author:  "Author: learnusezone@gmail.com"
+author:  "Author: Peter Pis&aacute;r"
 date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200, tzone = \"GMT\"), \"%Y-%m-%d %H:%M GMT+2\"))`"
-# from-to: 2020-12-19-
 purpose: basic data overview of iris dataset
 output:
   workflowr::wflow_html:
-    toc: true
-    highlight: pygments
-    theme: paper
+    toc: false
     code_folding: hide
 editor_options:
   chunk_output_type: console
@@ -49,16 +46,17 @@ and **`r dimensions[2]` variables**
 and its **class name** is **\"`r class_name`\"**.
 
 ```{r names, comment = ''}
-base::message("Variable (column) names of iris dataset are:", "\n",
-  base::paste(var_names, collapse = "\n")          
+base::message("Variable names of iris dataset:", "\n",
+  paste(var_names, collapse = "\n")          
 )
 ```
 
 ## Head, tail, summary
-```{r head-and-tail, class.source = 'fold-show'}
+```{r head-and-tail}
 # the 1st 4 and the last 4 observations
-base::print(base::rbind(head_iris, tail_iris))
+base::print(rbind(iris_head, iris_tail))
 
 # print summary
-base::print(summary_iris)
+base::print(iris_summary)
 ```
+
