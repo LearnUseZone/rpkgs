@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Author: learnusezone@gmail.com" />
+<meta name="author" content="Author: Peter Pisár" />
 
 
 <title>Data overview of iris dataset</title>
@@ -20,9 +20,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
@@ -424,69 +421,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -494,16 +428,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -543,10 +467,13 @@ div.tocify {
       <a href="examples--iris--static-visuals--histograms.html">Histograms</a>
     </li>
     <li>
-      <a href="examples--iris--static-visuals--plots.html">Scatter &amp; box plots</a>
+      <a href="examples--iris--static-visuals--plots.html">Scatter &amp; boxplots</a>
     </li>
     <li>
-      <a href="examples--iris--interactive-visuals--plotly.html">Interactive scatter</a>
+      <a href="examples--iris--interactive-visuals--plotly.html">Plotly plot</a>
+    </li>
+    <li>
+      <a href="examples--iris--interactive-visuals--trelliscopejs.html">Trelliscopejs plots</a>
     </li>
   </ul>
 </li>
@@ -577,8 +504,8 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Data overview of iris dataset</h1>
-<h4 class="author">Author: <a href="mailto:learnusezone@gmail.com" class="email">learnusezone@gmail.com</a></h4>
-<h4 class="date">Last update: 2021-01-05 10:10 GMT+2</h4>
+<h4 class="author">Author: Peter Pisár</h4>
+<h4 class="date">Last update: 2021-02-09 10:57 GMT+2</h4>
 
 </div>
 
@@ -603,7 +530,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-01-05
+<strong>Last updated:</strong> 2021-02-09
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -694,16 +621,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLearnUseZonerpkgstree824a3e953d4ffc3762415175aed7cb1ed32eb669targetblank824a3e9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/LearnUseZone/rpkgs/tree/824a3e953d4ffc3762415175aed7cb1ed32eb669" target="_blank">824a3e9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLearnUseZonerpkgstree9adb9807cafdbe25b409418ba187aad79251fd47targetblank9adb980a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/LearnUseZone/rpkgs/tree/9adb9807cafdbe25b409418ba187aad79251fd47" target="_blank">9adb980</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomLearnUseZonerpkgstree824a3e953d4ffc3762415175aed7cb1ed32eb669targetblank824a3e9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomLearnUseZonerpkgstree9adb9807cafdbe25b409418ba187aad79251fd47targetblank9adb980a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/LearnUseZone/rpkgs/tree/824a3e953d4ffc3762415175aed7cb1ed32eb669" target="_blank">824a3e9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/LearnUseZone/rpkgs/tree/9adb9807cafdbe25b409418ba187aad79251fd47" target="_blank">9adb980</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -761,6 +688,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LearnUseZone/rpkgs/blob/9adb9807cafdbe25b409418ba187aad79251fd47/analysis/examples--iris--data-overview.Rmd" target="_blank">9adb980</a>
+</td>
+<td>
+LearnUseZone
+</td>
+<td>
+2021-02-09
+</td>
+<td>
+feat: Commit temporary analysis .(r|R)md files
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LearnUseZone/rpkgs/blob/cb9dcd987d47673ef0c56bfb867a189c30794e23/analysis/examples--iris--data-overview.Rmd" target="_blank">cb9dcd9</a>
+</td>
+<td>
+LearnUseZone
+</td>
+<td>
+2021-01-05
+</td>
+<td>
+fix(workflowrsubdirs): Use correct Source file paths in HTML
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LearnUseZone/rpkgs/cb9dcd987d47673ef0c56bfb867a189c30794e23/docs/examples--iris--data-overview.html" target="_blank">cb9dcd9</a>
+</td>
+<td>
+LearnUseZone
+</td>
+<td>
+2021-01-05
+</td>
+<td>
+fix(workflowrsubdirs): Use correct Source file paths in HTML
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -909,10 +887,10 @@ Four features were measured from each sample: the length and the width of the se
 <div id="observations-variables-names" class="section level2">
 <h2>Observations, variables, names</h2>
 <p>Dataset <code>iris</code> has <strong>150 observations</strong> and <strong>5 variables</strong> and its <strong>class name</strong> is <strong>"data.frame"</strong>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>base<span class="op">::</span><span class="kw">message</span>(<span class="st">&quot;Variable (column) names of iris dataset are:&quot;</span>, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  base<span class="op">::</span><span class="kw">paste</span>(var_names, <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)          </span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>base<span class="op">::</span><span class="kw">message</span>(<span class="st">&quot;Variable names of iris dataset:&quot;</span>, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw">paste</span>(var_names, <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)          </span>
 <span id="cb2-3"><a href="#cb2-3"></a>)</span></code></pre></div>
-<pre><code>Variable (column) names of iris dataset are:
+<pre><code>Variable names of iris dataset:
 Sepal.Length
 Sepal.Width
 Petal.Length
@@ -921,8 +899,8 @@ Species</code></pre>
 </div>
 <div id="head-tail-summary" class="section level2">
 <h2>Head, tail, summary</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r fold-show"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># the 1st 4 and the last 4 observations</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>base<span class="op">::</span><span class="kw">print</span>(base<span class="op">::</span><span class="kw">rbind</span>(head_iris, tail_iris))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># the 1st 4 and the last 4 observations</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>base<span class="op">::</span><span class="kw">print</span>(<span class="kw">rbind</span>(iris_head, iris_tail))</span></code></pre></div>
 <pre><code>#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
 #&gt; 1            5.1         3.5          1.4         0.2    setosa
 #&gt; 2            4.9         3.0          1.4         0.2    setosa
@@ -932,8 +910,8 @@ Species</code></pre>
 #&gt; 148          6.5         3.0          5.2         2.0 virginica
 #&gt; 149          6.2         3.4          5.4         2.3 virginica
 #&gt; 150          5.9         3.0          5.1         1.8 virginica</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r fold-show"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># print summary</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>base<span class="op">::</span><span class="kw">print</span>(summary_iris)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># print summary</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>base<span class="op">::</span><span class="kw">print</span>(iris_summary)</span></code></pre></div>
 <pre><code>#&gt;   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
 #&gt;  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
 #&gt;  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
@@ -977,7 +955,7 @@ Species</code></pre>
 #&gt; loaded via a namespace (and not attached):
 #&gt;  [1] Rcpp_1.0.5             rstudioapi_0.11.0-9000 whisker_0.4           
 #&gt;  [4] knitr_1.30             magrittr_1.5           R6_2.4.1              
-#&gt;  [7] rlang_0.4.7            stringr_1.4.0          tools_4.0.3           
+#&gt;  [7] rlang_0.4.10           stringr_1.4.0          tools_4.0.3           
 #&gt; [10] xfun_0.18              git2r_0.27.1           htmltools_0.5.0       
 #&gt; [13] ellipsis_0.3.1         rprojroot_1.3-2        yaml_2.2.1            
 #&gt; [16] digest_0.6.25          tibble_3.0.3           lifecycle_0.2.0       
@@ -991,7 +969,7 @@ Species</code></pre>
 </div>
 </div>
 
-<p>Copyright &copy; 2020 LearnUseZone</p>
+<p>Copyright &copy; 2021 LearnUseZone</p>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
@@ -1006,8 +984,6 @@ footer is added to webpages before the MathJax javascript. -->
 </script>
 
 
-</div>
-</div>
 
 </div>
 
@@ -1045,32 +1021,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
