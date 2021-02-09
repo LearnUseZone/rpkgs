@@ -1,0 +1,19 @@
+---
+title: Histograms of iris dataset
+site: workflowr::wflow_site
+author: 'Author: Peter Pis&aacute;r'
+date: '`r paste("Last update:", format(lubridate::with_tz(as.POSIXct(Sys.time()) +
+  7200, tzone = "GMT"), "%Y-%m-%d %H:%M GMT+2"))`'
+purpose: static histograms of iris dataset
+output:
+  workflowr::wflow_html:
+    toc: no
+    code_folding: hide
+editor_options:
+  chunk_output_type: console
+---
+
+**Source file:** code\-rmd/examples/iris/static\-visuals/histograms.Rmd
+
+```{r child = base::file.path(knitr::opts_knit$get("output.dir"), "../code-rmd/examples--iris--static-visuals--histograms.Rmd")}
+```
