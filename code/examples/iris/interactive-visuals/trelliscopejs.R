@@ -97,11 +97,14 @@ iris_long %>%
   ggplot(aes(x = `x`, y = `y`)) +
   geom_point(color = "black", aes(shape = factor(1))) +
   scale_shape_manual(values = 1) +
-  geom_vline(xintercept = 0:8, color = "white", size = 0.25) +
-  geom_hline(yintercept = 0:8, color = "white", size = 0.25) +
+  geom_vline(xintercept = 0:8, color = "#EEEEEE", size = 0.25) +
+  geom_hline(yintercept = 0:8, color = "#EEEEEE", size = 0.25) +
   geom_smooth(method = "lm", formula = "y ~ x", se = F, color = "orange") +
   geom_ribbon(method = "lm", formula = "y ~ x", stat = "smooth", fill = "orange", alpha = .4) +
-  theme(legend.position = "none", axis.ticks = element_blank()) +
+  theme(legend.position = "none",
+        axis.ticks = element_blank(),
+        panel.background = element_rect(fill = "white")
+  ) +
   trelliscopejs::facet_trelliscope(
     . ~ Species + `x ` + `y `,
     nrow = 1,
