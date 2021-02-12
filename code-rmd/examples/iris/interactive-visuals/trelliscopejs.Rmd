@@ -6,7 +6,6 @@ date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.ti
 purpose: interactive scatter plot with qualitative colorscales
 output:
   workflowr::wflow_html:
-    toc: false
     code_folding: hide
 editor_options:
   chunk_output_type: console
@@ -22,7 +21,7 @@ knitr::opts_chunk$set(
 
 
 # Interactive scatter plots with regression lines
-These scatter plots are created also by using `trelliscopejs::facet_trelliscope()` which has advantages but also few disadvantages.
+These scatter plots are created also by using `trelliscopejs::facet_trelliscope()`.
 
 One of advantages is a possibility to manage displaying plots using the left pane.
 
@@ -32,7 +31,8 @@ One of disadvantages is a warning message that pops-up after using `as_plotly = 
   - It is also reflected in a created HTML file in a result text informing that some file
   couldn't be loaded. JavaScript is used in the source .Rmd file to hide this unwanted message.
 
-More about trelliscopejs is [here](https://github.com/hafen/trelliscopejs) and in [README](https://github.com/LearnUseZone/rpkgs/tree/master/code/workflowrsubdirs) file.
+More about using package `trelliscopejs` is [here](https://github.com/hafen/trelliscopejs) and
+in [README](https://github.com/LearnUseZone/rpkgs/tree/master/code/workflowrsubdirs) file.
 
 
 # Load prepared data

@@ -27,8 +27,8 @@ navbar:
     href: https://github.com/LearnUseZone/rpkgs
 output:
   workflowr::wflow_html:
-    toc: yes
-    toc_float: yes
+    toc: false
+    # toc_float: true
     theme: paper
     highlight: pygments
     pandoc_args: --include-after-body=include/footer.html

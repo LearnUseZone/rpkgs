@@ -6,7 +6,6 @@ date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.ti
 purpose: basic data overview of iris dataset
 output:
   workflowr::wflow_html:
-    toc: false
     code_folding: hide
 editor_options:
   chunk_output_type: console

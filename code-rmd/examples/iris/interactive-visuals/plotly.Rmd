@@ -6,7 +6,6 @@ date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.ti
 purpose: interactive scatter plot with qualitative colorscales
 output:
   workflowr::wflow_html:
-    toc: false
     code_folding: hide
 editor_options:
   chunk_output_type: console
@@ -21,9 +20,9 @@ knitr::opts_chunk$set(
 ```
 
 
-# Interactive scatter plot with qualitative color scales
+# Scatter plot with qualitative color scales
 Interactive scatter plot with 3 species of Iris
-(Iris setosa, Iris virginica and Iris versicolor) distinguished by color.
+(Iris setosa, Iris virginica and Iris versicolor) distinguished by color is shown below.
 
 
 # Load prepared data

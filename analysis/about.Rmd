@@ -5,13 +5,12 @@ author:  "Author: Peter Pis&aacute;r"
 date:    "`r paste('Last update:', format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200, tzone = 'GMT'), '%Y-%m-%d %H:%M GMT+2'))`"
 purpose: about
 output:
-  workflowr::wflow_html:
-    toc: false
+  workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 # note:  -
 ---
 
 # About
-Use the top menu to navigate through examples.
+Please use the top menu to navigate through examples.
 

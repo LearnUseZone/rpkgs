@@ -5,13 +5,15 @@ author:  "Author: Peter Pis&aacute;r"
 date:    "`r paste('Last update:', format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200, tzone = 'GMT'), '%Y-%m-%d %H:%M GMT+2'))`"
 purpose: home
 output:
-  workflowr::wflow_html:
-    toc: false
+  workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 # note:  -
 ---
 
 # Welcome
-Welcome to my website with examples of my created packages.
+Welcome to my website with examples using my created R packages.
+The main focus of this website is on demonstration of the functionality of relevant packages.
+
+Top menu \"Iris examples\" shows examples focused on using of package [workflowrsubdirs](https://github.com/LearnUseZone/rpkgs/tree/master/code/workflowrsubdirs#created-solution).
 
