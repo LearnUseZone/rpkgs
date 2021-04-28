@@ -1,7 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2021-02-10 12:51 GMT+2
+Last update: 2021-04-28 09:01 GMT+2
 
   - [Purpose](#purpose)
   - [General rules](#general-rules)
@@ -269,18 +269,28 @@ These examples demonstrate for example:
     `_site.yml`.
 5.  Commit all previously created files.
       - Commit example: cb7ba9a on 21-02-09.
-6.  Run `workflowrsubdirs::build_htmls()` to build HTML files that will
-    be saved in directory `docs` (for GitHub) or `public` (for GitLab).
+6.  Run `workflowrsubdirs::build_htmls()` with relevant parameters to
+    build HTML files that will be saved in directory `docs` (for GitHub)
+    or `public` (for GitLab).
+      - If you are sure that everything is set correctly (you don’t need
+        to test anymore), choose parameter `commit = TRUE`. It's
+        necessary to commit in this step otherwise "Checks" of workflowr
+        will show "R Markdown file: uncommitted changes".
       - Commit example: 9adb980 on 21-02-09.
       - Code example:
         `workflowrsubdirs::build_htmls("code-rmd/examples/iris", T,
         NULL, T)`
       - Note: commit d5cbbf4 is after running
         `workflowr::wflow_publish("analysis/*.Rmd")`.
-7.  Remember that although temporary R Markdown files are committed
+7.  This step can be done only if step 6 is committed
+    (`workflowrsubdirs::build_htmls()` with `commit = TRUE`)  
+    Remember that although temporary R Markdown files are committed
     separately when run function `workflowrsubdirs::build_htmls()`, it’s
-    still necessary to commit all remaining files (all deleted temporary
-    R Markdown files and new HTML files) after HTML files are created.
+    still necessary to commit (run another code or use software like
+    Sourcetree,  
+    etc. = hereinafter "manually commit") all remaining (all deleted
+    temporary R Markdown files and new HTML) files after HTML files are
+    created.
       - Commit example: a0ae3fb on 21-02-09.
 
 ### Rendering options
@@ -345,44 +355,53 @@ workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
 Following is an example of steps currently working for rendering a
 solution with package `trelliscopejs` to HTML:
 
-1)  Make the first 5 steps from "Usage of package workflowrsubdirs".
-    
+1)  Make the first 5 steps from "Brief example of steps from creating R
+    codes until committing HTML pages".
       - Commit example: 41ca33c on 21-02-09.
-
-2)  Open the created .R file -\> click "Source" (Source the contents of
+      - If you need to re-create HTML file that uses package
+        "trelliscopejs" as the 1st step delete relevant "trelliscopejs"
+        directories.
+2)  Open the created .R file (that uses package "trelliscopejs") -\>
+    source this file (click on icon "Source" = Source the contents of
     the active document)
-    
-      - For this purpose, parameter “path” specified in function
-        trelliscopejs::facet\_trelliscope() is used.
-          - Example: path = “trelliscopejs/regressions”.
-      - New directory (with trelliscopejs data) is created directly in a
+      - For this purpose, parameter "path" specified inside function
+        trelliscopejs::facet\_trelliscope() in the .R file is used.
+          - Example: path = "trelliscopejs/regressions".
+      - New directory with trelliscopejs data is created directly in a
         relevant project working directory.
           - Example: "D:\\Projects\\GitHub\\rpkgs\\trelliscopejs".
-
 3)  Copy this new directory "trelliscopejs" to directory `docs` (for
     GitHub) or `public` (for GitLab) (within a relevant project working
     directory).
-
-4)  Run `workflowrsubdirs::build_htmls()` to build HTML files that will
-    be saved in directory `docs` (for GitHub) or `public` (for GitLab).
-    
+4)  Run `workflowrsubdirs::build_htmls()` with relevant parameters to
+    build HTML files that will be saved in directory `docs` (for GitHub)
+    or `public` (for GitLab).
+      - If you are sure that everything is set correctly (you don’t need
+        to test anymore), choose parameter `commit = TRUE`. It's
+        necessary to commit in this step otherwise "Checks" of workflowr
+        will show "R Markdown file: uncommitted changes".
+          - example if you want to build and commit all .Rmd files (some
+            of them can contain "trelliscopejs") anywhere in directory
+            "code-rmd":  
+            `workflowrsubdirs::build_htmls("code-rmd", T, NULL, T)`
       - If you run it with parameter `commit = TRUE` then a separate
         commit is automatically created,  
         commit example: 42c119a on 21-02-09.
-
 5)  Delete directory "trelliscopejs" from the relevant project working
-    directory (as it was created by step 2).
-    
+    directory (as it was created in step 2).
       - Keep it in directory `docs` (for GitHub) or `public` (for
         GitLab).
-
-6)  (Manually) commit all remaining `trelliscopejs` files,
-    (automatically) deleted R Markdown file (from directory "analysis")
-    and added HTML file.
-    
+6)  This step can be done only if step 4 is committed
+    (`workflowrsubdirs::build_htmls()` with `commit = TRUE`)  
+    Manually commit all remaining `trelliscopejs` files, (automatically)
+    deleted R Markdown file (from directory "analysis") and added HTML
+    file.
       - Commit example: ce8e20f on 21-02-09.
-
-7)  It may take few minutes to see working visualization online.
+      - Note: If you build R Markdown file(s) containing "trelliscopejs"
+        together with other R Markdown files, you need to commit more
+        files.
+7)  Push your solution online. It may take few minutes to see working
+    visualization online.
 
 ## How to avoid and solve potential problems
 
