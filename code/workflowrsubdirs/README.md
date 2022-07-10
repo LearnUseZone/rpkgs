@@ -1,17 +1,7 @@
 [workflowrsubdirs](https://github.com/LearnUseZone/workflowrSubfolders)
 ================
 LearnUseZone
-Last update: 2021-04-28 09:01 GMT+2
-
-  - [Purpose](#purpose)
-  - [General rules](#general-rules)
-  - [Package functions](#package-functions)
-  - [Installation steps (for Windows)](#installation-steps-for-windows)
-  - [Necessary packages](#necessary-packages)
-  - [Examples](#examples)
-  - [How to avoid and solve potential
-    problems](#how-to-avoid-and-solve-potential-problems)
-  - [Additional notes](#additional-notes)
+Last update: 2022-07-10 15:13 GMT+2
 
 ## Purpose
 
@@ -19,7 +9,7 @@ This package is used (only) to build HTML files from their associated R
 Markdown files saved in a new directory and its subdirectories of a
 [workflowr](https://github.com/jdblischak/workflowr) project.
 
-  - [Package workflowr
+-   [Package workflowr
     offers](https://github.com/jdblischak/workflowr/blob/master/README.md)
     many useful features but doesn't offer this feature of package
     `workflowrsubdirs`.
@@ -28,54 +18,54 @@ Markdown files saved in a new directory and its subdirectories of a
 
 ### Directory structure
 
-  - Because this package is a kind of an (optional) extension for
+-   Because this package is a kind of an (optional) extension for
     package `workflowr`, it’s necessary to adhere the structure of the
     main [workflowr project's working
     directory](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
     (hereinafter `main workflowr dir`). The most important directories
     to follow this rule are:
-      - `analysis`
-      - `code`
-      - `docs` (for GitHub) or `public` (for GitLab)
+    -   `analysis`
+    -   `code`
+    -   `docs` (for GitHub) or `public` (for GitLab)
 
 ### Directories for R Markdown files
 
-  - 1stly, `workflowr` project needs to be prepared.
-      - Relevant steps (together with more information) can be found
+-   1stly, `workflowr` project needs to be prepared.
+    -   Relevant steps (together with more information) can be found
         [here](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html).
         Read e.g. about directories:
-          - `code` that can contain also subdirectories.
-          - `docs` that contain all HTML files for your website.
-  - 2ndly, ensure that `docs/index.html` is created, e.g by running
+        -   `code` that can contain also subdirectories.
+        -   `docs` that contain all HTML files for your website.
+-   2ndly, ensure that `docs/index.html` is created, e.g by running
     `workflowr::wflow_build()`.
-      - Ideal is to also properly prepare files `_site.yml` and
+    -   Ideal is to also properly prepare files `_site.yml` and
         `index.Rmd` in directory `analysis` and also directories with
         HTML files included in `_site.yml` (e.g. `footer.html`).
-  - For the purpose of saving R Markdown files in subdirectories, it’s
-    necessary to create a new directory directly in `main workflowr
-    dir`.
-      - Don’t create subdirectories (for this purpose) in directory
+-   For the purpose of saving R Markdown files in subdirectories, it’s
+    necessary to create a new directory directly in
+    `main workflowr dir`.
+    -   Don’t create subdirectories (for this purpose) in directory
         `analysis`.
-      - A required name of this new directory is `code-rmd`.
-          - R Markdown files saved in it will be usually associated to
+    -   A required name of this new directory is `code-rmd`.
+        -   R Markdown files saved in it will be usually associated to
             solutions in directory `code`.
-  - R Markdown files can be saved
-      - directly in this new directory or in any of its subdirectories
+-   R Markdown files can be saved
+    -   directly in this new directory or in any of its subdirectories
         (hereinafter `code-rmd subdirs`).
-  - Following 2 approaches can be used to show results of solutions from
+-   Following 2 approaches can be used to show results of solutions from
     directory `code` and keep them organized:
     1.  Create associated R Markdown files to directory `analysis` and
         build their HTML files using package `workflowr`.
-          - this approach cannot have the same structure as
+        -   this approach cannot have the same structure as
             subdirectories in directory `code`.
     2.  Create associated R Markdown files to `code-rmd subdirs` and
         build their HTML files using package `workflowrsubdirs`.
-          - This approach can have the same structure as directory
+        -   This approach can have the same structure as directory
             "code".
 
 ### Open workflowr project before using workflowrsubdirs
 
-  - If other than `workflowr` project is originally opened (using its
+-   If other than `workflowr` project is originally opened (using its
     .Rproj file) then function `workflowrsubdirs::build_htmls()` fails
     because `base::setwd(here::here())` in this function sets a working
     directory to an original .Rproj working directory regardless a
@@ -91,7 +81,7 @@ file extension is not .rmd or .Rmd then rendering will fail with error
 
 ## Package functions
 
-### build\_htmls()
+### build_htmls()
 
 This is currently the only one function accessible by users.
 
@@ -99,31 +89,31 @@ Main steps:
 
 1.  Evaluate if rendering of R Markdown to HTML files is possible. If
     some check doesn't pass, write a reason and stop processing.
-      - Used package function: initial\_checks()
+    -   Used package function: initial_checks()
 2.  Create paths to original R Markdown files. Non-existent R Markdown
     files are ignored. An R Markdown file referred by more than 1
     regular expression is processed only once.
-      - Used package function: create\_rmd\_paths()
+    -   Used package function: create_rmd_paths()
 3.  Create a temporary copy of original R Markdown files to directory
     “code-rmd” (it’s needed to be able to use figures generated by
     functions like e.g. graphics::hist()). Generate temporary (helping)
     R Markdown files from associated temporary code-rmd R Markdown files
     and save them to directory `analysis`.
-      - Used package function: render\_to\_htmls()
+    -   Used package function: render_to_htmls()
 4.  If input parameter `commit == TRUE`, create a commit of these
     temporary analysis R Markdown files with text "feat: Commit
-    temporary analysis .(r|R)md files".
-      - Used function: workflowr::wflow\_git\_commit()
-      - If these temporary analysis R Markdown files are not committed
-        before workflowr::wflow\_build(), the following error message is
+    temporary analysis .(r\|R)md files".
+    -   Used function: workflowr::wflow_git_commit()
+    -   If these temporary analysis R Markdown files are not committed
+        before workflowr::wflow_build(), the following error message is
         written after opening any of prepared HTML files and
         left-clicking on `workflowr` button under tab "Checks": "R
         Markdown file: uncommitted changes"
-          - This is also inline with `workflowr` package.
+        -   This is also inline with `workflowr` package.
 5.  Render temporary (helping) R Markdown files in directory `analysis`
     to HTML files.
-      - Used function: workflowr::wflow\_build()
-      - Final HTML files are prepared (also package `workflowr` is set
+    -   Used function: workflowr::wflow_build()
+    -   Final HTML files are prepared (also package `workflowr` is set
         in this way) in directory `docs` (for GitHub) or directory
         `public` (for GitLab). Each such file name contains `\-\-` which
         are delimiters for paths to original R Markdown file paths.
@@ -143,36 +133,35 @@ Main steps:
     "Packages") to avoid the following warning:  
     Warning in install.packages :  
       package ‘workflowrsubdirs’ is in use and will not be installed
-      - Examples:  
+    -   Examples:  
         4a) Session (from RStudio top menu) -\> Restart R
         (Ctrl+Shift+F10)  
         4b) Open tab "Packages" -\> find package `workflowrsubdirs` -\>
         uncheck a relevant check box  
         4c) `detach("package:workflowrsubdirs", unload = TRUE)`
 5.  Install the package using R code:
-    `install.packages(<path_to_tar.gz_file>, repos = NULL, type =
-    "source")`
+    `install.packages(<path_to_tar.gz_file>, repos = NULL, type = "source")`
 6.  Notes
-      - Don't use Build (from top menu of RStudio) -\> Install and
+    -   Don't use Build (from top menu of RStudio) -\> Install and
         Restart (Ctrl+Shift+B) because of problems explained
         [here](https://stackoverflow.com/questions/65004638/stop-in-package-function-doesnt-end-debug-mode).
-          - [Here](https://stackoverflow.com/questions/1474081/how-do-i-install-an-r-package-from-source/1474125#1474125)
+        -   [Here](https://stackoverflow.com/questions/1474081/how-do-i-install-an-r-package-from-source/1474125#1474125)
             can be found additional information e.g. regarding UNIX.
-      - This package still doesn't have any stable version therefore
+    -   This package still doesn't have any stable version therefore
         previous installation steps are suggested.
 
 ### Try following steps if it seems that the package wasn't installed properly
 
 1.  Restart R session for each opened RStudio session
-      - Continue with following steps if this doesn't help.
+    -   Continue with following steps if this doesn't help.
 2.  Uninstall this package from RStudio "Packages" tab if it exists
     there.
 3.  Delete directory `workflowrsubdirs` from directory `library`
     (directory with installed R packages) if it exists there.
 4.  Restart R session
-      - for example using RStudio -\> Session -\> Restart R.
+    -   for example using RStudio -\> Session -\> Restart R.
 5.  Install the package again using R code:
-    install.packages(\<path\_to\_tar.gz\_file\>, repos = NULL, type =
+    install.packages(\<path_to_tar.gz_file\>, repos = NULL, type =
     "source").
 
 ## Necessary packages
@@ -180,12 +169,12 @@ Main steps:
 It’s necessary to install following packages for a proper usage of this
 package (loading them isn’t necessary):
 
-  - `base`
-  - `here`
-  - `rmarkdown`
-  - `stringr`
-  - `workflowr`
-  - `yaml`
+-   `base`
+-   `here`
+-   `rmarkdown`
+-   `stringr`
+-   `workflowr`
+-   `yaml`
 
 ## Examples
 
@@ -203,61 +192,61 @@ functionality of package workflowrsubdirs rather than on choosing the
 best data interpretations.**  
 These examples demonstrate for example:
 
-  - possible structure of directories
-  - correct functionality of `workflowrsubdirs::build_htmls()`
-      - differences between `workflowrsubdirs::build_htmls()` and
+-   possible structure of directories
+-   correct functionality of `workflowrsubdirs::build_htmls()`
+    -   differences between `workflowrsubdirs::build_htmls()` and
         standard knitting (Knit button, `knitr::knit()`) are only:
-          - `workflowrsubdirs::build_htmls()` is of course called
+        -   `workflowrsubdirs::build_htmls()` is of course called
             instead of `knitr::knit()`
-          - figures (e.g. when running graphics::hist()) are saved to
+        -   figures (e.g. when running graphics::hist()) are saved to
             directory `rpkgs/docs/figure`
-          - directory structure of packages `workflowr` and
+        -   directory structure of packages `workflowr` and
             `workflowrsubdirs` are used to keep data files organized
-          - rules for using of package `workflowr` have to be met
-  - usage of a footer
-      - File `footer.html` is saved in `rpkgs/analysis/include` which is
+        -   rules for using of package `workflowr` have to be met
+-   usage of a footer
+    -   File `footer.html` is saved in `rpkgs/analysis/include` which is
         in line with package `workflowr` (see
         e.g. [here](https://zenodo.org/record/3706876#.X9CkkLMo_cs)).
-      - It’s working in combination with definition of "output" in file
+    -   It’s working in combination with definition of "output" in file
         `rpkgs/analysis/_site.yml` (commit 96087f9).
-  - usage of pictures
-      - A picture `3-species-of-iris.png` saved in directory
+-   usage of pictures
+    -   A picture `3-species-of-iris.png` saved in directory
         `rpkgs/docs/assets/examples/iris/static-visuals/histograms.Rmd`
         is used in
         `rpkgs/code-rmd/examples/iris/static-visuals/histograms.Rmd`.
-      - A picture could be saved also in other part of
+    -   A picture could be saved also in other part of
         `rpkgs/docs/assets` which is in line with package `workflowr`
         (read more
         [here](https://jdblischak.github.io/workflowr/articles/wflow-05-faq.html)).
-  - static visualizations with figures
-      - File
+-   static visualizations with figures
+    -   File
         `rpkgs/code-rmd/examples/iris/static-visuals/histograms.Rmd`
         uses one .R file.
-      - File `rpkgs/code-rmd/examples/iris/static-visuals/plots.Rmd`
+    -   File `rpkgs/code-rmd/examples/iris/static-visuals/plots.Rmd`
         uses two .R files.
-      - Both R Markdown files generate figures that are automatically
+    -   Both R Markdown files generate figures that are automatically
         (functionality of package `workflowr`) saved in directories
         `rpkgs/docs/figure/examples--iris--static-visuals--histograms.Rmd`
         and
         `rpkgs/docs/figure/examples--iris--static-visuals--plots.Rmd`.
-      - Based on functionality of package `workflowr` if a .png file
+    -   Based on functionality of package `workflowr` if a .png file
         already exist, it’s overwritten with a new file but remains
         saved even if it’s deleted from the source R Markdown or .R
         file.
-      - More information is
+    -   More information is
         [here](https://jdblischak.github.io/workflowr/articles/wflow-04-how-it-works.html#where-are-the-figures)
-      - Also for example package ggplot2 is used (in "boxplots.R").
-  - interactive visualization
-      - It’s used in
+    -   Also for example package ggplot2 is used (in "boxplots.R").
+-   interactive visualization
+    -   It’s used in
         `rpkgs/code-rmd/examples/iris/interactive-visuals/plotly.Rmd`
         and
         `rpkgs/code-rmd/examples/iris/interactive-visuals/trelliscopejs.Rmd`.
-      - It also uses:
-          - [code
+    -   It also uses:
+        -   [code
             externalization](https://bookdown.org/yihui/rmarkdown-cookbook/read-chunk.html)
-          - packages: plotly, crosstalk, trelliscopejs
-  - usage of `knitr::opts_chunk$set()`
-      - It’s used in all R Markdown files.
+        -   packages: plotly, crosstalk, trelliscopejs
+-   usage of `knitr::opts_chunk$set()`
+    -   It’s used in all R Markdown files.
 
 ### Brief example of steps from creating R codes until committing HTML pages
 
@@ -268,19 +257,18 @@ These examples demonstrate for example:
 4.  Optionally create other files like `footer.html` and update
     `_site.yml`.
 5.  Commit all previously created files.
-      - Commit example: cb7ba9a on 21-02-09.
+    -   Commit example: cb7ba9a on 21-02-09.
 6.  Run `workflowrsubdirs::build_htmls()` with relevant parameters to
     build HTML files that will be saved in directory `docs` (for GitHub)
     or `public` (for GitLab).
-      - If you are sure that everything is set correctly (you don’t need
+    -   If you are sure that everything is set correctly (you don’t need
         to test anymore), choose parameter `commit = TRUE`. It's
         necessary to commit in this step otherwise "Checks" of workflowr
         will show "R Markdown file: uncommitted changes".
-      - Commit example: 9adb980 on 21-02-09.
-      - Code example:
-        `workflowrsubdirs::build_htmls("code-rmd/examples/iris", T,
-        NULL, T)`
-      - Note: commit d5cbbf4 is after running
+    -   Commit example: 9adb980 on 21-02-09.
+    -   Code example:
+        `workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)`
+    -   Note: commit d5cbbf4 is after running
         `workflowr::wflow_publish("analysis/*.Rmd")`.
 7.  This step can be done only if step 6 is committed
     (`workflowrsubdirs::build_htmls()` with `commit = TRUE`)  
@@ -291,18 +279,16 @@ These examples demonstrate for example:
     etc. = hereinafter "manually commit") all remaining (all deleted
     temporary R Markdown files and new HTML) files after HTML files are
     created.
-      - Commit example: a0ae3fb on 21-02-09.
+    -   Commit example: a0ae3fb on 21-02-09.
 
 ### Rendering options
 
 Some of options to render R Markdown files to HTML files follow.
 
-  - Before using `workflowrsubdirs::build_htmls()`, remember to firstly
+-   Before using `workflowrsubdirs::build_htmls()`, remember to firstly
     run file `.Rproj` which also set the correct project working
     directory (read more in subtitle "Open workflowr project before
     using workflowrsubdirs").
-
-<!-- end list -->
 
 ``` r
 # render all .rmd and .Rmd files in directory "code-rmd" and its subdirectories to HTML files
@@ -334,15 +320,15 @@ workflowrsubdirs::build_htmls(dir_path = "code-rmd/examples/iris",
 workflowrsubdirs::build_htmls("code-rmd/examples/iris", T, NULL, T)
 ```
 
-  - Notes
+-   Notes
     1.  Input parameter `dir_path` can also
-          - contain the whole path to a directory,
-          - starts with `./`, \`.\\’ and
-          - contain some kind of typos like used a redundant `/` and
+        -   contain the whole path to a directory,
+        -   starts with `./`, \`.\\’ and
+        -   contain some kind of typos like used a redundant `/` and
             `\\` at the beginning or/and end of a path.
     2.  If also files in directory `analysis` need to be updated using
         package `workflowr`, a code like the following one can be used:
-    <!-- end list -->
+
     ``` r
     workflowr::wflow_publish(
         files = c("analysis/_site.yml", "analysis/about.Rmd",
@@ -357,47 +343,51 @@ solution with package `trelliscopejs` to HTML:
 
 1)  Make the first 5 steps from "Brief example of steps from creating R
     codes until committing HTML pages".
-      - Commit example: 41ca33c on 21-02-09.
-      - If you need to re-create HTML file that uses package
-        "trelliscopejs" as the 1st step delete relevant "trelliscopejs"
+    -   Commit example: 41ca33c on 21-02-09.
+    -   If you need to re-create HTML file that uses package
+        `trelliscopejs` as the 1st step delete relevant `trelliscopejs`
         directories.
-2)  Open the created .R file (that uses package "trelliscopejs") -\>
+2)  Open the created .R file (that uses package `trelliscopejs`) -\>
     source this file (click on icon "Source" = Source the contents of
     the active document)
-      - For this purpose, parameter "path" specified inside function
-        trelliscopejs::facet\_trelliscope() in the .R file is used.
-          - Example: path = "trelliscopejs/regressions".
-      - New directory with trelliscopejs data is created directly in a
+    -   For this purpose, parameter "path" specified inside function
+        `trelliscopejs::facet_trelliscope()` in the .R file is used.
+        -   Example: path = "trelliscopejs/regressions".
+    -   New directory with `trelliscopejs` data is created directly in a
         relevant project working directory.
-          - Example: "D:\\Projects\\GitHub\\rpkgs\\trelliscopejs".
-3)  Copy this new directory "trelliscopejs" to directory `docs` (for
-    GitHub) or `public` (for GitLab) (within a relevant project working
-    directory).
-4)  Run `workflowrsubdirs::build_htmls()` with relevant parameters to
+        -   Example: "D:\\Projects\\GitHub\\rpkgs\\trelliscopejs".
+3)  Delete directory `trelliscopejs` in directory `docs` (for GitHub) or
+    `public` (for GitLab) (inside a relevant project working directory)
+    if directory `trelliscopejs` exists there.  
+    Copy (don’t move, but really copy) directory `trelliscopejs`, that
+    was created by previous sourcing of .R code in point 2, from
+    relevant project working directory to previously mentioned directory
+    `docs` (for GitHub) or `public` (for GitLab).
+4)  Run `workflowrsubdirs::build_htmls()` with relevant arguments to
     build HTML files that will be saved in directory `docs` (for GitHub)
     or `public` (for GitLab).
-      - If you are sure that everything is set correctly (you don’t need
+    -   If you are sure that everything is set correctly (you don't need
         to test anymore), choose parameter `commit = TRUE`. It's
         necessary to commit in this step otherwise "Checks" of workflowr
         will show "R Markdown file: uncommitted changes".
-          - example if you want to build and commit all .Rmd files (some
-            of them can contain "trelliscopejs") anywhere in directory
+        -   example if you want to build and commit all .Rmd files (some
+            of them can contain `trelliscopejs`) anywhere in directory
             "code-rmd":  
             `workflowrsubdirs::build_htmls("code-rmd", T, NULL, T)`
-      - If you run it with parameter `commit = TRUE` then a separate
+    -   If you run it with parameter `commit = TRUE` then a separate
         commit is automatically created,  
         commit example: 42c119a on 21-02-09.
-5)  Delete directory "trelliscopejs" from the relevant project working
+5)  Delete directory `trelliscopejs` from the relevant project working
     directory (as it was created in step 2).
-      - Keep it in directory `docs` (for GitHub) or `public` (for
+    -   Keep it in directory `docs` (for GitHub) or `public` (for
         GitLab).
 6)  This step can be done only if step 4 is committed
     (`workflowrsubdirs::build_htmls()` with `commit = TRUE`)  
     Manually commit all remaining `trelliscopejs` files, (automatically)
-    deleted R Markdown file (from directory "analysis") and added HTML
+    deleted R Markdown file (from directory `analysis`) and added HTML
     file.
-      - Commit example: ce8e20f on 21-02-09.
-      - Note: If you build R Markdown file(s) containing "trelliscopejs"
+    -   Commit example: ce8e20f on 21-02-09.
+    -   Note: If you build R Markdown file(s) containing `trelliscopejs`
         together with other R Markdown files, you need to commit more
         files.
 7)  Push your solution online. It may take few minutes to see working
@@ -407,97 +397,96 @@ solution with package `trelliscopejs` to HTML:
 
 ### YAML headers
 
-  - It’s necessary to use correct quotation marks if inline R code is
+-   It’s necessary to use correct quotation marks if inline R code is
     used in YAML header. otherwise there is an error with rendering R
     Markdown to HTML file.
 
-  - Example of using quotation marks (in this case: `"`) incorrectly:
-    
+-   Example of using quotation marks (in this case: `"`) incorrectly:
+
     ``` r
     date:    "`r paste("Last update:", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
              tzone = "GMT"), "%Y-%m-%d %H:%M GMT+2"))`"
     ```
 
-  - Single quotation marks (') have to be used in inline R codes in YAML
+-   Single quotation marks (') have to be used in inline R codes in YAML
     header in R Markdown files saved in directory "analysis", for
     example:  
-    
+
     ``` r
     date:    "`r paste('Last update:', format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
              tzone = 'GMT'), '%Y-%m-%d %H:%M GMT+2'))`"
     ```
 
-  - Escaped double quotation marks (\\") have to be used in inline R
+-   Escaped double quotation marks (\\") have to be used in inline R
     codes in YAML header in R Markdown files saved in "code-rmd
     subdirs", for example:  
-    
+
     ``` r
     date:    "`r paste(\"Last update:\", format(lubridate::with_tz(as.POSIXct(Sys.time()) + 7200,
              tzone = \"GMT\"), \"%Y-%m-%d %H:%M GMT+2\"))`"
     ```
 
-  - Examples of errors if incorrect quotation marks are used:
-    
-      - `workflowr::wflow_build("analysis/testfile.Rmd")`
-          - `'` - working
-          - `\'` - Scanner error: while parsing a quoted scalar at line
+-   Examples of errors if incorrect quotation marks are used:
+
+    -   `workflowr::wflow_build("analysis/testfile.Rmd")`
+        -   `'` - working
+        -   `\'` - Scanner error: while parsing a quoted scalar at line
             3, column 10 found unknown escape character at line 3,
             column 20
-          - `"` - Parser error: while parsing a block mapping at line 1,
+        -   `"` - Parser error: while parsing a block mapping at line 1,
             column 1 did not find expected key at line 3, column 21
-          - `\"` - Error: callr subprocess failed: \<text\>:1:7:
+        -   `\"` - Error: callr subprocess failed: \<text\>:1:7:
             unexpected input
-          - `''` - Error: callr subprocess failed: \<text\>:1:9:
+        -   `''` - Error: callr subprocess failed: \<text\>:1:9:
             unexpected symbol  
               
-      - `workflowrsubdirs::build_htmls("code-rmd/subdir", F,
-        "testfile.Rmd")`
-          - `'` - Error: callr subprocess failed: \<text\>:1:9:
+    -   `workflowrsubdirs::build_htmls("code-rmd/subdir", F, "testfile.Rmd")`
+        -   `'` - Error: callr subprocess failed: \<text\>:1:9:
             unexpected symbol ('' is created)
-          - `\'` - Scanner error: while parsing a quoted scalar at line
+        -   `\'` - Scanner error: while parsing a quoted scalar at line
             3, column 10 found unknown escape character at line 3,
             column 20
-          - `"` - Parser error: while parsing a block mapping at line 1,
+        -   `"` - Parser error: while parsing a block mapping at line 1,
             column 1 did not find expected key at line 3, column 21
-          - `\"` - working
-          - `''` - Error: callr subprocess failed: \<text\>:1:9:
+        -   `\"` - working
+        -   `''` - Error: callr subprocess failed: \<text\>:1:9:
             unexpected string constant
 
 ### Problems when R Markdown file contains space in its name
 
-  - It’s necessary to not use spaces in R Markdown file names otherwise
+-   It’s necessary to not use spaces in R Markdown file names otherwise
     following errors occur.
-    
-      - It’s unusual to have file names, that will be used for web
+
+    -   It’s unusual to have file names, that will be used for web
         addresses, containing spaces so the easiest way how to avoid
         following errors is simply to not use spaces in R Markdown file
         names.
 
-  - Error when R Markdown file saved in `code-rmd subdirs` contain a
+-   Error when R Markdown file saved in `code-rmd subdirs` contain a
     space in its name after running e.g. following code is: Error: callr
     subprocess failed: cannot open the connection
-    
+
     ``` r
     workflowrsubdirs::build_htmls("code-rmd/subdir", F, "file.Rmd")
     ```
 
-  - Error when R Markdown file saved in directory `analysis` contain a
+-   Error when R Markdown file saved in directory `analysis` contain a
     space in its name after running e.g. following code is: Error: callr
     subprocess failed: The specified directory
     'D:/Projects/GitLab/portfolios/test file.Rmd' does not exist. (This
     error message is strange because directory "analysis" isn't written
     there.)
-    
+
     ``` r
     workflowr::wflow_build("analysis/file.Rmd")
     ```
 
-  - It seems that both of these errors are caused directly by package
+-   It seems that both of these errors are caused directly by package
     `workflowr`. J. Blischak (creator of package `workflowr`) will add a
     better error message (or maybe another suitable solution) as we
     discuss [here](https://github.com/jdblischak/workflowr/issues/226).
 
-### Warning messages when using trelliscopejs::facet\_trelliscope() with parameter as\_plotly = TRUE
+### Warning messages when using trelliscopejs::facet_trelliscope() with parameter as_plotly = TRUE
 
 Running a solution that uses `trelliscopejs::facet_trelliscope()` with
 parameter `as_plotly = TRUE` is working but a warning like the following
@@ -523,18 +512,18 @@ This issue is also described
 
 ## Additional notes
 
-  - I’m still working on improvements (I don’t have a stable version),
+-   I’m still working on improvements (I don’t have a stable version),
     some of them follow:
-      - replace some placeholders like
+    -   replace some placeholders like
         `tests\testthat\test-build_htmls.R` with a solution,
-      - replace comments for future improvements with relevant
+    -   replace comments for future improvements with relevant
         improvements,
-      - check and update comments and roxygen2 descriptions,
-      - check and update some parts of R codes.
-  - This package `workflowrsubdirs` is available under the [MIT
+    -   check and update comments and roxygen2 descriptions,
+    -   check and update some parts of R codes.
+-   This package `workflowrsubdirs` is available under the [MIT
     license](https://choosealicense.com/licenses/mit/).
-  - Initial inspiration for this package is from [this
+-   Initial inspiration for this package is from [this
     discussion](https://github.com/jdblischak/workflowr/issues/95).  
-  - A related discussion with John Blischak (a creator of package
+-   A related discussion with John Blischak (a creator of package
     `workflowr`) about some of used concepts is
     [here](https://github.com/jdblischak/workflowr/issues/220).
